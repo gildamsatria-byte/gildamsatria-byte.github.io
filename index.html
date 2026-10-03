@@ -78,6 +78,8 @@ p{margin:0}
 .card.dark .go{background:var(--sky);color:#0A1428;border-top-color:var(--dark-rule)}
 .locked{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;font-weight:500;padding:4px 10px;background:var(--pencil);color:var(--ink);border-radius:2px}
 .card.dark .go.off{background:var(--dark-rule);color:var(--dark-muted);cursor:not-allowed}
+.card li .new{flex:none;align-self:center;font-family:var(--mono);font-size:11px;font-weight:500;padding:2px 6px;border-radius:2px;background:var(--pencil);color:var(--ink)}
+.card li:has(.new)::before{display:none}
 .gmail{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#E8EEF9;color:#123B8C;font-size:15px;border-radius:4px}
 /* flow */
 .flow-sec{background:var(--paper);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
@@ -175,11 +177,11 @@ footer .fine{border-top:1px solid var(--dark-rule);padding-top:20px;display:flex
 <div class="body">
 <div class="top"><span class="tag">BIM</span><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
 <h3>LiteBIM</h3>
-<p>Alat pemodelan BIM ringan: denah 2D dan tampilan 3D bertingkat, lengkap dengan elemen struktur dan lembar gambar.</p>
-<ul><li>Dinding, pintu, jendela, kolom, balok, tangga, atap</li><li>Denah 2D dengan tampilan 3D langsung</li><li>Potongan, tampak, jadwal volume, dan lembar gambar</li><li>Ekspor IFC, DXF, dan JSON</li></ul>
+<p>Alat pemodelan BIM ringan: denah 2D dan tampilan 3D bertingkat, lengkap dengan elemen struktur, RAB, dan lembar gambar.</p>
+<ul><li><span class="new">BARU</span>Impor IFC dari Revit, ArchiCAD, dan software BIM lain</li><li><span class="new">BARU</span>RAB otomatis dari model, harga satuan acuan daerah (IKK) atau input sendiri</li><li><span class="new">BARU</span>Volume bekisting kolom, balok, dan pelat lantai beserta rinciannya</li><li>Dinding, pintu, jendela, kolom, balok, tangga, atap, ruang, dan furnitur</li><li>Potongan A/B, tampak, dan set lembar gambar siap cetak</li><li>Ekspor IFC, DXF, CSV, dan simpan/buka file proyek</li></ul>
 <div class="gmail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>Wajib login dengan akun Gmail untuk membuka aplikasi.</div>
 </div>
-<a class="go fill" href="/GilBIM/">LOGIN DENGAN GMAIL <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="M10 17l5-5-5-5M15 12H3"></path></svg></a>
+<a class="go fill" href="https://litebim.octonaut.id/">LOGIN DENGAN GMAIL <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="M10 17l5-5-5-5M15 12H3"></path></svg></a>
 </article>
 <article class="card">
 <div class="body">
@@ -293,7 +295,7 @@ footer .fine{border-top:1px solid var(--dark-rule);padding-top:20px;display:flex
 <section class="cta" id="kontak">
 <div><h2>Mulai proyek rumah berikutnya dengan Octopus</h2></div>
 <div class="ctas">
-<a class="btn white" href="/GilBIM/">Coba LiteBIM</a>
+<a class="btn white" href="https://litebim.octonaut.id/">Coba LiteBIM</a>
 <a class="btn line-w" href="/Octopus-Studio/">Coba Octopus Studio</a>
 </div>
 </section>
@@ -302,7 +304,7 @@ footer .fine{border-top:1px solid var(--dark-rule);padding-top:20px;display:flex
 <div class="row">
 <div><b>OCTOPUS</b><span>Alat bantu arsitek untuk rumah tinggal sederhana.</span></div>
 <nav aria-label="Tautan footer">
-<a href="/GilBIM/">LiteBIM</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
 <a href="/Octopus-Studio/">Octopus Studio</a>
 <a href="#kontak">Mulai</a>
 </nav>
