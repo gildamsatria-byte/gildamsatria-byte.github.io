@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Urutan kerja membuat model rumah dua lantai di LiteBIM · Octopus</title>
+<meta name="description" content="Dari lantai pertama sampai RAB dan lembar gambar: urutan alat yang dipakai dan pengaturan yang membantu.">
+<link rel="canonical" href="https://octonaut.id/belajar/mulai-litebim/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTOPUS</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Urutan kerja membuat model rumah dua lantai di LiteBIM</h1>
+<p class="lede">Urutan alat yang dipakai dari lantai pertama sampai RAB dan lembar gambar, dengan pengaturan snap dan navigasi yang membantu.</p>
+<div class="meta"><span>Diperbarui 5 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>LiteBIM adalah pemodel gedung sederhana yang berjalan di browser. Panduan ini memberi urutan kerja yang masuk akal untuk rumah dua lantai, memakai nama alat persis seperti yang tertulis di aplikasi. Untuk membukanya, masuk dulu dengan akun Gmail di <a href="https://litebim.octonaut.id/">litebim.octonaut.id</a>.</p>
+
+<h2>Sebelum menggambar</h2>
+<ul>
+<li><strong>Navigasi.</strong> Gulir roda mouse untuk zoom. Untuk menggeser tampilan, tahan tombol tengah mouse, atau tahan <kbd>Spasi</kbd> sambil menggeser.</li>
+<li><strong>Snap.</strong> Buka menu <strong>Snap</strong> dan nyalakan <strong>Snap ke objek</strong> (Ujung, Tengah, Perpotongan) supaya dinding bertemu tepat di sudut. Pilih juga ukuran grid, misalnya 5 cm.</li>
+<li><strong>Ortho.</strong> Nyalakan <strong>Ortho</strong>, atau tahan <kbd>Shift</kbd> (bisa juga <kbd>F8</kbd>), supaya garis tetap tegak lurus.</li>
+<li><strong>Salah langkah?</strong> Pakai <strong>Undo</strong> dan <strong>Redo</strong>. Elemen terpilih dihapus dengan <kbd>Del</kbd>.</li>
+</ul>
+
+<h2>Urutan kerja</h2>
+<ol class="steps">
+<li><b>Gambar dinding lantai satu</b>Di menu <strong>Arsitektur</strong>, pilih <strong>Dinding</strong>. Atur dulu <strong>Tinggi dinding baru</strong> dan <strong>Tebal</strong>, lalu gambar dinding luar dan dinding penyekat.</li>
+<li><b>Pasang pintu dan jendela</b>Pilih <strong>Pintu</strong> atau <strong>Jendela</strong>, lalu tempatkan pada dinding yang sudah ada.</li>
+<li><b>Tambahkan lantai dan struktur</b>Buat pelat dengan <strong>Lantai</strong>. Dari menu <strong>Struktur</strong>, tempatkan <strong>Kolom</strong>, <strong>Balok</strong>, dan pondasi (<strong>Pondasi Setempat</strong> atau <strong>Pondasi Lajur</strong>).</li>
+<li><b>Buat lantai dua</b>Klik <strong>+ Tambah lantai</strong>. Supaya tidak menggambar dari nol, pakai <strong>Salin lantai</strong> untuk menyalin isi lantai aktif, lalu ubah yang perlu. Centang <strong>Tampilkan level di bawah sebagai referensi</strong> agar denah lantai satu terlihat sebagai acuan.</li>
+<li><b>Hubungkan kedua lantai</b>Pasang <strong>Tangga</strong>, buat lubang tangga dengan <strong>Void lantai</strong>, lalu tambahkan <strong>Railing</strong>.</li>
+<li><b>Tutup dengan atap</b>Pilih <strong>Atap</strong> untuk bentuk persegi, atau <strong>Atap (polyline)</strong> untuk denah yang tidak persegi. <strong>Plafon</strong> ada di menu yang sama.</li>
+<li><b>Beri nama ruang dan ukuran</b>Pakai <strong>Ruang (otomatis)</strong> atau <strong>Ruang (manual)</strong>. Dari menu <strong>Anotasi</strong>, tambahkan <strong>Dimensi</strong>, <strong>Teks</strong>, dan <strong>Garis potongan</strong>.</li>
+<li><b>Periksa dalam 3D</b>Buka tampilan <strong>3D</strong>, lalu cek <strong>Depan</strong>, <strong>Belakang</strong>, <strong>Kiri</strong>, <strong>Kanan</strong>, dan <strong>Potongan</strong>. Kesalahan tinggi dinding atau atap paling cepat terlihat di sini.</li>
+<li><b>Ambil hasilnya</b>Buka <strong>Schedule / kuantitas</strong> untuk daftar elemen, <strong>RAB — Rencana Anggaran Biaya</strong> untuk perkiraan biaya, dan <strong>Lembar Kerja (Sheet)</strong> untuk lembar gambar siap cetak.</li>
+<li><b>Simpan pekerjaan</b>Klik <strong>Simpan ke file</strong> dan simpan filenya di komputer Anda. Untuk melanjutkan di lain waktu, pakai <strong>Buka file</strong>.</li>
+</ol>
+
+<h2>Bertukar file dengan aplikasi lain</h2>
+<ul>
+<li><strong>Ekspor IFC</strong> menghasilkan file yang bisa dibuka di aplikasi BIM lain, termasuk <a href="/Analisis/">Analisis Arsitektural</a>.</li>
+<li><strong>Ekspor DXF</strong> menghasilkan gambar yang bisa dibuka di aplikasi CAD.</li>
+<li><strong>Import IFC</strong> memasukkan model dari aplikasi lain. Anda bisa memilih <strong>Ganti model sekarang</strong> atau <strong>Tambahkan ke model</strong>.</li>
+</ul>
+
+<h2>Tiga kebiasaan yang menghemat waktu</h2>
+<ul>
+<li>Simpan ke file setiap selesai satu lantai, dengan nama file berbeda untuk tiap versi.</li>
+<li>Selesaikan dinding satu lantai dulu, baru pasang pintu dan jendelanya.</li>
+<li>Kalau satu ukuran elemen dipakai berulang, pilih elemennya lalu klik <strong>Simpan tipe dari elemen terpilih</strong> supaya bisa dipakai ulang.</li>
+</ul>
+<div class="note">Belum paham bedanya model BIM dengan gambar CAD? Baca dulu <a href="/belajar/apa-itu-bim/">Apa itu BIM</a>.</div>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul><li>Nama menu dan tombol diambil dari tampilan <a href="https://litebim.octonaut.id/">LiteBIM</a> pada tanggal artikel ini diperbarui.</li></ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTOPUS</b><span>Alat bantu arsitek untuk rumah tinggal sederhana.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Octopus Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octopus</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
