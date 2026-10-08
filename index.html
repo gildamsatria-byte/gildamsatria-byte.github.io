@@ -1,6 +1,27 @@
 <!doctype html>
 <html lang="id">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Octopus · Alat bantu arsitek</title>
