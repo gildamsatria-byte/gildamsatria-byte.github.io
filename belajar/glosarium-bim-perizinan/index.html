@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glosarium istilah BIM dan perizinan bangunan · Octopus</title>
+<meta name="description" content="Arti singkat istilah yang sering muncul saat merancang dan mengurus izin rumah: BIM, IFC, KDB, KLB, KDH, GSB, KRK, PBG, SLF, SIMBG, RAB, dan lainnya.">
+<link rel="canonical" href="https://octonaut.id/belajar/glosarium-bim-perizinan/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octopus">
+<meta property="og:url" content="https://octonaut.id/belajar/glosarium-bim-perizinan/">
+<meta property="og:title" content="Glosarium istilah BIM dan perizinan bangunan · Octopus">
+<meta property="og:description" content="Arti singkat istilah yang sering muncul saat merancang dan mengurus izin rumah: BIM, IFC, KDB, KLB, KDH, GSB, KRK, PBG, SLF, SIMBG, RAB, dan lainnya.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octopus di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTOPUS</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">GLOSARIUM</span>
+<h1>Glosarium istilah BIM dan perizinan bangunan</h1>
+<p class="lede">Arti singkat istilah yang sering muncul saat merancang rumah dan mengurus izinnya, dikelompokkan supaya mudah dicari.</p>
+<div class="meta"><span>Diperbarui 8 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Dunia bangunan penuh singkatan. Daftar ini merangkum yang paling sering ditanyakan klien dan muncul di aplikasi Octopus. Setiap istilah dijelaskan dalam satu atau dua kalimat, dengan tautan ke artikel yang membahasnya lebih lanjut.</p>
+
+<h2>Istilah BIM</h2>
+<div class="tw"><table>
+<thead><tr><th>Istilah</th><th>Artinya</th></tr></thead>
+<tbody>
+<tr><td><strong>BIM</strong></td><td><em>Building Information Modelling</em>: bangunan disusun sebagai model 3D yang tiap elemennya membawa informasi. Lihat <a href="/belajar/apa-itu-bim/">Apa itu BIM</a>.</td></tr>
+<tr><td><strong>IFC</strong></td><td><em>Industry Foundation Classes</em>: format terbuka untuk memindahkan model BIM antar-aplikasi, dengan ekstensi <code>.ifc</code>. Lihat <a href="/belajar/format-ifc/">Mengenal format IFC</a>.</td></tr>
+<tr><td><strong>Pset</strong></td><td><em>Property set</em>: kumpulan properti tambahan pada elemen IFC, misalnya bahan atau tingkat ketahanan api.</td></tr>
+<tr><td><strong>CAD</strong></td><td><em>Computer-Aided Design</em>: menggambar dengan garis dan bentuk. Berbeda dengan BIM, tiap tampilan digambar terpisah.</td></tr>
+<tr><td><strong>Digital twin</strong></td><td>Kembaran digital: model bangunan yang terhubung dengan data kondisi nyata seperti sensor dan inspeksi. Lihat <a href="/belajar/digital-twin-gedung/">Digital twin untuk gedung</a>.</td></tr>
+<tr><td><strong>AIM</strong></td><td><em>Asset Information Model</em>: kumpulan data aset bangunan yang dipakai saat gedung dioperasikan, misalnya pemasok, tanggal pasang, dan riwayat servis.</td></tr>
+<tr><td><strong>IoT</strong></td><td><em>Internet of Things</em>: perangkat seperti sensor yang mengirim data lewat jaringan.</td></tr>
+<tr><td><strong>RAB</strong></td><td>Rencana Anggaran Biaya: perkiraan biaya pembangunan, dihitung dari volume pekerjaan dikalikan harga satuan.</td></tr>
+</tbody></table></div>
+
+<h2>Aturan tata bangunan</h2>
+<div class="tw"><table>
+<thead><tr><th>Istilah</th><th>Artinya</th></tr></thead>
+<tbody>
+<tr><td><strong>KDB</strong></td><td>Koefisien Dasar Bangunan: perbandingan luas lantai dasar terhadap luas lahan.</td></tr>
+<tr><td><strong>KLB</strong></td><td>Koefisien Lantai Bangunan: perbandingan luas seluruh lantai terhadap luas lahan.</td></tr>
+<tr><td><strong>KDH</strong></td><td>Koefisien Daerah Hijau: perbandingan luas ruang terbuka hijau terhadap luas lahan.</td></tr>
+<tr><td><strong>GSB</strong></td><td>Garis Sempadan Bangunan: garis batas yang tidak boleh dilewati bangunan.</td></tr>
+<tr><td><strong>KRK</strong></td><td>Keterangan Rencana Kota: dokumen dari pemerintah daerah yang memuat ketentuan tata bangunan untuk sebuah lahan.</td></tr>
+</tbody></table></div>
+<p>Cara menghitung keempat koefisien dan sempadan ada di <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a>.</p>
+
+<h2>Perizinan</h2>
+<div class="tw"><table>
+<thead><tr><th>Istilah</th><th>Artinya</th></tr></thead>
+<tbody>
+<tr><td><strong>PBG</strong></td><td>Persetujuan Bangunan Gedung: perizinan untuk membangun baru, mengubah, memperluas, mengurangi, atau merawat bangunan gedung sesuai standar teknis.</td></tr>
+<tr><td><strong>IMB</strong></td><td>Izin Mendirikan Bangunan, istilah lama yang kini digantikan oleh PBG. Anda masih akan mendengarnya dari orang yang terbiasa dengan istilah itu.</td></tr>
+<tr><td><strong>SLF</strong></td><td>Sertifikat Laik Fungsi: sertifikat dari pemerintah daerah yang menyatakan bangunan layak dipakai, dan diperlukan sebelum bangunan dimanfaatkan.</td></tr>
+<tr><td><strong>SIMBG</strong></td><td>Sistem Informasi Manajemen Bangunan Gedung: sistem daring pemerintah untuk mengajukan dan mengelola PBG dan SLF.</td></tr>
+</tbody></table></div>
+<p>Urutan umumnya: cek KRK lahan, rancang bangunan sesuai ketentuannya, ajukan PBG lewat SIMBG, bangun, lalu urus SLF sebelum bangunan dipakai.</p>
+<div class="note warn">Nama dan prosedur perizinan bisa berubah dan berbeda antar-daerah. Sebelum mengajukan, cek ketentuan terbaru di dinas pemerintah daerah Anda.</div>
+
+<h2>Memakai istilah ini di aplikasi</h2>
+<ul>
+<li><a href="https://litebim.octonaut.id/">LiteBIM</a> untuk membuat model, menghitung <strong>RAB</strong>, dan mengekspor <strong>IFC</strong>.</li>
+<li><a href="/Gtwin/">GTwin</a> untuk membuka model IFC sebagai <strong>digital twin</strong>.</li>
+<li><a href="/Analisis/">Analisis Arsitektural</a> untuk membaca file IFC dan melihat analisis dari modelnya.</li>
+</ul>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul><li><a href="https://peraturan.bpk.go.id/Details/161846/pp-no-16-tahun-2021">Peraturan Pemerintah Nomor 16 Tahun 2021 tentang Peraturan Pelaksanaan Undang-Undang Nomor 28 Tahun 2002 tentang Bangunan Gedung</a>, Pasal 1 (JDIH BPK): definisi GSB, KRK, KDB, KDH, KLB, PBG, dan SIMBG.</li><li><a href="https://dpb.unpad.ac.id/wp-content/uploads/2026/06/Sosialisasi-PP-28-Tahun-2025-Penyelenggaraan-Bangunan-Gedung-PBG-SLF-sesuai-PP-16-2021-PP-28-2025.pdf">Sosialisasi PP 28 Tahun 2025 tentang penyelenggaraan bangunan gedung (PBG dan SLF)</a>, Universitas Padjadjaran: definisi PBG dan SLF.</li><li><a href="https://finance.detik.com/properti/d-5478218/5-hal-yang-wajib-diketahui-buat-urus-pbg-pengganti-imb">5 Hal yang Wajib Diketahui buat Urus PBG Pengganti IMB</a>, detikFinance: PBG sebagai pengganti IMB.</li><li><a href="https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/">Industry Foundation Classes (IFC)</a>, buildingSMART International.</li></ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTOPUS</b><span>Alat bantu arsitek untuk rumah tinggal sederhana.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Octopus Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octopus</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

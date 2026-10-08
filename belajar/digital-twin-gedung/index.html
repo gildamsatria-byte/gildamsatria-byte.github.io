@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital twin untuk gedung: apa gunanya setelah bangunan jadi · Octopus</title>
+<meta name="description" content="Digital twin melanjutkan model BIM ke masa pemakaian gedung dengan data sensor, inspeksi, dan aset. Ini penjelasan singkat, contoh pemakaian, dan kapan layak dipakai.">
+<link rel="canonical" href="https://octonaut.id/belajar/digital-twin-gedung/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octopus">
+<meta property="og:url" content="https://octonaut.id/belajar/digital-twin-gedung/">
+<meta property="og:title" content="Digital twin untuk gedung: apa gunanya setelah bangunan jadi · Octopus">
+<meta property="og:description" content="Digital twin melanjutkan model BIM ke masa pemakaian gedung dengan data sensor, inspeksi, dan aset. Ini penjelasan singkat, contoh pemakaian, dan kapan layak dipakai.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octopus di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTOPUS</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">KONSEP</span>
+<h1>Digital twin untuk gedung: apa gunanya setelah bangunan jadi</h1>
+<p class="lede">Model BIM biasanya selesai saat bangunan selesai dibangun. Digital twin melanjutkannya ke masa pemakaian, dengan data sensor, inspeksi, dan aset yang terus bertambah.</p>
+<div class="meta"><span>Diperbarui 8 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Setelah serah terima, gambar dan model proyek sering tersimpan di lemari arsip, padahal gedung masih dipakai puluhan tahun. Yang berubah selama itu adalah kondisinya: mesin diganti, ruangan dialihfungsikan, dan ada kerusakan yang perlu dicatat. <strong>Digital twin</strong> adalah cara menjaga model tetap hidup dan sesuai dengan bangunan sebenarnya.</p>
+
+<h2>Apa itu digital twin</h2>
+<p>Digital twin (kembaran digital) adalah representasi virtual dari sebuah aset fisik, yang dipakai untuk memahami kondisinya, mensimulasikan skenario, dan membantu mengambil keputusan. Ciri yang membedakannya dari model biasa adalah keterhubungan dengan data dari bangunan yang sesungguhnya, yang bisa berupa pembacaan sensor atau catatan pemeliharaan.</p>
+
+<h2>Bedanya dengan model BIM</h2>
+<div class="tw"><table>
+<thead><tr><th>Hal</th><th>Model BIM</th><th>Digital twin</th></tr></thead>
+<tbody>
+<tr><td>Dipakai di tahap</td><td>Perencanaan, desain, dan konstruksi</td><td>Operasi dan pemeliharaan</td></tr>
+<tr><td>Isi utama</td><td>Elemen bangunan dan propertinya</td><td>Model yang sama, ditambah data kondisi nyata</td></tr>
+<tr><td>Sifat data</td><td>Relatif tetap setelah serah terima</td><td>Terus bertambah selama gedung dipakai</td></tr>
+<tr><td>Pertanyaan yang dijawab</td><td>"Apa yang akan dibangun?"</td><td>"Bagaimana kondisinya sekarang?"</td></tr>
+</tbody></table></div>
+<p>Jadi digital twin biasanya tidak dibuat dari nol. Model BIM, terutama yang dapat diekspor ke <a href="/belajar/format-ifc/">format IFC</a>, menjadi dasarnya, lalu data operasional ditambahkan di atasnya.</p>
+
+<h2>Data apa saja yang ditempel pada model</h2>
+<ul>
+<li><strong>Properti elemen.</strong> Bahan, ukuran, dan keterangan lain dari model BIM, misalnya yang tersimpan sebagai Pset.</li>
+<li><strong>Sensor IoT.</strong> Titik pemasangan sensor ditandai di model, lalu pembacaannya, misalnya suhu atau kelembapan, bisa dipantau per ruang.</li>
+<li><strong>Catatan inspeksi.</strong> Temuan seperti retak, rembes, atau komponen aus dicatat pada elemen yang bersangkutan, lengkap dengan tanggalnya.</li>
+<li><strong>Data aset.</strong> Siapa pemasoknya, kapan dipasang, dan kapan terakhir diservis. Kumpulan data ini sering disebut <em>Asset Information Model</em> (AIM).</li>
+</ul>
+
+<h2>Contoh pemakaian</h2>
+<ul>
+<li><strong>Pemeliharaan.</strong> Petugas melihat riwayat servis sebuah pompa langsung dari modelnya, tanpa mencari berkas satu per satu.</li>
+<li><strong>Pemantauan kondisi.</strong> Pembacaan sensor yang menyimpang dari biasanya bisa ditandai lebih awal, sebelum menjadi kerusakan.</li>
+<li><strong>Perencanaan renovasi.</strong> Tim bisa melihat elemen mana yang akan terpengaruh dan menguji skenario di model lebih dulu.</li>
+<li><strong>Serah terima ke pengelola.</strong> Pengelola menerima model dan data aset yang sama dengan yang dipakai saat membangun.</li>
+</ul>
+
+<h2>Kapan layak dipakai</h2>
+<p>Digital twin paling terasa manfaatnya pada gedung dengan banyak sistem dan banyak orang yang merawatnya, misalnya perkantoran, rumah sakit, kampus, atau pabrik. Untuk rumah tinggal sederhana, biasanya yang diperlukan cukup model BIM yang rapi dan arsip gambar yang mudah ditemukan.</p>
+<div class="note warn">Digital twin hanya sebaik data yang masuk. Kalau catatan inspeksi tidak diperbarui atau sensor tidak dirawat, model akan menyimpang dari kondisi gedung dan justru menyesatkan.</div>
+
+<h2>Mencobanya di GTwin</h2>
+<p><a href="/Gtwin/">GTwin</a> adalah aplikasi Octopus untuk kembaran digital gedung dari model IFC. Anda bisa melihat data BIM, menempatkan sensor IoT, mencatat inspeksi, dan mengelola anggota tim serta data aset. GTwin terbuka untuk umum dan tidak memerlukan login.</p>
+<p>Siapkan model IFC lebih dulu. Panduannya ada di <a href="/belajar/mulai-litebim/">urutan kerja membuat model rumah dua lantai di LiteBIM</a>, lalu ekspor ke IFC sesuai <a href="/belajar/format-ifc/">artikel tentang format IFC</a>.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul><li><a href="https://ghd.com/insights/the-journey-from-building-information-modelling-to-digital-twins">Building Information Modelling to Digital Twins</a>, GHD: definisi digital twin, hubungannya dengan BIM, dan manfaat pada fase operasi.</li><li>Fitur GTwin mengacu pada keterangan produk di <a href="/#produk">halaman depan Octopus</a>.</li></ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/format-ifc/">Mengenal format IFC dan cara memindahkan model antar-aplikasi</a><a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTOPUS</b><span>Alat bantu arsitek untuk rumah tinggal sederhana.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Octopus Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octopus</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

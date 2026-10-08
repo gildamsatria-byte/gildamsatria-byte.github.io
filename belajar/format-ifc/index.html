@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mengenal format IFC dan cara memindahkan model antar-aplikasi · Octopus</title>
+<meta name="description" content="IFC adalah format terbuka untuk model BIM. Kenali versinya, apa yang ikut terbawa saat model dipindah, dan cara memeriksa hasil ekspor sebelum dikirim.">
+<link rel="canonical" href="https://octonaut.id/belajar/format-ifc/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octopus">
+<meta property="og:url" content="https://octonaut.id/belajar/format-ifc/">
+<meta property="og:title" content="Mengenal format IFC dan cara memindahkan model antar-aplikasi · Octopus">
+<meta property="og:description" content="IFC adalah format terbuka untuk model BIM. Kenali versinya, apa yang ikut terbawa saat model dipindah, dan cara memeriksa hasil ekspor sebelum dikirim.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octopus di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTOPUS</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">KONSEP</span>
+<h1>Mengenal format IFC dan cara memindahkan model antar-aplikasi</h1>
+<p class="lede">IFC adalah format terbuka agar model BIM bisa dibuka di aplikasi lain. Artikel ini menjelaskan versinya, apa yang ikut terbawa, dan cara memeriksa hasil ekspor sebelum dikirim.</p>
+<div class="meta"><span>Diperbarui 8 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Arsitek, insinyur struktur, dan kontraktor sering memakai aplikasi yang berbeda. Kalau tiap aplikasi hanya bisa membuka file miliknya sendiri, model harus digambar ulang setiap kali berpindah tangan. <strong>IFC</strong> (<em>Industry Foundation Classes</em>) dibuat untuk mengatasi itu: satu format yang bisa ditulis dan dibaca oleh banyak aplikasi BIM.</p>
+
+<h2>Apa isi sebuah file IFC</h2>
+<p>File IFC tidak hanya menyimpan bentuk 3D. Ia menyimpan elemen bangunan beserta jenisnya, misalnya dinding, pelat, kolom, pintu, atau atap, lalu letaknya di lantai yang mana, dan sifat-sifat yang melekat pada elemen itu. Kumpulan sifat tambahan ini disebut <strong>Pset</strong> (<em>property set</em>), misalnya bahan, ketebalan, atau tingkat ketahanan api.</p>
+<p>IFC adalah standar terbuka yang dikelola buildingSMART dan dipublikasikan dengan lisensi Creative Commons, jadi tidak terikat pada satu pembuat aplikasi.</p>
+
+<h2>Versi IFC yang perlu Anda kenal</h2>
+<p>Ada beberapa versi IFC. Yang paling sering Anda temui adalah tiga ini:</p>
+<div class="tw"><table>
+<thead><tr><th>Versi</th><th>Status standar ISO</th><th>Catatan</th></tr></thead>
+<tbody>
+<tr><td><strong>IFC 2x3</strong></td><td>ISO/PAS 16739:2005</td><td>Versi lama yang masih banyak didukung aplikasi.</td></tr>
+<tr><td><strong>IFC 4</strong> (4.0.2.1)</td><td>ISO 16739-1:2018</td><td>Cakupan lebih luas dibanding 2x3.</td></tr>
+<tr><td><strong>IFC 4.3</strong> (4.3.2.0)</td><td>ISO 16739-1:2024</td><td>Versi resmi terbaru; menambah dukungan untuk infrastruktur.</td></tr>
+</tbody></table></div>
+<p>Aplikasi tidak selalu mendukung semua versi. Saat mengekspor, pilih versi yang bisa dibaca oleh penerima file.</p>
+
+<h2>Bentuk file</h2>
+<p>Format yang direkomendasikan untuk pertukaran adalah file berekstensi <code>.ifc</code>. IFC juga bisa disimpan sebagai <code>.ifcXML</code> atau dikemas dalam <code>.ifcZIP</code> agar ukurannya lebih kecil. Untuk sehari-hari, <code>.ifc</code> sudah cukup.</p>
+
+<h2>Apa yang terbawa, dan apa yang tidak</h2>
+<p>IFC memindahkan <em>hasil</em> model, bukan cara Anda membuatnya. Perbedaan ini yang sering membuat orang kaget setelah membuka file di aplikasi lain.</p>
+<ul>
+<li><strong>Umumnya terbawa:</strong> jenis elemen, bentuk 3D, struktur lantai, nama, dan properti yang disimpan sebagai Pset.</li>
+<li><strong>Bisa berubah atau hilang:</strong> pengaturan tampilan, gaya garis dan arsiran, lembar gambar, serta fitur khusus milik satu aplikasi. Elemen yang tidak punya padanan di IFC bisa dibaca sebagai bentuk umum.</li>
+</ul>
+<p>Karena itu, anggap IFC sebagai format untuk <strong>bertukar dan memeriksa</strong>, dan simpan file asli dari aplikasi Anda sebagai berkas kerja utama.</p>
+
+<h2>Cara memeriksa ekspor sebelum dikirim</h2>
+<ol class="steps">
+<li><b>Rapikan modelnya dulu</b>Beri nama yang jelas untuk tiap lantai dan ruang. Hapus elemen sisa yang tidak terpakai.</li>
+<li><b>Ekspor ke IFC</b>Pilih versi sesuai kebutuhan penerima. Kalau tidak tahu, tanyakan dulu aplikasi apa yang mereka pakai.</li>
+<li><b>Buka kembali di aplikasi lain</b>Jangan hanya percaya bahwa file berhasil dibuat. Buka di aplikasi penampil IFC dan lihat apakah semua lantai ada.</li>
+<li><b>Cek jumlah dan posisi</b>Bandingkan jumlah lantai dan jumlah elemen utama, lalu pastikan dinding, pintu, dan jendela tetap berada di tempatnya.</li>
+<li><b>Cek properti</b>Pilih beberapa elemen dan pastikan bahan serta ukuran yang Anda isi tetap terbaca.</li>
+<li><b>Kirim bersama berkas asli</b>Sertakan file asli dari aplikasi Anda kalau penerima perlu mengedit, dan beri nama file dengan tanggal atau nomor versi.</li>
+</ol>
+
+<h2>Memakai IFC di aplikasi Octopus</h2>
+<ul>
+<li><a href="https://litebim.octonaut.id/">LiteBIM</a> bisa <strong>mengekspor IFC</strong> dan juga <strong>mengimpor IFC</strong> dari aplikasi lain, dengan pilihan mengganti model yang sedang dibuka atau menambahkannya ke model.</li>
+<li><a href="/Analisis/">Analisis Arsitektural</a> membaca file IFC untuk melihat perkiraan energi dan analisis lainnya.</li>
+<li><a href="/Gtwin/">GTwin</a> membuka model IFC sebagai kembaran digital: struktur lantai, properti, sensor, dan catatan inspeksi.</li>
+</ul>
+<div class="note">Belum tahu apa itu BIM? Baca dulu <a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a>. Kalau ingin melihat model IFC dipakai setelah bangunan jadi, lanjut ke <a href="/belajar/digital-twin-gedung/">Digital twin untuk gedung</a>.</div>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul><li><a href="https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/">Industry Foundation Classes (IFC)</a>, buildingSMART International: definisi, lisensi, dan format file.</li><li><a href="https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/">IFC Specifications Database</a>, buildingSMART Technical: daftar versi dan nomor standar ISO.</li><li>Kemampuan ekspor dan impor mengacu pada tampilan <a href="https://litebim.octonaut.id/">LiteBIM</a> dan keterangan produk di <a href="/#produk">halaman depan Octopus</a>.</li></ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a><a href="/belajar/digital-twin-gedung/">Digital twin untuk gedung: apa gunanya setelah bangunan jadi</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTOPUS</b><span>Alat bantu arsitek untuk rumah tinggal sederhana.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Octopus Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octopus</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
