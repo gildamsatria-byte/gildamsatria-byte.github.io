@@ -1,4 +1,4 @@
-/* Halaman Belajar Octopus — memakai token warna dan huruf yang sama dengan halaman depan */
+/* Halaman Belajar Octonaut — memakai token warna dan huruf yang sama dengan halaman depan */
 :root{--bg:#F1F2F3;--paper:#FBFBFA;--ink:#141922;--muted:#4A5261;--rule:#C4C9D1;--rule2:#DEE2E7;--accent:#1F5FD1;--accent-d:#174AA6;--dark:#0F141C;--dark-rule:#27303D;--dark-text:#E6EAF0;--dark-muted:#B3BCC9;--sky:#8AB8FF;--pencil:#F2B84B;--cream:#F7E6C2;--soft:#E8EEF9;
 --display:"Barlow Condensed","Arial Narrow",sans-serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;--pad:clamp(20px,5.5vw,80px)}
 *{box-sizing:border-box}
