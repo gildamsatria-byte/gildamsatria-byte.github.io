@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Merencanakan tata letak lokasi proyek dan stok material gudang · Octonaut</title>
+<meta name="description" content="Cara menempatkan tower crane, hoist, concrete pump, dan jalur truk di denah, membaca clash dan skor tower crane, lalu mencatat stok material gudang per WBS.">
+<link rel="canonical" href="https://octonaut.id/belajar/tata-letak-proyek-dan-gudang/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/tata-letak-proyek-dan-gudang/">
+<meta property="og:title" content="Merencanakan tata letak lokasi proyek dan stok material gudang · Octonaut">
+<meta property="og:description" content="Cara menempatkan tower crane, hoist, concrete pump, dan jalur truk di denah, membaca clash dan skor tower crane, lalu mencatat stok material gudang per WBS.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Merencanakan tata letak lokasi proyek dan stok material gudang</h1>
+<p class="lede">Cara menempatkan tower crane, hoist, concrete pump, dan jalur truk di denah sebelum alat datang, lalu mencatat stok material per pekerjaan supaya tidak kehabisan atau menumpuk.</p>
+<div class="meta"><span>Diperbarui 14 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Dua hal sering baru terpikir setelah proyek berjalan: di mana alat berat dan fasilitas diletakkan, dan berapa material yang harus ada di gudang. Keduanya murah diperbaiki di atas kertas dan mahal diperbaiki di lapangan. Artikel ini membahas dua aplikasi Octonaut untuk itu: <a href="https://konstruksi.octonaut.id/">Konstruksi</a> untuk tata letak lokasi, dan <a href="https://gudang.octonaut.id/">Gudang</a> untuk stok material. Keduanya perlu login dengan akun Gmail.</p>
+
+<h2>Bagian 1: tata letak lokasi dengan Konstruksi</h2>
+<p>Tata letak lokasi (site layout) menjawab pertanyaan seperti: tower crane ditaruh di mana supaya menjangkau semua bagian bangunan, di mana truk mixer masuk, dan apakah ada alat yang saling bertabrakan atau menabrak bangunan tetangga.</p>
+
+<ol class="steps">
+<li><b>Masukkan data lokasi</b>Klik <strong>Impor data proyek</strong> dan pilih file DXF, IFC, atau gambar JPG. Boleh juga menggambar langsung: pakai alat <strong>Batas lahan</strong>, <strong>Bang. eksisting</strong> untuk bangunan tetangga, dan <strong>Bang. rencana</strong> untuk bangunan yang akan dibangun.</li>
+<li><b>Kalibrasi skala gambar latar</b>Kalau Anda memakai gambar JPG atau PNG, skala awalnya hanya perkiraan. Klik <strong>Kalibrasi skala</strong>, klik dua titik yang jaraknya Anda tahu, misalnya lebar jalan atau sisi kavling, lalu masukkan jarak sebenarnya. Tanpa langkah ini, semua jarak dan jangkauan crane akan meleset.</li>
+<li><b>Tandai yang membatasi</b>Gambar <strong>Lubang/void</strong> untuk bukaan lantai, <strong>Jalur truk</strong> untuk rute truk mixer, dan <strong>Titik beban</strong> untuk beban terberat yang harus diangkat. Titik beban inilah yang dipakai aplikasi untuk menguji kapasitas crane.</li>
+<li><b>Tempatkan alat dari katalog</b>Di panel <strong>Katalog alat &amp; fasilitas</strong> ada tower crane, passenger hoist, concrete pump, fasilitas proyek, dan kendaraan. Klik item, lalu klik di denah. Tahan <kbd>Shift</kbd> untuk menempatkan beberapa kali.</li>
+<li><b>Periksa dari dua sudut</b>Ganti antara <strong>Denah 2D</strong>, <strong>3D</strong>, dan <strong>Split</strong>. Nyalakan lapisan <strong>Radius &amp; zona kapasitas crane</strong> untuk melihat sejauh mana crane menjangkau.</li>
+<li><b>Baca tab Clash, Optimasi TC, dan K3</b>Di panel kanan, tiga tab ini memberi peringatan dan saran. Bagian berikut menjelaskannya.</li>
+<li><b>Ekspor</b>Klik <strong>Ekspor PDF</strong> untuk membawa hasilnya ke rapat atau dokumen metode kerja.</li>
+</ol>
+
+<h2>Membaca peringatan dan saran</h2>
+<ul>
+<li><strong>Clash.</strong> Aplikasi mendeteksi alat yang bertabrakan dengan alat lain, bangunan sekitar, atau jalur truk. Jumlahnya tampil di tab Clash.</li>
+<li><strong>Beban dan kapasitas crane.</strong> Setiap titik beban dicek terhadap kapasitas crane pada radius yang bersangkutan, sudah termasuk persentase rigging (hook block, sling, dan faktor dinamis). Beban yang melewati kapasitas ditandai kritis, dan yang memakai lebih dari 90% kapasitas ditandai peringatan.</li>
+<li><strong>Passenger hoist.</strong> Aplikasi memperingatkan kalau hoist terlalu jauh dari fasad (idealnya sekitar 2–3 m agar landing dan angkur pendek) dan kalau tinggi mast belum melayani lantai teratas.</li>
+<li><strong>Concrete pump.</strong> Aplikasi menunjukkan berapa persen denah yang terjangkau boom, sehingga Anda tahu bagian mana yang butuh posisi pompa lain.</li>
+<li><strong>Optimasi TC.</strong> Tab ini mengusulkan posisi tower crane berdasarkan kapasitas, jangkauan, dan beban. Aplikasi memilih jib terpendek yang masih menjangkau seluruh bangunan rencana dan titik beban, lalu memberi skor hingga 100. Bobot terbesarnya adalah porsi denah yang bisa diangkat dengan beban minimum (55 poin) dan porsi titik beban yang aman (25 poin). Sisanya menilai seberapa jauh jib melewati batas lahan, seberapa banyak area di atas bangunan tetangga, dan efisiensi ukuran crane. Lapisan <strong>Peta skor optimasi TC</strong> menampilkannya sebagai peta warna di denah.</li>
+<li><strong>K3.</strong> Lapisan <strong>Railing &amp; penutup lubang (K3)</strong> menampilkan railing dan penutup lubang pada denah, dan tab K3 memuat catatan keselamatan terkait penempatan alat.</li>
+</ul>
+<div class="note warn">Data katalog alat bersifat indikatif. Sebelum memesan atau memasang alat, cocokkan dengan load chart dan brosur pabrikan, dan minta persetujuan ahli yang berwenang. Skor optimasi adalah alat bantu membandingkan posisi, bukan perhitungan keselamatan.</div>
+
+<h2>Bagian 2: stok material dengan Gudang</h2>
+<p>Setelah tata letak jelas, material perlu dicatat supaya pemakaian sesuai rencana. Aplikasi Gudang punya empat bagian: <strong>Dashboard</strong>, <strong>Stok</strong>, <strong>Transaksi</strong>, dan <strong>Proyek &amp; WBS</strong>.</p>
+<ul>
+<li><strong>Stok.</strong> Stok dicatat per kode barang dan rak, dengan stok minimum. Barang yang jumlahnya di bawah batas ditandai perlu dipesan.</li>
+<li><strong>Transaksi.</strong> Catat barang masuk, barang keluar ke proyek, dan opname (penghitungan fisik). Riwayatnya tersimpan lengkap, jadi selisih bisa ditelusuri.</li>
+<li><strong>Proyek &amp; WBS.</strong> Isi rencana material, anggaran, dan pemakaian aktual untuk tiap item WBS (rincian pekerjaan). Dari sini terlihat pekerjaan mana yang memakai material lebih banyak daripada rencana.</li>
+<li><strong>Hubungan ke model.</strong> WBS bisa dihubungkan ke elemen model IFC, dan daftar per WBS bisa disalin sebagai CSV untuk dipakai di Excel. Kalau Anda menyusun rencana biaya dari model, lihat juga <a href="/belajar/cara-menghitung-rab-rumah/">cara menghitung RAB rumah dari model BIM</a>.</li>
+</ul>
+
+<h2>Kebiasaan yang membantu</h2>
+<ul>
+<li>Rencanakan tata letak untuk <strong>beberapa tahap</strong>, misalnya saat struktur dan saat finishing. Posisi alat dan jalur truk yang ideal di satu tahap belum tentu cocok di tahap lain.</li>
+<li>Selalu kalibrasi skala sebelum percaya pada jarak dan radius.</li>
+<li>Cek peringatan sebelum rapat metode kerja, lalu simpan PDF-nya sebagai bahan diskusi.</li>
+<li>Lakukan opname rutin di Gudang. Stok di aplikasi hanya sebaik data transaksi yang masuk.</li>
+</ul>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li>Nama menu, alat, dan aturan peringatan mengacu pada tampilan <a href="https://konstruksi.octonaut.id/">Konstruksi</a> dan <a href="https://gudang.octonaut.id/">Gudang</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a><a href="/belajar/format-ifc/">Mengenal format IFC dan cara memindahkan model antar-aplikasi</a><a href="/belajar/cara-menghitung-rab-rumah/">Cara menghitung RAB rumah dari model BIM</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
