@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cara menghitung RAB rumah dari model BIM · Octonaut</title>
+<meta name="description" content="Rumus dasar RAB rumah tinggal, contoh hitungan dinding bata dan plester, dan cara mengambil volume otomatis dari model BIM supaya tidak mengukur ulang.">
+<link rel="canonical" href="https://octonaut.id/belajar/cara-menghitung-rab-rumah/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/cara-menghitung-rab-rumah/">
+<meta property="og:title" content="Cara menghitung RAB rumah dari model BIM · Octonaut">
+<meta property="og:description" content="Rumus dasar RAB rumah tinggal, contoh hitungan dinding bata dan plester, dan cara mengambil volume otomatis dari model BIM supaya tidak mengukur ulang.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Cara menghitung RAB rumah dari model BIM</h1>
+<p class="lede">Rumus dasar RAB rumah tinggal, contoh hitungan yang bisa Anda tiru, dan cara mengambil volume langsung dari model supaya tidak mengukur ulang setiap desain berubah.</p>
+<div class="meta"><span>Diperbarui 14 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>RAB (Rencana Anggaran Biaya) adalah perkiraan biaya membangun, dihitung dari seberapa banyak pekerjaan yang ada dan berapa harga tiap satuannya. Rumusnya sederhana. Yang memakan waktu adalah mengukur volume dari gambar, apalagi kalau desain sering berubah. Artikel ini menjelaskan rumusnya, memberi contoh hitungan, lalu menunjukkan bagaimana model BIM memangkas bagian yang paling melelahkan.</p>
+
+<h2>Rumus dasarnya</h2>
+<p>Setiap baris dalam RAB mengikuti pola yang sama:</p>
+<p><strong>Biaya pekerjaan = volume × harga satuan</strong></p>
+<p>RAB lengkap adalah jumlah semua baris itu, ditambah biaya lain seperti overhead, keuntungan, dan pajak sesuai kesepakatan proyek. Jadi ada dua hal yang harus Anda siapkan: <strong>volume</strong> tiap pekerjaan dan <strong>harga satuan</strong> tiap pekerjaan.</p>
+
+<h2>Langkah menyusun RAB secara manual</h2>
+<ol class="steps">
+<li><b>Daftar pekerjaan</b>Pecah bangunan menjadi kelompok pekerjaan: persiapan, tanah dan pondasi, struktur beton, dinding, atap, plafon, lantai, pintu dan jendela, instalasi, finishing.</li>
+<li><b>Ukur volume</b>Ambil panjang, luas, atau isi dari gambar. Dinding dan plester dalam m², beton dalam m³, besi dalam kg, pekerjaan titik seperti pintu dalam unit.</li>
+<li><b>Tentukan harga satuan</b>Pakai harga satuan acuan daerah, daftar harga di lapangan, atau analisis harga satuan dari kontraktor langganan Anda. Harga berbeda antar daerah dan antar waktu.</li>
+<li><b>Kalikan dan jumlahkan</b>Volume dikali harga satuan di setiap baris, lalu seluruh baris dijumlahkan.</li>
+<li><b>Tambahkan biaya lain</b>Masukkan overhead, keuntungan, dan pajak sesuai kebiasaan atau kontrak.</li>
+</ol>
+
+<h2>Contoh: dinding bata dan plester</h2>
+<p>Contoh ini hanya memakai dua pekerjaan supaya jalannya mudah diikuti. Semua angka adalah perumpamaan, termasuk harga satuannya, dan bukan harga acuan daerah mana pun.</p>
+<p>Misalkan satu lantai punya dinding dengan keliling 36 m dan tinggi 3 m, 2 pintu berukuran 0,9 × 2,1 m, dan 3 jendela berukuran 1,5 × 1,2 m.</p>
+<div class="tw"><table>
+<thead><tr><th>Langkah</th><th>Hitungan</th><th class="n">Hasil</th></tr></thead>
+<tbody>
+<tr><td>Luas dinding kotor</td><td>36 × 3</td><td class="n">108 m²</td></tr>
+<tr><td>Luas pintu</td><td>2 × (0,9 × 2,1)</td><td class="n">3,78 m²</td></tr>
+<tr><td>Luas jendela</td><td>3 × (1,5 × 1,2)</td><td class="n">5,40 m²</td></tr>
+<tr><td>Luas dinding bersih</td><td>108 − 3,78 − 5,40</td><td class="n">98,82 m²</td></tr>
+<tr><td>Luas plester (dua sisi)</td><td>98,82 × 2</td><td class="n">197,64 m²</td></tr>
+</tbody></table></div>
+<p>Sekarang kalikan dengan harga satuan contoh:</p>
+<div class="tw"><table>
+<thead><tr><th>Pekerjaan</th><th class="n">Volume</th><th class="n">Harga satuan contoh</th><th class="n">Biaya</th></tr></thead>
+<tbody>
+<tr><td>Pasang dinding bata</td><td class="n">98,82 m²</td><td class="n">Rp150.000</td><td class="n">Rp14.823.000</td></tr>
+<tr><td>Plester dan acian</td><td class="n">197,64 m²</td><td class="n">Rp60.000</td><td class="n">Rp11.858.400</td></tr>
+<tr><td><strong>Jumlah</strong></td><td></td><td></td><td class="n"><strong>Rp26.681.400</strong></td></tr>
+</tbody></table></div>
+<p>Itu baru dua baris. RAB rumah sungguhan punya puluhan baris, dan setiap kali dinding digeser atau jendela ditambah, semua volume di atas harus dihitung ulang. Di sinilah model BIM membantu.</p>
+
+<h2>Apa yang berubah kalau memakai model BIM</h2>
+<p>Pada model BIM, dinding, kolom, balok, pelat, pintu, dan jendela adalah elemen yang punya ukuran. Volume tidak perlu diukur dari gambar, karena bisa dibaca dari elemen itu sendiri. Kalau Anda menggeser dinding atau menambah jendela, volumenya ikut berubah. Penjelasan umum tentang konsepnya ada di <a href="/belajar/apa-itu-bim/">Apa itu BIM</a>.</p>
+<p>Di LiteBIM, volume pekerjaan terisi dari model dan Anda tinggal mengatur harga satuan:</p>
+<ol class="steps">
+<li><b>Gambar atau impor model</b>Gambar dinding, kolom, balok, dan atap di <a href="https://litebim.octonaut.id/">LiteBIM</a>, atau impor file IFC dari aplikasi lain. Urutan kerjanya ada di <a href="/belajar/mulai-litebim/">panduan membuat model rumah dua lantai</a>.</li>
+<li><b>Buka RAB</b>Pilih <strong>RAB — Rencana Anggaran Biaya</strong>. Volume pekerjaan terisi dari model.</li>
+<li><b>Atur harga satuan</b>Pakai harga satuan acuan daerah (IKK), atau ganti dengan harga Anda sendiri.</li>
+<li><b>Unduh hasilnya</b>Ekspor ke CSV. Di <a href="/Octopus-Studio/">Octopus Studio</a>, RAB bisa diunduh sebagai Excel.</li>
+</ol>
+
+<h2>Yang tetap harus Anda periksa</h2>
+<ul>
+<li><strong>Kelengkapan model.</strong> RAB dari model hanya menghitung elemen yang ada di model. Pekerjaan yang belum digambar, seperti pekerjaan persiapan atau instalasi, harus Anda tambahkan sendiri.</li>
+<li><strong>Harga satuan.</strong> Harga berbeda antar daerah dan berubah dari waktu ke waktu. Cocokkan dengan harga di lapangan sebelum dipakai.</li>
+<li><strong>Cara pengukuran.</strong> Beberapa pekerjaan, misalnya plester, diukur dengan aturan tertentu pada kontrak. Pastikan aturan hitung di aplikasi sama dengan yang disepakati dengan klien.</li>
+<li><strong>Hitung manual satu pekerjaan.</strong> Ambil satu pekerjaan, misalnya dinding, lalu cocokkan dengan hitungan tangan seperti contoh di atas. Kalau angkanya wajar, Anda bisa lebih yakin dengan baris lainnya.</li>
+</ul>
+<div class="note warn">Nilai di aplikasi dan di artikel ini adalah perkiraan. Verifikasi dengan dokumen resmi daerah dan harga pasar sebelum dipakai untuk penawaran atau perizinan.</div>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li>Fitur RAB dan alurnya mengacu pada tampilan <a href="https://litebim.octonaut.id/">LiteBIM</a> pada tanggal artikel ini diperbarui.</li>
+<li>Angka pada contoh hitungan adalah perumpamaan penulis, bukan harga acuan resmi.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/aplikasi-rab/">Aplikasi RAB untuk arsitek</a><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a><a href="/belajar/glosarium-bim-perizinan/">Glosarium istilah BIM dan perizinan bangunan</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
