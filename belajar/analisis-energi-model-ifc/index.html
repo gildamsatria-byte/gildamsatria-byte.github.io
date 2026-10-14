@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Membaca hasil analisis energi dan radiasi matahari dari model IFC · Octonaut</title>
+<meta name="description" content="Cara memakai file IFC untuk perkiraan konsumsi listrik, beban pendinginan, OTTV, radiasi matahari per fasad, dan skenario hemat energi di tahap pra-desain.">
+<link rel="canonical" href="https://octonaut.id/belajar/analisis-energi-model-ifc/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/analisis-energi-model-ifc/">
+<meta property="og:title" content="Membaca hasil analisis energi dan radiasi matahari dari model IFC · Octonaut">
+<meta property="og:description" content="Cara memakai file IFC untuk perkiraan konsumsi listrik, beban pendinginan, OTTV, radiasi matahari per fasad, dan skenario hemat energi di tahap pra-desain.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Membaca hasil analisis energi dan radiasi matahari dari model IFC</h1>
+<p class="lede">Dari file IFC ke perkiraan konsumsi listrik, beban pendinginan, dan fasad yang paling panas, lengkap dengan cara membaca skenario hemat energi di tahap pra-desain.</p>
+<div class="meta"><span>Diperbarui 14 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Keputusan yang paling berpengaruh pada konsumsi energi gedung sering diambil di awal: orientasi massa, luas kaca, jenis kaca, dan sistem AC. Di tahap itu belum ada waktu atau data untuk simulasi energi penuh. Aplikasi <a href="https://analisis.octonaut.id/">Analisis Arsitektural</a> membantu mengisi celah itu. Ia membaca model IFC Anda, lalu memberi perkiraan cepat. Artikel ini menjelaskan cara menyiapkan datanya dan cara membaca hasilnya. Bagi yang belum mengenal formatnya, ada penjelasan di <a href="/belajar/format-ifc/">Mengenal format IFC</a>.</p>
+
+<div class="note warn">Hasilnya perkiraan pra-desain dengan ketelitian sekitar ±30%, bukan pengganti simulasi energi tersertifikasi. Pakai untuk membandingkan opsi desain, bukan untuk klaim hemat energi yang pasti.</div>
+
+<h2>Langkah menjalankan analisis</h2>
+<ol class="steps">
+<li><b>Unggah file IFC</b>Buka <a href="https://analisis.octonaut.id/">analisis.octonaut.id</a>, lalu pilih file <strong>.ifc</strong>. File diproses di browser Anda dan tidak diunggah ke server. Kalau ingin mencoba dulu, klik <strong>Isi data contoh</strong>.</li>
+<li><b>Periksa parameter</b>Setiap isian punya penanda: <strong>IFC</strong> berarti nilainya terbaca dari file, <strong>Manual</strong> berarti perlu dicek atau diisi, dan <strong>Diubah</strong> berarti Anda sudah mengubahnya. Jangan lewatkan yang bertanda Manual.</li>
+<li><b>Atur lokasi dan iklim</b>Pilih <strong>Preset kota</strong> supaya lintang, bujur, dan data iklim terisi. Atau isi manual. Periksa juga <strong>Azimut sumbu +Y model dari utara</strong>, karena orientasi salah akan menggeser semua hasil radiasi matahari.</li>
+<li><b>Lengkapi data bangunan</b>Isi fungsi bangunan, jumlah lantai, tinggi lantai, rasio kaca terhadap dinding (WWR), material dinding, jenis kaca, jenis atap, sistem AC, dan tarif listrik.</li>
+<li><b>Jalankan analisis</b>Klik <strong>Analisis sekarang</strong>, lalu buka tab <strong>Energi</strong>.</li>
+</ol>
+
+<h2>Membaca hasil di tab Energi</h2>
+<ul>
+<li><strong>Konsumsi bulanan (kWh).</strong> Grafik perkiraan listrik tiap bulan. Dari sini terlihat bulan terpanas dan seberapa besar bedanya sepanjang tahun.</li>
+<li><strong>Porsi beban pendinginan tahunan.</strong> Menunjukkan bagian mana yang paling membebani AC: dinding, atap, radiasi matahari lewat kaca, konduksi kaca, penghuni, lampu dan peralatan, serta ventilasi udara segar. Bagian terbesar adalah tempat penghematan paling berarti.</li>
+<li><strong>OTTV (W/m²).</strong> Ukuran seberapa banyak panas masuk lewat selubung bangunan. Makin kecil makin baik. Nilainya dihitung dari sifat dinding, rasio kaca, dan faktor radiasi matahari.</li>
+<li><strong>Tampilan 3D dan radiasi matahari tahunan.</strong> Model diberi skala warna menurut radiasi yang diterima tiap permukaan. Putar modelnya untuk melihat fasad dan atap yang paling panas.</li>
+<li><strong>Lintasan matahari.</strong> Geser pilihan bulan dan jam untuk melihat posisi matahari. Kurva yang ditampilkan adalah 21 Juni, 21 Maret atau 23 September, dan 21 Desember.</li>
+</ul>
+
+<h2>Kaca sering jadi penentu</h2>
+<p>Aplikasi menyediakan tiga jenis kaca dengan nilai asumsi berikut. SHGC adalah seberapa besar panas matahari yang diteruskan, dan U adalah seberapa mudah panas merambat lewat kaca. Keduanya sebaiknya kecil.</p>
+<div class="tw"><table>
+<thead><tr><th>Jenis kaca</th><th class="n">SHGC</th><th class="n">U (W/m²K)</th></tr></thead>
+<tbody>
+<tr><td>Kaca bening 6 mm</td><td class="n">0,75</td><td class="n">5,8</td></tr>
+<tr><td>Kaca tinted/reflektif</td><td class="n">0,45</td><td class="n">5,6</td></tr>
+<tr><td>Low-E double glazing</td><td class="n">0,25</td><td class="n">1,8</td></tr>
+</tbody></table></div>
+<p>Kaca bening meneruskan sekitar tiga kali lebih banyak panas matahari daripada Low-E double glazing. Karena itu, mengganti kaca atau mengurangi WWR pada fasad yang paling panas biasanya memberi hasil yang paling terlihat. Aplikasi memberi saran serupa: kurangi WWR di fasad dengan radiasi tertinggi, atau pakai kaca ber-SHGC rendah atau sirip peneduh.</p>
+
+<h2>Memakai skenario hemat energi</h2>
+<p>Bagian <strong>Skenario hemat energi</strong> menghitung beberapa perubahan desain dan membandingkan hasilnya dengan kondisi sekarang. Contohnya mengganti dinding dengan panel, mengurangi WWR 10 poin, mengganti ke VRF atau chiller water-cooled, dan satu paket gabungan Low-E, atap terinsulasi, dan VRF.</p>
+<ul>
+<li>Setiap skenario dihitung <strong>terpisah</strong> dari kondisi sekarang. Penghematan tiap baris tidak boleh dijumlahkan, kecuali baris paket yang memang menggabungkan beberapa perubahan.</li>
+<li>Angka skenario <strong>tidak memuat biaya investasi</strong>. Penghematan terbesar belum tentu pilihan terbaik kalau biayanya jauh lebih mahal. Bandingkan dulu dengan harga di lapangan.</li>
+<li>Skenario yang sama dengan kondisi Anda saat ini tidak ditampilkan lagi.</li>
+</ul>
+
+<h2>Hal yang perlu dicek sebelum memakai angkanya</h2>
+<ul>
+<li><strong>Tarif listrik.</strong> Cocokkan tarif dan golongan dengan tagihan PLN yang berlaku, karena tarif bisa berubah.</li>
+<li><strong>Metode.</strong> Beban pendinginan dihitung per jam untuk satu hari representatif tiap bulan (12 × 24 jam), lalu diperluas ke satu tahun. Itu pendekatan cepat, bukan simulasi tiap jam sepanjang tahun.</li>
+<li><strong>Dasar perhitungan.</strong> Buka bagian <strong>Dasar perhitungan &amp; asumsi energi</strong> di aplikasi. Tabel faktor radiasi untuk OTTV diambil dari ingatan SNI 03-6389, sehingga perlu diverifikasi dengan edisi terbaru sebelum dipakai untuk keperluan resmi.</li>
+<li><strong>Kelengkapan model.</strong> Nilai yang bertanda IFC bergantung pada isi model Anda. Kalau dinding atau kaca belum dimodelkan lengkap, angka hasilnya ikut meleset.</li>
+</ul>
+<div class="note">Mulai dengan satu desain, lalu ubah satu parameter dalam satu waktu, misalnya WWR atau jenis kaca. Dengan begitu pengaruh tiap keputusan terlihat jelas.</div>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li>Parameter, nilai asumsi kaca, dan metode perhitungan mengacu pada tampilan <a href="https://analisis.octonaut.id/">Analisis Arsitektural</a> pada tanggal artikel ini diperbarui.</li>
+<li>Penjelasan OTTV di aplikasi merujuk pada SNI 03-6389.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/format-ifc/">Mengenal format IFC dan cara memindahkan model antar-aplikasi</a><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a><a href="/belajar/cara-menghitung-rab-rumah/">Cara menghitung RAB rumah dari model BIM</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
