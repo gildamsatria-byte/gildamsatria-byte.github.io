@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aplikasi RAB untuk Arsitek: RAB Rumah Otomatis dari Model 3D · Octonaut</title>
+<meta name="description" content="Susun RAB rumah langsung dari model bangunan di browser. Volume dihitung otomatis dari model, harga satuan bisa memakai acuan daerah atau input sendiri, hasil bisa diunduh.">
+<link rel="canonical" href="https://octonaut.id/aplikasi-rab/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/aplikasi-rab/">
+<meta property="og:title" content="Aplikasi RAB untuk Arsitek: RAB Rumah Otomatis dari Model 3D · Octonaut">
+<meta property="og:description" content="Susun RAB rumah langsung dari model bangunan di browser. Volume dihitung otomatis dari model, harga satuan bisa memakai acuan daerah atau input sendiri, hasil bisa diunduh.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/belajar/belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/">Belajar</a>
+<a class="btn" href="https://litebim.octonaut.id/">Coba LiteBIM</a>
+</nav>
+</header>
+
+<section class="phead">
+<span class="tag" style="align-self:flex-start;color:var(--accent)">APLIKASI RAB</span>
+<h1>RAB rumah langsung dari model bangunan</h1>
+<p class="lede">Gambar bangunan di browser, lalu volume pekerjaan dihitung dari model. Tanpa instalasi, tanpa mengetik ulang ukuran ke spreadsheet.</p>
+<div class="more" style="margin-top:8px"><a class="fill" href="https://litebim.octonaut.id/">Coba LiteBIM</a><a href="/Octopus-Studio/">Buka Octopus Studio</a></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Menghitung RAB rumah tinggal biasanya berarti mengukur volume dari gambar, memindahkannya ke Excel, lalu menyusun harga satuan satu per satu. Di Octonaut, volume diambil dari model yang sudah Anda gambar, jadi kalau desain berubah, perhitungannya ikut berubah.</p>
+
+<h2>Yang bisa dilakukan</h2>
+<ul>
+<li><strong>RAB otomatis dari model.</strong> Volume dihitung dari dinding, kolom, balok, pelat, dan elemen lain di model <a href="https://litebim.octonaut.id/">LiteBIM</a>.</li>
+<li><strong>Harga satuan fleksibel.</strong> Pakai harga satuan acuan daerah (IKK), atau isi sendiri sesuai harga di lapangan.</li>
+<li><strong>Volume bekisting.</strong> Bekisting kolom, balok, dan pelat lantai dihitung lengkap dengan rinciannya.</li>
+<li><strong>Impor dari software BIM lain.</strong> Model IFC dari Revit atau ArchiCAD bisa dimasukkan, lalu RAB-nya disusun di sini.</li>
+<li><strong>Hasil bisa dibawa pulang.</strong> Ekspor ke CSV, dan di <a href="/Octopus-Studio/">Octopus Studio</a> RAB diunduh sebagai Excel.</li>
+</ul>
+
+<h2>Cara kerjanya</h2>
+<ol class="steps">
+<li><b>Gambar atau impor model</b>Gambar dinding, kolom, balok, dan atap di LiteBIM, atau impor file IFC dari aplikasi lain.</li>
+<li><b>Buka RAB</b>Pilih <strong>RAB — Rencana Anggaran Biaya</strong>. Volume pekerjaan langsung terisi dari model.</li>
+<li><b>Atur harga satuan</b>Pakai acuan daerah atau ganti dengan harga Anda sendiri.</li>
+<li><b>Unduh hasilnya</b>Simpan sebagai file untuk dilampirkan ke penawaran atau berkas proyek.</li>
+</ol>
+
+<div class="note warn">Nilai aturan dan harga di aplikasi bersifat perkiraan. Verifikasi dengan dokumen resmi daerah dan harga pasar sebelum dipakai untuk penawaran atau perizinan.</div>
+
+<h2>Pilih alat sesuai kebutuhan</h2>
+<ul>
+<li><strong>LiteBIM</strong> untuk pemodelan 2D dan 3D yang ringan, lengkap dengan RAB dan lembar gambar.</li>
+<li><strong>Octopus Studio</strong> untuk alur pra-desain, pemodelan, RAB, dan gambar kerja rumah tinggal sederhana.</li>
+</ul>
+<p>LiteBIM dan Octopus Studio memerlukan login dengan akun Gmail. Data proyek disimpan per proyek dan bisa diekspor.</p>
+
+<div class="more"><a class="fill" href="https://litebim.octonaut.id/">Coba LiteBIM</a><a href="/Octopus-Studio/">Buka Octopus Studio</a></div>
+
+<h2>Bacaan terkait</h2>
+<ul>
+<li><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a></li>
+<li><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a></li>
+<li><a href="/belajar/format-ifc/">Format IFC</a></li>
+</ul>
+
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Nilai aturan dan harga di aplikasi bersifat perkiraan; verifikasi dengan dokumen resmi daerah.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
