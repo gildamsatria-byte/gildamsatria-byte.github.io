@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pra-desain: membaca tapak dan menyusun program ruang · Octonaut</title>
+<meta name="description" content="Sebelum menggambar: baca sisi, luas, dan diagonal di surat ukur, analisis tapak singkat, susun program ruang, lalu uji ke batas KDB dan KLB.">
+<link rel="canonical" href="https://octonaut.id/belajar/pra-desain-tapak-dan-program-ruang/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/pra-desain-tapak-dan-program-ruang/">
+<meta property="og:title" content="Pra-desain: membaca tapak dan menyusun program ruang · Octonaut">
+<meta property="og:description" content="Sebelum menggambar: baca sisi, luas, dan diagonal di surat ukur, analisis tapak singkat, susun program ruang, lalu uji ke batas KDB dan KLB.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Pra-desain: membaca tapak dan menyusun program ruang sebelum menggambar</h1>
+<p class="lede">Tiga pekerjaan yang sebaiknya selesai sebelum garis pertama: memastikan bentuk lahan dari surat ukur, mencatat kondisi tapak, dan menyusun daftar ruang yang luasnya diuji ke KDB dan KLB.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Banyak revisi desain berawal dari hal yang sebenarnya bisa dicek di awal. Lahannya ternyata tidak siku. Kamar tidur menghadap panas sore. Daftar ruang klien tidak muat di batas luas lantai. Artikel ini membahas urutan pra-desain yang ringkas, dengan satu contoh yang angkanya bisa Anda hitung ulang.</p>
+
+<h2>1. Membaca ukuran tapak dari sertifikat dan surat ukur</h2>
+<p>Menurut PP Nomor 24 Tahun 1997 tentang Pendaftaran Tanah, <strong>surat ukur</strong> adalah dokumen yang memuat data fisik suatu bidang tanah dalam bentuk peta dan uraian. <strong>Data fisik</strong> sendiri adalah keterangan tentang letak, batas, dan luas bidang tanah. Jadi, ukuran sisi dan luas lahan sebaiknya diambil dari dokumen ini, bukan dari perkiraan pemilik.</p>
+<p>Yang perlu dicatat:</p>
+<ul>
+<li><strong>Panjang tiap sisi</strong>, berurutan mengelilingi lahan. Mulailah dari sisi yang berbatasan dengan jalan.</li>
+<li><strong>Luas tertulis</strong> di sertifikat.</li>
+<li><strong>Diagonal</strong>, bila tertulis. Kalau tidak ada, ukur sendiri di lapangan.</li>
+</ul>
+
+<h3>Mengapa diagonal penting</h3>
+<p>Empat sisi saja tidak mengunci bentuk segiempat. Bayangkan empat batang kayu yang disambung engsel: bentuknya bisa didorong miring tanpa mengubah panjang sisinya. Satu diagonal membagi lahan menjadi dua segitiga, dan segitiga yang ketiga sisinya diketahui hanya punya satu bentuk.</p>
+<p>Contoh: sisi depan dan belakang 12 m, sisi samping 20 m. Kalau dianggap siku, luasnya 12 × 20 = 240 m² dan diagonalnya √(12² + 20²) ≈ 23,32 m. Tetapi sertifikat menulis <strong>228 m²</strong>. Artinya lahan ini tidak siku. Tabel berikut menunjukkan luas untuk beberapa ukuran diagonal A–C, dengan sisi yang sama.</p>
+<div class="tw"><table>
+<thead><tr><th class="n">Diagonal A–C</th><th class="n">Luas lahan</th><th>Keterangan</th></tr></thead>
+<tbody>
+<tr><td class="n">23,32 m</td><td class="n">240,0 m²</td><td>Persegi panjang, sudut siku</td></tr>
+<tr><td class="n">22,00 m</td><td class="n">238,1 m²</td><td>Sedikit miring</td></tr>
+<tr><td class="n">21,00 m</td><td class="n">234,4 m²</td><td>Lebih miring</td></tr>
+<tr><td class="n">19,85 m</td><td class="n">228,0 m²</td><td>Cocok dengan sertifikat, sudut B sekitar 72°</td></tr>
+<tr><td class="n">26,34 m</td><td class="n">228,0 m²</td><td>Juga cocok: lahan miring ke arah sebaliknya</td></tr>
+</tbody></table></div>
+<p>Luas dihitung sebagai jumlah dua segitiga dengan rumus Heron. Perhatikan dua baris terakhir. Luas yang sama bisa berasal dari dua bentuk yang saling mencerminkan. Luas sertifikat membantu menyaring, tetapi arah kemiringan tetap harus dipastikan dengan mengukur diagonal di lapangan atau mencocokkan dengan gambar di surat ukur.</p>
+<div class="note warn">Kalau luas hasil hitungan Anda berbeda jauh dari sertifikat, jangan lanjut menggambar. Ukur ulang sisi dan diagonal, atau minta pengukuran ulang ke pihak yang berwenang.</div>
+
+<h2>2. Analisis tapak singkat</h2>
+<p>Untuk rumah atau ruko kecil, analisis tapak tidak perlu tebal. Satu halaman catatan dan sketsa sudah cukup, asal menjawab empat hal.</p>
+<ul>
+<li><strong>Matahari.</strong> Tandai arah utara dan sisi mana yang terkena matahari pagi dan sore. Sisi barat menerima panas sore yang paling mengganggu. Letakkan ruang servis, tangga, gudang, atau kamar mandi di sisi itu sebagai penyangga, dan beri pembayang pada bukaannya.</li>
+<li><strong>Angin.</strong> Di Indonesia, BMKG menjelaskan bahwa musim hujan berkaitan dengan angin monsun barat dari Asia, dan musim kemarau dengan angin monsun timur dari Australia yang bersifat kering. Rencanakan bukaan berhadapan supaya ada ventilasi silang. Angin setempat bisa dibelokkan bangunan tetangga, jadi amati juga di lokasi.</li>
+<li><strong>Akses.</strong> Sisi mana yang berbatasan dengan jalan, berapa lebar jalannya, di mana mobil masuk, dan di mana saluran air, listrik, serta air bersih tersambung.</li>
+<li><strong>Tetangga.</strong> Catat jenis batas tiap sisi (dinding tetangga, pagar, lahan kosong) dan tinggi bangunan di sebelahnya. Dinding tetangga yang tinggi mengurangi cahaya dan angin, tetapi juga bisa menjadi pembayang sore.</li>
+</ul>
+<p>Tambahkan catatan singkat soal banjir, kebisingan, pohon, dan beda tinggi tanah. Semua ini menentukan zoning: ruang publik di depan dekat akses, ruang privat menjauh dari bising dan panas.</p>
+
+<h2>3. Menyusun program ruang</h2>
+<p>Program ruang adalah daftar ruang beserta luas dan letak lantainya. Susunannya dimulai dari penghuni dan kegiatan, bukan dari bentuk denah.</p>
+<ol class="steps">
+<li><b>Daftar ruang</b>Tulis semua ruang yang dibutuhkan, dari kebutuhan penghuni: jumlah orang, kendaraan, kebiasaan memasak, ruang kerja, ruang ibadah.</li>
+<li><b>Luas bersih</b>Beri luas tiap ruang dari ukuran perabot dan gerak di dalamnya. Pakai referensi kantor Anda atau buku standar yang biasa dipakai.</li>
+<li><b>Hubungan ruang</b>Tandai ruang mana yang harus bersebelahan, cukup berdekatan, atau sebaiknya dipisah. Misalnya dapur dekat ruang makan dan area servis; kamar tidur jauh dari carport; kamar mandi dekat kamar tidur.</li>
+<li><b>Sirkulasi</b>Tambahkan persentase untuk selasar, hall, dan ruang gerak antarruang. Tidak ada satu angka baku. Tetapkan sebagai asumsi, tulis di tabel, dan cek lagi setelah denah jadi.</li>
+</ol>
+
+<h3>Contoh: rumah dua lantai untuk keluarga berempat</h3>
+<p>Kita pakai lahan 228 m² di atas. Sirkulasi diasumsikan 20%. Carport dan teras dicatat terpisah.</p>
+<div class="tw"><table>
+<thead><tr><th>Ruang</th><th>Lantai</th><th class="n">Luas (m²)</th></tr></thead>
+<tbody>
+<tr><td>Ruang tamu</td><td>1</td><td class="n">9</td></tr>
+<tr><td>Ruang keluarga dan makan</td><td>1</td><td class="n">20</td></tr>
+<tr><td>Dapur</td><td>1</td><td class="n">9</td></tr>
+<tr><td>Kamar tidur tamu/lansia</td><td>1</td><td class="n">9</td></tr>
+<tr><td>Kamar mandi</td><td>1</td><td class="n">3</td></tr>
+<tr><td>Servis dan cuci</td><td>1</td><td class="n">6</td></tr>
+<tr><td>Tangga</td><td>1</td><td class="n">6</td></tr>
+<tr><td><strong>Subtotal bersih lantai 1</strong></td><td></td><td class="n"><strong>62</strong></td></tr>
+<tr><td>Kamar tidur utama</td><td>2</td><td class="n">16</td></tr>
+<tr><td>Kamar mandi dalam</td><td>2</td><td class="n">4</td></tr>
+<tr><td>Kamar tidur anak (2 × 9)</td><td>2</td><td class="n">18</td></tr>
+<tr><td>Kamar mandi</td><td>2</td><td class="n">3</td></tr>
+<tr><td>Ruang keluarga atas</td><td>2</td><td class="n">9</td></tr>
+<tr><td>Tangga</td><td>2</td><td class="n">6</td></tr>
+<tr><td><strong>Subtotal bersih lantai 2</strong></td><td></td><td class="n"><strong>56</strong></td></tr>
+<tr><td>Lantai 1 dengan sirkulasi (62 × 1,2)</td><td></td><td class="n">74,4</td></tr>
+<tr><td>Lantai 2 dengan sirkulasi (56 × 1,2)</td><td></td><td class="n">67,2</td></tr>
+<tr><td><strong>Total luas lantai</strong></td><td></td><td class="n"><strong>141,6</strong></td></tr>
+<tr><td>Carport (15) dan teras (6), dicatat terpisah</td><td>1</td><td class="n">21</td></tr>
+</tbody></table></div>
+
+<h2>4. Membandingkan dengan KDB, KLB, dan KDH</h2>
+<p>PP Nomor 16 Tahun 2021 mendefinisikan KDB sebagai perbandingan luas seluruh lantai dasar bangunan terhadap luas lahan, dan KLB sebagai perbandingan luas seluruh lantai bangunan terhadap luas lahan. Nilainya untuk lahan Anda ada di Keterangan Rencana Kota (KRK) dari pemerintah daerah. Penjelasan lengkapnya ada di artikel <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a>.</p>
+<p>Untuk contoh ini kita pakai angka perumpamaan: KDB 60%, KLB 1,2, KDH 20%. Carport dan teras beratap kita hitung ke tapak lantai dasar supaya aman. Dari 132,6 m² lahan terbuka, 20 m² diperkeras untuk jalan masuk.</p>
+<div class="tw"><table>
+<thead><tr><th>Yang dicek</th><th>Rencana</th><th>Batas</th><th>Hasil</th></tr></thead>
+<tbody>
+<tr><td>Lantai dasar (KDB)</td><td>74,4 + 21 = 95,4 m², atau 41,8%</td><td>maks. 136,8 m² (60%)</td><td>Memenuhi</td></tr>
+<tr><td>Total luas lantai (KLB)</td><td>141,6 m², atau 0,62</td><td>maks. 273,6 m² (1,2)</td><td>Memenuhi</td></tr>
+<tr><td>Area hijau (KDH)</td><td>228 − 95,4 − 20 = 112,6 m², atau 49,4%</td><td>min. 45,6 m² (20%)</td><td>Memenuhi</td></tr>
+</tbody></table></div>
+<p>Kalau carport dan teras ikut dihitung ke KLB, totalnya 162,6 m² atau 0,71. Masih di bawah batas. Cara daerah menghitung teras, carport, dan void bisa berbeda, jadi tanyakan saat meminta KRK. GSB juga perlu dicek: tapak lantai dasar harus muat di dalam garis sempadan, dan pada lahan yang tidak siku ini sering lebih sempit dari dugaan.</p>
+<div class="note warn">Angka KDB, KLB, dan KDH di atas hanya perumpamaan. Pakai nilai dari KRK lahan Anda.</div>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://studio.octonaut.id/">Studio</a> menyusun langkah-langkah ini dalam tab berurutan. Aplikasi meminta masuk dengan akun Google.</p>
+<ul>
+<li><strong>Tab 01 Tapak.</strong> Pilih cara input <strong>Persegi</strong>, <strong>Sisi &amp; diagonal</strong>, atau <strong>Koordinat titik</strong>, lalu isi <strong>Luas di sertifikat</strong>. Aplikasi membandingkan luas hitungan dengan sertifikat: selisih sampai 3% dianggap sesuai, 3–7% perlu dicek, lebih dari itu ditandai bermasalah. Contoh 12 × 20 di atas akan selisih 5,3%. Untuk lahan empat sisi ada tombol <strong>Hitung diagonal dari luas sertifikat</strong>. Karena luas yang sama bisa menghasilkan dua diagonal, aplikasi memilih yang paling dekat dengan bentuk siku. Tetap cocokkan dengan ukuran lapangan.</li>
+<li><strong>Tab 02 Lokasi &amp; sekitar.</strong> Isi koordinat dari Google Maps untuk menampilkan lintasan matahari dan arah angin pada lembar tapak, lalu isi batas tiap sisi, tinggi bangunan tetangga, dan kondisi sekitar.</li>
+<li><strong>Tab 03 Aturan daerah.</strong> Masukkan KDB, KLB, KDH, GSB, jumlah lantai, dan tinggi maksimal. Tandai sumbernya sebagai resmi atau perkiraan.</li>
+<li><strong>Tab 04 Penghuni &amp; program.</strong> Program ruang tersusun dari data penghuni dan bisa diubah manual. Sirkulasi diisi dalam persen (bawaan 15%).</li>
+<li><strong>Tab 05 Hasil &amp; Gerbang A.</strong> Menampilkan pengecekan terhadap aturan daerah dan tempat menulis laporan analisis tapak.</li>
+</ul>
+<p>Yang tidak dilakukan aplikasi: Studio tidak membaca KRK atau sertifikat Anda secara resmi, tidak punya diagram hubungan ruang, dan tidak menggantikan pengukuran lapangan. Hubungan antarruang tetap Anda tulis sendiri di laporan atau sketsa.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://peraturan.go.id/files/pp24-1997.pdf">Peraturan Pemerintah Nomor 24 Tahun 1997 tentang Pendaftaran Tanah</a>, Pasal 1 angka 6 dan 17 (definisi data fisik dan surat ukur).</li>
+<li><a href="https://peraturan.bpk.go.id/Details/161846/pp-no-16-tahun-2021">Peraturan Pemerintah Nomor 16 Tahun 2021 tentang Peraturan Pelaksanaan Undang-Undang Nomor 28 Tahun 2002 tentang Bangunan Gedung</a> (JDIH BPK, status: berlaku).</li>
+<li><a href="https://jdih.pkp.go.id/produk-hukum/file/pp-nomor-16-tahun-2021-tanpa-lampiran.pdf">Naskah PP Nomor 16 Tahun 2021 tanpa lampiran</a> (JDIH Kementerian PKP), Pasal 1 angka 9, 10, 12, 13, dan 14 (GSB, KRK, KDB, KDH, KLB).</li>
+<li><a href="https://www.bmkg.go.id/siaran-pers/hujan-di-musim-kemarau-bmkg-normal-terjadi-bukan-anomali-iklim">BMKG: Hujan di musim kemarau normal terjadi, bukan anomali iklim</a> (siaran pers tentang monsun barat dan monsun timur).</li>
+<li>Nama tab, tombol, dan batas selisih luas mengacu pada tampilan <a href="https://studio.octonaut.id/">Studio</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a><a href="/belajar/glosarium-bim-perizinan/">Glosarium istilah BIM dan perizinan bangunan</a><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

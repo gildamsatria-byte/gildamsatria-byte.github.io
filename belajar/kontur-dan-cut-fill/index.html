@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Membaca kontur dan menghitung galian-timbunan untuk tapak kecil · Octonaut</title>
+<meta name="description" content="Dari titik survei X, Y, Z ke kontur TIN, elevasi rencana, dan volume galian-timbunan metode grid dan luas ujung, plus faktor tanah dan talud.">
+<link rel="canonical" href="https://octonaut.id/belajar/kontur-dan-cut-fill/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/kontur-dan-cut-fill/">
+<meta property="og:title" content="Membaca kontur dan menghitung galian-timbunan untuk tapak kecil · Octonaut">
+<meta property="og:description" content="Dari titik survei X, Y, Z ke kontur TIN, elevasi rencana, dan volume galian-timbunan metode grid dan luas ujung, plus faktor tanah dan talud.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Membaca kontur dan menghitung galian-timbunan untuk tapak kecil</h1>
+<p class="lede">Dari daftar titik survei X, Y, Z sampai angka galian dan timbunan dalam meter kubik: cara kerja kontur TIN, memilih elevasi rencana, dua metode hitung volume, faktor tanah, dan kemiringan talud.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Sebelum fondasi digali, Anda perlu tahu berapa tanah yang harus dibuang dan berapa yang harus didatangkan. Angka itu masuk ke RAB, jadwal truk, dan rencana drainase. Artikel ini membahas urutannya dengan contoh tapak 20 × 20 m.</p>
+
+<h2>Titik koordinat survei</h2>
+<p>Hasil pengukuran tapak biasanya berupa tabel titik. Tiap titik punya tiga angka:</p>
+<ul>
+<li><strong>Easting (X)</strong> dan <strong>Northing (Y)</strong>: posisi titik di denah, dalam meter. Bisa koordinat peta atau koordinat lokal proyek.</li>
+<li><strong>Elevasi (Z)</strong>: tinggi permukaan tanah di titik itu, dalam meter, terhadap satu titik acuan yang sama.</li>
+<li><strong>Kode</strong> (opsional): keterangan seperti tepi jalan, pohon, atau saluran.</li>
+</ul>
+<p>Yang penting bukan banyaknya titik, tetapi letaknya. Titik perlu ada di sudut lahan, di perubahan lereng, di tepi saluran, dan di sepanjang jalan depan. Di area yang berubah tajam, titik harus rapat.</p>
+
+<h2>Dari titik ke kontur: TIN</h2>
+<p>Titik saja belum menjadi permukaan. Cara yang umum adalah <strong>TIN</strong> (<em>triangulated irregular network</em>): titik-titik dihubungkan menjadi jaring segitiga yang tidak saling tumpang tindih. Triangulasi yang paling sering dipakai adalah <strong>Delaunay</strong>, yang aturannya: tidak ada titik lain di dalam lingkaran luar setiap segitiga. Aturan ini menghindari segitiga yang panjang dan tipis.</p>
+<p>Di dalam tiap segitiga, permukaan dianggap bidang datar miring. Elevasi di titik mana pun di dalamnya dihitung secara linear dari tiga sudutnya. Garis kontur lalu dicari di sepanjang sisi segitiga. Contoh: satu sisi menghubungkan titik berelevasi 100,20 m dan 100,80 m sepanjang 6 m. Kontur 100,50 m memotong sisi itu tepat di tengah, 3 m dari ujung pertama, karena 0,30 ÷ 0,60 = 0,5.</p>
+<p>Saat membaca kontur, ingat tiga hal:</p>
+<ul>
+<li>Kontur rapat berarti lereng curam, kontur renggang berarti landai.</li>
+<li>Kontur tidak pernah bercabang atau bersilangan. Kalau terlihat begitu, biasanya ada titik yang salah ketik.</li>
+<li>Di tepi area data, TIN sering membuat segitiga panjang yang tidak mewakili tanah. Bagian ini sebaiknya dibuang, bukan dipercaya.</li>
+</ul>
+
+<h2>Menentukan elevasi rencana</h2>
+<p><strong>Elevasi rencana</strong> adalah tinggi permukaan tanah yang Anda inginkan setelah pekerjaan tanah selesai. Untuk bangunan kecil, biasanya berupa satu bidang datar (pad) di bawah bangunan, dengan talud atau dinding penahan di tepinya.</p>
+<p>Bedakan elevasi lantai jadi (FFL) dengan elevasi tanah dasar. Di antara keduanya ada pelat lantai, lantai kerja, dan urugan pasir. Kalau yang Anda hitung adalah pekerjaan pematangan lahan, pakailah elevasi tanah dasar. Selisih 20–30 cm pada tapak 400 m² sudah berarti 80–120 m³.</p>
+
+<h2>Metode grid: contoh tapak 20 × 20 m</h2>
+<p>Metode grid (sering disebut metode <em>borrow pit</em>) cocok untuk tapak bangunan. Lahan dibagi menjadi kotak sama besar, lalu dihitung selisih tinggi di setiap sudut kotak. Volume tiap kotak adalah luas kotak dikali rata-rata selisih empat sudutnya.</p>
+<p>Contoh: tapak 20 × 20 m dibagi menjadi empat kotak 10 × 10 m (100 m² per kotak). Elevasi rencana pad 100,50 m. Selisih = elevasi eksisting dikurangi elevasi rencana. Positif berarti galian, negatif berarti timbunan.</p>
+<div class="tw"><table>
+<thead><tr><th>Baris</th><th class="n">Kiri</th><th class="n">Tengah</th><th class="n">Kanan</th></tr></thead>
+<tbody>
+<tr><td>Atas (eksisting)</td><td class="n">101,10</td><td class="n">100,90</td><td class="n">100,70</td></tr>
+<tr><td>Tengah (eksisting)</td><td class="n">100,50</td><td class="n">100,50</td><td class="n">100,50</td></tr>
+<tr><td>Bawah (eksisting)</td><td class="n">100,20</td><td class="n">100,00</td><td class="n">99,80</td></tr>
+<tr><td>Atas (selisih)</td><td class="n">+0,60</td><td class="n">+0,40</td><td class="n">+0,20</td></tr>
+<tr><td>Tengah (selisih)</td><td class="n">0,00</td><td class="n">0,00</td><td class="n">0,00</td></tr>
+<tr><td>Bawah (selisih)</td><td class="n">−0,30</td><td class="n">−0,50</td><td class="n">−0,70</td></tr>
+</tbody></table></div>
+
+<figure>
+<svg viewBox="0 0 680 340" role="img" aria-label="Grid 20 kali 20 meter berisi empat kotak 10 kali 10 meter. Dua kotak atas galian 25 dan 15 meter kubik, dua kotak bawah timbunan 20 dan 30 meter kubik">
+<rect x="0" y="0" width="680" height="340" fill="#FBFBFA"/>
+<rect x="190" y="40" width="150" height="130" fill="#F6D9D2"/>
+<rect x="340" y="40" width="150" height="130" fill="#F6D9D2"/>
+<rect x="190" y="170" width="150" height="130" fill="#C9DAF7"/>
+<rect x="340" y="170" width="150" height="130" fill="#C9DAF7"/>
+<rect x="190" y="40" width="300" height="260" fill="none" stroke="#141922" stroke-width="2"/>
+<line x1="340" y1="40" x2="340" y2="300" stroke="#141922" stroke-width="1.5"/>
+<line x1="190" y1="170" x2="490" y2="170" stroke="#141922" stroke-width="1.5"/>
+<g fill="#141922"><circle cx="190" cy="40" r="4"/><circle cx="340" cy="40" r="4"/><circle cx="490" cy="40" r="4"/><circle cx="190" cy="170" r="4"/><circle cx="340" cy="170" r="4"/><circle cx="490" cy="170" r="4"/><circle cx="190" cy="300" r="4"/><circle cx="340" cy="300" r="4"/><circle cx="490" cy="300" r="4"/></g>
+<g font-family="IBM Plex Mono, monospace" font-size="13" fill="#141922">
+<text x="182" y="30" text-anchor="end">+0,60</text><text x="340" y="28" text-anchor="middle">+0,40</text><text x="498" y="30">+0,20</text>
+<text x="182" y="166" text-anchor="end">0,00</text><text x="498" y="166">0,00</text>
+<text x="182" y="320" text-anchor="end">−0,30</text><text x="340" y="322" text-anchor="middle">−0,50</text><text x="498" y="320">−0,70</text>
+</g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="14" text-anchor="middle">
+<text x="265" y="100" fill="#8A2A17" font-weight="600">Galian</text><text x="265" y="120" fill="#8A2A17">25,0 m³</text>
+<text x="415" y="100" fill="#8A2A17" font-weight="600">Galian</text><text x="415" y="120" fill="#8A2A17">15,0 m³</text>
+<text x="265" y="230" fill="#123B8C" font-weight="600">Timbunan</text><text x="265" y="250" fill="#123B8C">20,0 m³</text>
+<text x="415" y="230" fill="#123B8C" font-weight="600">Timbunan</text><text x="415" y="250" fill="#123B8C">30,0 m³</text>
+</g>
+<text x="600" y="174" font-family="IBM Plex Mono, monospace" font-size="12" fill="#4A5261" text-anchor="middle">garis nol</text>
+</svg>
+<figcaption>Angka di sudut adalah selisih elevasi eksisting terhadap rencana 100,50 m. Baris tengah tepat di elevasi rencana, sehingga menjadi garis nol antara galian dan timbunan.</figcaption>
+</figure>
+
+<p>Hitungan per kotak:</p>
+<ul>
+<li>Kiri atas: (0,60 + 0,40 + 0 + 0) ÷ 4 = 0,25 m × 100 m² = <strong>25,0 m³ galian</strong></li>
+<li>Kanan atas: (0,40 + 0,20 + 0 + 0) ÷ 4 = 0,15 m × 100 m² = <strong>15,0 m³ galian</strong></li>
+<li>Kiri bawah: (0 + 0 + 0,30 + 0,50) ÷ 4 = 0,20 m × 100 m² = <strong>20,0 m³ timbunan</strong></li>
+<li>Kanan bawah: (0 + 0 + 0,50 + 0,70) ÷ 4 = 0,30 m × 100 m² = <strong>30,0 m³ timbunan</strong></li>
+</ul>
+<p>Total galian 40,0 m³ dan timbunan 50,0 m³. Cara singkatnya: kalikan selisih tiap sudut dengan jumlah kotak yang memakai sudut itu, jumlahkan, lalu kalikan luas satu kotak dan bagi empat. Untuk galian: (0,60 × 1 + 0,40 × 2 + 0,20 × 1) × 100 ÷ 4 = 1,6 × 25 = 40,0 m³.</p>
+<div class="note">Contoh ini sengaja dibuat rapi: tidak ada kotak yang sebagian galian dan sebagian timbunan. Di tapak sungguhan, kotak campuran pasti ada. Kalau empat sudutnya dirata-rata begitu saja, galian dan timbunan di kotak itu saling menghapus. Perkecil ukuran kotak di area itu supaya hasilnya lebih teliti.</div>
+
+<h2>Metode rata-rata luas ujung</h2>
+<p>Untuk pekerjaan memanjang seperti jalan masuk, saluran, atau talud, lebih praktis memakai potongan melintang. Luas galian atau timbunan diukur di setiap potongan, lalu volume di antara dua potongan dihitung dengan:</p>
+<p><code>V = L × (A1 + A2) ÷ 2</code></p>
+<p>Contoh: potongan pertama punya luas galian 2,4 m², potongan berikutnya 10 m kemudian punya 3,0 m². Volumenya 10 × (2,4 + 3,0) ÷ 2 = <strong>27,0 m³</strong>. FHWA mencatat bahwa metode ini umumnya memberi hasil sedikit lebih besar dari volume sebenarnya.</p>
+<p>Rumus yang lebih teliti adalah <strong>rumus prismoidal</strong>: <code>V = L × (A1 + 4Am + A2) ÷ 6</code>, dengan Am adalah luas potongan yang <em>diukur</em> di tengah, bukan rata-rata A1 dan A2. Kalau Am terukur 2,8 m², volumenya 10 × (2,4 + 11,2 + 3,0) ÷ 6 = 27,7 m³. Kalau Am diisi rata-rata kedua ujung (2,7 m²), hasilnya kembali 27,0 m³, jadi tidak ada gunanya.</p>
+
+<h2>Faktor pengembangan dan penyusutan</h2>
+<p>Satu meter kubik tanah tidak tetap satu meter kubik. Ada tiga keadaan:</p>
+<div class="tw"><table>
+<thead><tr><th>Keadaan</th><th>Arti</th><th>Dipakai untuk</th></tr></thead>
+<tbody>
+<tr><td><strong>Asli (bank)</strong></td><td>Tanah di tempatnya, belum diganggu</td><td>Volume galian dari gambar</td></tr>
+<tr><td><strong>Lepas (loose)</strong></td><td>Tanah setelah digali, mengembang</td><td>Jumlah rit truk, tumpukan</td></tr>
+<tr><td><strong>Padat (compacted)</strong></td><td>Tanah setelah dihampar dan dipadatkan</td><td>Volume timbunan dari gambar</td></tr>
+</tbody></table></div>
+<p>Urutannya: padat &lt; asli &lt; lepas. Rumusnya: volume lepas = volume asli × (1 + faktor pengembangan), dan volume padat = volume asli × (1 − faktor penyusutan). Besarnya tergantung jenis tanah. FHWA menyebut penyusutan untuk galian tanah sedang sekitar 10–25%, dan bisa lebih besar untuk tanah ringan. Pakai angka dari uji tanah atau pengalaman di lokasi itu, bukan angka buku semata.</p>
+<p>Kembali ke contoh grid, dengan asumsi penyusutan 10% dan pengembangan 25%:</p>
+<ol>
+<li>Galian 40,0 m³ asli, setelah dipadatkan menjadi 40,0 × 0,9 = 36,0 m³.</li>
+<li>Timbunan butuh 50,0 m³ padat. Kurangnya 50,0 − 36,0 = 14,0 m³ padat.</li>
+<li>Tanah asli yang dibutuhkan 14,0 ÷ 0,9 = 15,6 m³. Dalam keadaan lepas di truk, 15,6 × 1,25 = 19,4 m³.</li>
+</ol>
+<p>Jadi tapak yang di atas kertas "hanya kurang 10 m³" ternyata butuh sekitar 19,4 m³ tanah lepas. Kalau satu truk memuat 5 m³ lepas, perlu 4 rit.</p>
+
+<h2>Kemiringan dan talud</h2>
+<p>Kemiringan tanah dinyatakan dalam persen: beda tinggi dibagi jarak datar, dikali 100. Pada contoh di atas, dari sudut kiri atas (101,10) ke kiri bawah (100,20) turun 0,90 m dalam 20 m, jadi kemiringannya 4,5%.</p>
+<p>Tepi pad yang lebih tinggi atau lebih rendah dari tanah sekitar perlu talud. Talud biasa ditulis sebagai perbandingan, misalnya 1 : 2, artinya 1 m tegak untuk 2 m datar (50%). Timbunan 0,70 m di sudut kanan bawah dengan talud 1 : 2 butuh kaki talud selebar 1,4 m di luar pad. Pastikan kaki talud itu masih di dalam batas lahan. Kalau tidak cukup, pertimbangkan dinding penahan. Volume talud juga menambah galian atau timbunan, jadi ikut dihitung.</p>
+<div class="note warn">Kemiringan talud yang aman tergantung jenis tanah, tinggi, dan air. Untuk talud tinggi, tanah lunak, atau dekat bangunan tetangga, minta ahli geoteknik menentukannya.</div>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://civil.octonaut.id/">Civil</a> adalah aplikasi browser untuk pekerjaan ini. Aplikasinya perlu login dengan akun Google. Yang bisa dilakukan:</p>
+<ul>
+<li><strong>Modul 1 · Survei Kontur</strong>: tempel atau impor titik dari CSV, TXT, atau TSV (kolom No, Easting_X, Northing_Y, Elevasi_Z, Kode). Aplikasi membuat TIN Delaunay dan kontur. "Batas sisi segitiga (m)" membuang segitiga panjang di tepi data.</li>
+<li><strong>Modul 2 · Grading</strong>: buat pad dengan elevasi dan talud galian serta timbunan 1 : n, atau unggah titik desain CSV. Volume dihitung dengan grid yang ukurannya Anda tentukan. Tiap kotak dibagi lagi menjadi titik sampel, sehingga kotak campuran tetap terpisah antara galian dan timbunan. Hasilnya termasuk luas galian dan timbunan, kedalaman maksimum, dan peta cut/fill.</li>
+<li><strong>Modul 3 · Kemiringan</strong>: luas per kelas kemiringan (batas kelas bisa Anda atur) dan arah lereng.</li>
+<li><strong>Modul 5 · Jalan</strong>: volume galian dan timbunan badan jalan per stasiun dengan metode rata-rata luas ujung.</li>
+<li>Volume galian dan timbunan diteruskan ke <strong>Modul 9 · BOQ / RAB</strong>. Gambar bisa diunduh sebagai PDF atau DXF.</li>
+</ul>
+<p>Batasannya juga perlu diketahui. Data masukan hanya berupa daftar titik, bukan file DXF atau LandXML. Rumus prismoidal tidak disediakan. "Faktor tanah (cut ke fill)" adalah satu pengali: angka net yang ditampilkan adalah galian × faktor − timbunan. Pada contoh di atas, faktor 0,9 memberi 36,0 − 50,0 = −14,0 m³. Konversi ke volume lepas untuk truk tetap Anda hitung sendiri.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://highways.fhwa.dot.gov/federal-lands/pddm/dpg/earthwork-design">FHWA Federal Lands, Project Development and Design Manual: Earthwork Design</a>. Metode rata-rata luas ujung, catatan bahwa hasilnya cenderung lebih besar, dan rentang penyusutan/pengembangan.</li>
+<li><a href="https://eng.libretexts.org/Bookshelves/Civil_Engineering/Fundamentals_of_Transportation/07%3A_Geometric_Design/7.03%3A_Earthwork">Levinson dkk., Fundamentals of Transportation, 7.3 Earthwork</a> (Engineering LibreTexts). Rumus rata-rata luas ujung dan rumus prismoidal.</li>
+<li><a href="https://courses.washington.edu/cive316/lectures/lecture7/tsld013.htm">University of Washington, CIVE 316: Borrow-Pit Method</a>. Metode grid dengan bobot sudut menurut jumlah kotak.</li>
+<li><a href="https://resources.arcgis.com/en/help/main/10.2/0060/006000000001000000.htm">Esri ArcGIS Help 10.2: What is a TIN surface?</a> Definisi TIN dan kriteria Delaunay.</li>
+<li><a href="https://help.propelleraero.com/hc/en-us/articles/28452401313559">Propeller Aero: Calculating Shrink/Swell</a>. Keadaan asli, lepas, padat dan rumus konversinya.</li>
+<li>Nama menu dan cara hitung aplikasi mengacu pada <a href="https://civil.octonaut.id/">Civil</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a><a href="/belajar/cara-menghitung-rab-rumah/">Cara menghitung RAB rumah dari model BIM</a><a href="/belajar/tata-letak-proyek-dan-gudang/">Merencanakan tata letak lokasi proyek dan stok material gudang</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

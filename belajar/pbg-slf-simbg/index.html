@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alur PBG dan SLF lewat SIMBG untuk bangunan kecil · Octonaut</title>
+<meta name="description" content="Tahapan PBG dan SLF lewat SIMBG untuk rumah, ruko, kantor kecil, dan restoran: dasar hukum, dokumen arsitektur, struktur, MEP, dan kesalahan umum.">
+<link rel="canonical" href="https://octonaut.id/belajar/pbg-slf-simbg/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/pbg-slf-simbg/">
+<meta property="og:title" content="Alur PBG dan SLF lewat SIMBG untuk bangunan kecil · Octonaut">
+<meta property="og:description" content="Tahapan PBG dan SLF lewat SIMBG untuk rumah, ruko, kantor kecil, dan restoran: dasar hukum, dokumen arsitektur, struktur, MEP, dan kesalahan umum.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Alur PBG dan SLF lewat SIMBG untuk bangunan kecil</h1>
+<p class="lede">Urutan mengurus Persetujuan Bangunan Gedung sampai Sertifikat Laik Fungsi untuk rumah, ruko, kantor kecil, showroom, dan restoran, beserta dokumen yang biasanya diminta dan kesalahan yang sering membuat berkas bolak-balik.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Sejak IMB diganti, bangunan baru di Indonesia memerlukan dua dokumen dari pemerintah daerah. <strong>Persetujuan Bangunan Gedung (PBG)</strong> diperlukan sebelum membangun. <strong>Sertifikat Laik Fungsi (SLF)</strong> diperlukan sebelum bangunan dipakai. Keduanya diurus lewat <strong>SIMBG</strong> (Sistem Informasi Manajemen Bangunan Gedung), sistem daring milik pemerintah. Artikel ini merangkum alurnya untuk bangunan skala kecil.</p>
+<div class="note warn">Rincian persyaratan teknis, formulir, dan besaran retribusi bisa berbeda di tiap kabupaten atau kota. Pakai artikel ini sebagai peta umum, lalu cocokkan dengan standar pelayanan dinas di daerah lokasi bangunan.</div>
+
+<h2>Dasar hukumnya</h2>
+<ul>
+<li><strong>Undang-Undang Nomor 28 Tahun 2002 tentang Bangunan Gedung</strong>, yang sebagian ketentuannya diubah lewat Undang-Undang Cipta Kerja.</li>
+<li><strong>Peraturan Pemerintah Nomor 16 Tahun 2021</strong>, peraturan pelaksanaan undang-undang tersebut. Di sinilah PBG, SLF, SIMBG, tim penilai, dan tahapan prosesnya diatur. Statusnya di JDIH BPK masih berlaku.</li>
+<li><strong>Peraturan Pemerintah Nomor 28 Tahun 2025</strong> tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko, yang mencabut PP 5/2021. PP ini memasukkan PBG dan SLF sebagai persyaratan dasar perizinan berusaha. Jadi kalau ruko, showroom, atau restoran Anda menjadi tempat usaha, PBG dan SLF juga terkait dengan perizinan usahanya di OSS.</li>
+</ul>
+<p>Detail teknis pelaksanaannya biasanya dituangkan lagi dalam peraturan daerah dan standar pelayanan dinas setempat.</p>
+
+<h2>Siapa yang menilai berkas Anda</h2>
+<p>PP 16/2021 mengenal dua tim. <strong>Tim Penilai Teknis (TPT)</strong> dibentuk pemerintah kabupaten/kota untuk rumah tinggal tunggal sederhana: satu lantai dengan luas paling banyak 72 m², atau dua lantai dengan luas lantai paling banyak 90 m². Bangunan lain, termasuk ruko, kantor, showroom, dan restoran, dinilai oleh <strong>Tim Profesi Ahli (TPA)</strong>.</p>
+<p>Contoh: rumah dua lantai dengan denah 6 × 8 m di tiap lantai. Luas per lantai 48 m², jadi total 48 + 48 = 96 m². Angka ini melewati batas 90 m², sehingga rumah tersebut tidak lagi termasuk kategori TPT. Cara menghitung luas yang dipakai dinas bisa berbeda, jadi tanyakan bila angka Anda dekat batas.</p>
+
+<h2>Tahapan PBG</h2>
+<p>Secara garis besar, PBG terdiri dari dua bagian: <strong>konsultasi perencanaan</strong> dan <strong>penerbitan</strong>.</p>
+<ol class="steps">
+<li><b>Daftar di SIMBG</b>Pemilik atau kuasanya membuat akun, mengisi data pemilik, data bangunan, dan mengunggah dokumen rencana teknis. Operator memeriksa kelengkapan. Berkas yang belum lengkap dikembalikan untuk diperbaiki.</li>
+<li><b>Pemeriksaan pemenuhan standar teknis</b>TPT atau TPA memeriksa dokumen dalam sidang konsultasi. Menurut materi DPMPTSP Belitung yang merujuk PP 16/2021, pemeriksaan dilakukan bertahap, dokumen arsitektur dulu lalu struktur dan MEP. Pemeriksaan paling banyak lima kali dalam kurun paling lama 28 hari kerja. Konsultasi perencanaan tidak dipungut biaya.</li>
+<li><b>Pernyataan pemenuhan standar teknis</b>Kalau dokumen dinyatakan memenuhi, dinas teknis menerbitkan pernyataan pemenuhan standar teknis.</li>
+<li><b>Retribusi</b>Dinas teknis menetapkan nilai retribusi berdasarkan perhitungan teknis, lalu pemohon membayarnya. Tarifnya diatur peraturan daerah.</li>
+<li><b>PBG terbit</b>PBG diterbitkan setelah bukti pembayaran retribusi diterima. Setelah itu baru pekerjaan konstruksi dimulai.</li>
+</ol>
+
+<h2>Tahapan SLF untuk bangunan baru</h2>
+<ol class="steps">
+<li><b>Laporkan tahapan konstruksi</b>Selama membangun, pemilik menyampaikan informasi tahapan pekerjaan kepada pemerintah daerah melalui SIMBG, dan bangunan diperiksa oleh penilik.</li>
+<li><b>Surat pernyataan kelaikan fungsi</b>Setelah selesai, penyedia jasa pengawasan atau manajemen konstruksi menerbitkan surat pernyataan bahwa bangunan dibangun sesuai dokumen PBG. Dasarnya laporan pengawasan, hasil inspeksi, dan uji fungsi.</li>
+<li><b>SLF terbit</b>Setelah surat pernyataan diunggah ke SIMBG, SLF diterbitkan paling lama 3 hari kerja, bersamaan dengan Surat Bukti Kepemilikan Bangunan Gedung. SLF bangunan baru diterbitkan tanpa pungutan biaya.</li>
+</ol>
+<p>SLF punya masa berlaku. Untuk rumah tinggal tunggal dan rumah deret, 20 tahun. Untuk bangunan lain, termasuk ruko, kantor, dan restoran, 5 tahun. Perpanjangannya didahului pemeriksaan kelaikan fungsi.</p>
+
+<h2>Dokumen yang biasanya disiapkan</h2>
+<p>Selain data umum (identitas pemilik, bukti kepemilikan atau pemanfaatan tanah, KRK atau KKPR, dan data penyedia jasa perencana), dokumen rencana teknis dibagi tiga kelompok. Daftar di bawah dirangkum dari standar pelayanan PBG Kabupaten Sanggau dan materi sosialisasi PP 28/2025. Isi lengkapnya tergantung fungsi, luas, dan daerah.</p>
+<div class="tw"><table>
+<thead><tr><th>Kelompok</th><th>Yang umum diminta</th><th>Catatan untuk bangunan kecil</th></tr></thead>
+<tbody>
+<tr><td><strong>Arsitektur</strong></td><td>Konsep rancangan, gambar situasi, denah, tampak, potongan, detail utama, tata ruang dalam dan luar, spesifikasi teknis.</td><td>Ukuran, skala, dan luas harus sama di semua gambar dan di isian formulir.</td></tr>
+<tr><td><strong>Struktur</strong></td><td>Gambar pondasi, kolom, balok, pelat, rangka atap, beserta detailnya, perhitungan struktur, spesifikasi teknis.</td><td>Penyelidikan tanah diwajibkan untuk bangunan lebih dari dua lantai.</td></tr>
+<tr><td><strong>MEP</strong></td><td>Perhitungan dan gambar air bersih, air limbah, air hujan, listrik, penangkal petir, proteksi kebakaran, ventilasi, dan sistem lain yang relevan.</td><td>Rumah biasanya cukup sanitasi dan listrik. Restoran dan showroom sering ditanya soal proteksi kebakaran, dapur, dan tata udara.</td></tr>
+</tbody></table></div>
+
+<h2>Peran konsultan</h2>
+<ul>
+<li><strong>Penyedia jasa perencanaan</strong> (arsitek dan ahli struktur/MEP) menyusun dokumen rencana teknis dan melakukan penilaian mandiri bahwa rancangan memenuhi standar teknis. Datanya dicantumkan dalam permohonan.</li>
+<li><strong>Penyedia jasa pengawasan atau manajemen konstruksi</strong> mengawasi pembangunan dan menerbitkan surat pernyataan kelaikan fungsi untuk SLF.</li>
+<li>Untuk rumah tinggal sederhana, PP 16/2021 juga mengenal <strong>desain prototipe</strong>. Penyesuaian prototipe dilakukan bersama arsitek atau TPT, dan tetap harus memenuhi persyaratan dasar tahan gempa.</li>
+</ul>
+<p>Banyak pemilik bangunan kecil juga memakai jasa konsultan untuk mengurus akun dan unggahan di SIMBG. Itu sah, tetapi tanggung jawab isi dokumen tetap pada perencana dan pemilik.</p>
+
+<h2>Kesalahan yang sering terjadi</h2>
+<ul>
+<li><strong>Merancang sebelum memegang KRK.</strong> KDB, KLB, atau GSB yang terlewat baru ketahuan saat sidang, lalu denah harus diubah. Lihat <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB</a>.</li>
+<li><strong>Gambar tidak konsisten.</strong> Lebar bangunan di denah beda dengan tampak, atau tinggi lantai di potongan tidak cocok dengan tampak.</li>
+<li><strong>Luas di formulir beda dengan luas di gambar.</strong> Ini memengaruhi kategori penilai dan retribusi.</li>
+<li><strong>Fungsi bangunan salah pilih.</strong> Rumah yang lantai dasarnya dipakai usaha bukan lagi sekadar hunian. Tanyakan klasifikasinya ke dinas.</li>
+<li><strong>Lembar gambar tanpa kop, skala, atau ukuran.</strong> Penilai sulit membaca, dan berkas dikembalikan.</li>
+<li><strong>Mulai membangun sebelum PBG terbit</strong>, atau mengubah desain di lapangan tanpa memperbarui dokumen. Akibatnya bangunan tidak sesuai PBG, dan SLF tersendat.</li>
+<li><strong>Lupa SLF.</strong> Bangunan dipakai tanpa SLF, padahal SLF wajib ada sebelum pemanfaatan, dan untuk tempat usaha juga terkait perizinan berusaha.</li>
+</ul>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://litebim.octonaut.id/">LiteBIM</a> bisa membantu di bagian gambar arsitektur. Masuk dulu dengan akun Gmail. Yang bisa dilakukan:</p>
+<ul>
+<li>Memodelkan dinding, pintu, jendela, lantai, kolom, balok, pondasi, tangga, dan atap per lantai, lalu memberi ruang, dimensi, dan <strong>Garis potongan</strong>.</li>
+<li>Menyusun <strong>Lembar Kerja (Sheet)</strong> ukuran A4 atau A3 dengan title block (Nama Proyek, Judul Gambar, Skala, Digambar oleh, Tanggal, No. Lembar). Tiap lembar bisa berisi viewport denah, tampak depan/belakang/kiri/kanan, potongan, atau 3D, dengan skala standar otomatis seperti 1:50 atau 1:100.</li>
+<li>Menyimpan lembar sebagai PNG atau PDF lewat dialog cetak browser, mengekspor denah ke DXF, dan model ke IFC. Karena denah, tampak, dan potongan diambil dari satu model, ukurannya konsisten.</li>
+</ul>
+<p>Yang <strong>tidak</strong> dilakukan LiteBIM: mengurus PBG atau SLF, terhubung ke SIMBG, memeriksa kepatuhan terhadap standar teknis atau KRK, membuat perhitungan struktur, atau menghitung sistem MEP. Alat pipa di LiteBIM hanya menggambar jalur pipa, bukan perhitungan plambing. Dokumen untuk SIMBG tetap disusun dan ditandatangani perencana yang bertanggung jawab. Urutan kerjanya ada di <a href="/belajar/mulai-litebim/">panduan membuat model rumah dua lantai di LiteBIM</a>.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://peraturan.bpk.go.id/Details/161846/pp-no-16-tahun-2021">Peraturan Pemerintah Nomor 16 Tahun 2021 tentang Peraturan Pelaksanaan Undang-Undang Nomor 28 Tahun 2002 tentang Bangunan Gedung</a> (JDIH BPK, status: berlaku): definisi TPT dan batas 72/90 m², desain prototipe (Pasal 57), pelaporan tahap konstruksi lewat SIMBG dan surat pernyataan kelaikan fungsi (Pasal 59–60).</li>
+<li><a href="https://peraturan.bpk.go.id/Details/319773">Peraturan Pemerintah Nomor 28 Tahun 2025 tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko</a> (JDIH BPK): berlaku 5 Juni 2025, mencabut PP 5/2021.</li>
+<li><a href="https://dpmptspp.belitung.go.id/wp-content/uploads/2022/04/MEKANISMES-Penerbitan-PBG-SLF-dan-SBKBG.pdf">Mekanisme penerbitan PBG, SLF, dan SBKBG</a>, DPMPTSP Kabupaten Belitung: tahapan konsultasi, batas pemeriksaan, retribusi, SLF bangunan baru, dan masa berlaku SLF.</li>
+<li><a href="https://dpmptsp.sanggau.go.id/wp-content/uploads/2022/08/11.-SP-PBG.pdf">Standar pelayanan PBG</a>, DPMPTSP Kabupaten Sanggau: alur di SIMBG dan rincian dokumen arsitektur, struktur, dan MEP.</li>
+<li><a href="https://dpb.unpad.ac.id/wp-content/uploads/2026/06/Sosialisasi-PP-28-Tahun-2025-Penyelenggaraan-Bangunan-Gedung-PBG-SLF-sesuai-PP-16-2021-PP-28-2025.pdf">Sosialisasi PP 28 Tahun 2025 tentang penyelenggaraan bangunan gedung (PBG dan SLF)</a>, Universitas Padjadjaran: kaitan PBG/SLF dengan OSS, peran pihak-pihak, SLF 3 hari kerja tanpa biaya.</li>
+<li>Nama menu dan fitur mengacu pada tampilan <a href="https://litebim.octonaut.id/">LiteBIM</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a><a href="/belajar/glosarium-bim-perizinan/">Glosarium istilah BIM dan perizinan bangunan</a><a href="/belajar/mulai-litebim/">Urutan kerja membuat model rumah dua lantai di LiteBIM</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

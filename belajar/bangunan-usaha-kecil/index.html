@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yang dicek sebelum mendesain ruko, kantor kecil, showroom, dan restoran · Octonaut</title>
+<meta name="description" content="Daftar cek pra-desain bangunan usaha kecil: fungsi dan klas bangunan, zonasi dan KKPR, intensitas, parkir, evakuasi, kebakaran, aksesibilitas, dapur.">
+<link rel="canonical" href="https://octonaut.id/belajar/bangunan-usaha-kecil/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/bangunan-usaha-kecil/">
+<meta property="og:title" content="Yang dicek sebelum mendesain ruko, kantor kecil, showroom, dan restoran · Octonaut">
+<meta property="og:description" content="Daftar cek pra-desain bangunan usaha kecil: fungsi dan klas bangunan, zonasi dan KKPR, intensitas, parkir, evakuasi, kebakaran, aksesibilitas, dapur.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Yang dicek sebelum mendesain ruko, kantor kecil, showroom, dan restoran</h1>
+<p class="lede">Bangunan usaha kecil diperiksa dengan cara yang berbeda dari rumah tinggal. Ini daftar hal yang sebaiknya jelas sebelum garis pertama digambar, dan ke mana mencari angkanya.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Ruko dua lantai, kantor konsultan kecil, showroom motor, atau warung makan sering dirancang dengan pola pikir rumah: hitung kamar, cek KDB, selesai. Padahal begitu bangunan dipakai untuk usaha, pertanyaannya bertambah. Siapa saja yang masuk ke bangunan? Bagaimana mereka keluar saat ada kebakaran? Di mana tamu memarkir kendaraan? Bisakah pengguna kursi roda masuk?</p>
+<p>Artikel ini tidak memberi angka teknis. Angka seperti jumlah parkir, lebar tangga, atau jumlah APAR ditentukan oleh peraturan dan standar yang rinciannya bisa berbeda per daerah. Tugas kita di tahap pra-desain adalah tahu <strong>apa</strong> yang harus ditanyakan dan <strong>ke mana</strong> bertanya.</p>
+
+<h2>1. Tetapkan fungsi dan klas bangunan</h2>
+<p>Peraturan Pemerintah Nomor 16 Tahun 2021 membagi fungsi bangunan gedung menjadi lima: hunian, keagamaan, usaha, sosial dan budaya, serta khusus. Bangunan fungsi usaha adalah bangunan yang fungsi utamanya tempat kegiatan usaha. PP yang sama juga mengenal <strong>fungsi campuran</strong>, yaitu bangunan dengan lebih dari satu fungsi. Ruko yang lantai bawahnya toko dan lantai atasnya tempat tinggal adalah contoh yang umum.</p>
+<p>Selain fungsi, ada <strong>klasifikasi</strong>. PP 16/2021 menyebut tujuh dasar klasifikasi: kompleksitas, permanensi, risiko bahaya kebakaran, lokasi, ketinggian, kepemilikan, dan klas bangunan. Klas bangunan dibagi dari klas 1 sampai klas 10. Definisi tiap klas tercantum dalam peraturan teknis, misalnya Permen PU 29/PRT/M/2006 dan Permen PU 26/PRT/M/2008:</p>
+<ul>
+<li><strong>Klas 5, bangunan kantor:</strong> untuk usaha profesional, pengurusan administrasi, atau usaha komersial di luar klas 6, 7, 8, dan 9.</li>
+<li><strong>Klas 6, bangunan perdagangan:</strong> toko atau bangunan lain untuk penjualan barang secara eceran atau pelayanan kebutuhan langsung masyarakat. Contohnya termasuk ruang makan, kafe, restoran, salon, pasar, ruang penjualan, dan ruang pamer.</li>
+</ul>
+<p>Jadi kantor kecil umumnya masuk klas 5, sedangkan restoran dan showroom masuk klas 6. Klas ini penting karena persyaratan teknis, terutama proteksi kebakaran, mengacu padanya. Bangunan campuran bisa punya lebih dari satu klas. Pastikan penetapan klas dengan dinas yang menangani PBG di daerah Anda.</p>
+
+<h2>2. Cek zonasi dan KKPR</h2>
+<p>Bangunan harus didirikan di lokasi yang sesuai dengan Rencana Detail Tata Ruang (RDTR). Kalau RDTR belum ada, acuannya rencana tata ruang yang lain. Lahan di zona perumahan belum tentu boleh dipakai untuk restoran atau showroom, walaupun rumah di sebelahnya sudah membuka usaha.</p>
+<p>Untuk kegiatan berusaha, kesesuaian ini dinyatakan lewat <strong>KKPR</strong> (Kesesuaian Kegiatan Pemanfaatan Ruang), yang diatur dalam PP 21 Tahun 2021. Bentuknya dua:</p>
+<ul>
+<li><strong>Konfirmasi KKPR</strong>, bila lokasi sudah punya RDTR.</li>
+<li><strong>Persetujuan KKPR</strong>, bila acuannya rencana tata ruang selain RDTR.</li>
+</ul>
+<p>Bagi perancang, yang penting: jangan mulai mendesain sebelum tahu zona lahan dan apakah kegiatan yang direncanakan diizinkan di sana.</p>
+
+<h2>3. Hitung batas intensitas</h2>
+<p>KDB, KLB, KDH, dan GSB berlaku sama seperti pada rumah, tetapi nilainya bisa berbeda untuk zona komersial atau koridor jalan tertentu. Nilai untuk sebuah lahan dimuat dalam Keterangan Rencana Kota (KRK). Cara menghitungnya ada di artikel <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a>.</p>
+<p>Satu hal yang sering terlupa pada bangunan usaha: halaman depan tidak hanya untuk taman. Area parkir, bongkar muat, dan jalur pejalan kaki ikut berebut lahan terbuka yang sama dengan KDH. Hitung semuanya sejak awal.</p>
+
+<h2>4. Parkir</h2>
+<p>PP 16/2021 menyebut tempat parkir sebagai salah satu prasarana dan sarana bangunan gedung. Permen PUPR 14/PRT/M/2017 menyebut pertimbangannya, antara lain fungsi bangunan, kapasitas kendaraan, dan pemisahan jalur kendaraan dari pejalan kaki. Jumlah satuan ruang parkir yang wajib disediakan biasanya ditetapkan peraturan daerah dan dihitung dari fungsi dan luas lantai.</p>
+<p>Tanyakan ke dinas setempat: berapa kebutuhan parkir untuk fungsi Anda, apakah parkir di badan jalan diperbolehkan (sering tidak), dan apakah perlu area bongkar muat. Untuk showroom mobil, perhatikan juga jalur kendaraan masuk ke ruang pamer.</p>
+
+<h2>5. Akses dan sarana evakuasi</h2>
+<p>Permen PUPR 14/PRT/M/2017 mengatur kemudahan hubungan ke, dari, dan di dalam bangunan. Isinya mencakup hubungan horizontal (pintu, selasar, koridor), hubungan vertikal (tangga, ram, lift), dan sarana evakuasi. Sarana evakuasi terdiri dari akses eksit, eksit, dan eksit pelepasan, ditambah sarana pendukung seperti sistem peringatan bahaya, pencahayaan eksit, tanda arah, dan titik berkumpul.</p>
+<p>Peraturan ini mengecualikan rumah tinggal tunggal dan rumah deret sederhana dari kewajiban sarana evakuasi. Ruko, kantor, showroom, dan restoran tidak termasuk pengecualian itu. Di tahap pra-desain, tanyakan pada diri sendiri:</p>
+<ul>
+<li>Berapa orang yang mungkin ada di tiap lantai pada jam ramai?</li>
+<li>Dari titik terjauh, ke mana orang berjalan untuk keluar? Apakah ada jalan keluar kedua?</li>
+<li>Apakah tangga di ruko deret bisa dipakai pengunjung, atau hanya tangga sempit di belakang?</li>
+</ul>
+
+<h2>6. Proteksi kebakaran dasar</h2>
+<p>Persyaratan teknisnya ada di Permen PU 26/PRT/M/2008 tentang sistem proteksi kebakaran pada bangunan gedung dan lingkungan. Peraturan ini memakai klasifikasi klas 1 sampai 10 tadi. Isinya mencakup:</p>
+<ul>
+<li><strong>Akses pemadam:</strong> jalan akses untuk mobil pemadam, hidran halaman, dan pasokan air.</li>
+<li><strong>Sarana penyelamatan:</strong> eksit, pintu, tangga kebakaran, dan jalur ke luar.</li>
+<li><strong>Proteksi pasif:</strong> konstruksi tahan api, penghalang api dan asap.</li>
+<li><strong>Proteksi aktif:</strong> APAR, sistem pipa tegak, sprinkler, alarm dan deteksi kebakaran, serta pengendalian asap.</li>
+</ul>
+<p>Mana yang wajib untuk bangunan Anda bergantung pada klas, luas, dan tinggi bangunan. Jangan menebak. Konsultasikan ke dinas pemadam kebakaran atau ahli proteksi kebakaran, terutama untuk restoran yang memakai kompor gas.</p>
+
+<h2>7. Aksesibilitas penyandang disabilitas</h2>
+<p>Permen PUPR 14/PRT/M/2017 mewajibkan prinsip desain universal yang mempertimbangkan penyandang disabilitas, anak-anak, lanjut usia, dan ibu hamil. Elemen yang disebut antara lain ram, jalur pemandu, toilet dengan ruang manuver kursi roda, rambu, dan tempat parkir. Kewajibannya dibedakan menurut fungsi dan klasifikasi bangunan.</p>
+<p>Yang paling sering bermasalah pada ruko dan restoran kecil adalah beda tinggi lantai dengan trotoar. Lantai toko yang dinaikkan beberapa anak tangga membuat pintu masuk tidak bisa dilewati kursi roda. Sisakan ruang untuk ram sejak denah pertama, karena ram butuh panjang yang tidak sedikit.</p>
+
+<h2>8. Kebutuhan khusus restoran dan showroom</h2>
+<h3>Restoran</h3>
+<ul>
+<li><strong>Dapur:</strong> pisahkan alur bahan mentah, masak, cuci, dan saji. Tentukan letak dapur sebelum letak meja.</li>
+<li><strong>Exhaust:</strong> asap dan bau dapur harus dibuang ke tempat yang tidak mengganggu tetangga. Siapkan jalur saluran (duct) ke atap atau fasad belakang sejak awal, karena sulit ditambahkan setelah pelat dicor.</li>
+<li><strong>Penangkap lemak (grease trap):</strong> air limbah dapur mengandung minyak dan lemak yang bisa menyumbat saluran. Sediakan tempat untuk penangkap lemak yang mudah dibuka dan dibersihkan. Tanyakan persyaratannya ke dinas atau pengelola kawasan.</li>
+<li><strong>Gas dan listrik:</strong> catat kebutuhan tabung atau pipa gas dan daya listrik untuk peralatan dapur.</li>
+</ul>
+<h3>Showroom</h3>
+<ul>
+<li><strong>Bentang:</strong> ruang pamer biasanya ingin bebas kolom. Bentang yang lebar memengaruhi ukuran balok dan tinggi lantai, jadi bicarakan dengan ahli struktur sejak awal.</li>
+<li><strong>Beban lantai:</strong> mobil, motor, atau barang berat yang dipajang di lantai atas memerlukan beban rencana yang lebih tinggi daripada hunian. Nilainya ditentukan perencana struktur berdasarkan standar pembebanan yang berlaku.</li>
+<li><strong>Bukaan dan akses barang:</strong> pintu dan jalur masuk harus cukup untuk barang terbesar yang dipajang.</li>
+</ul>
+
+<h2>Ringkasan daftar cek</h2>
+<div class="tw"><table>
+<thead><tr><th>Yang dicek</th><th>Pertanyaan kunci</th><th>Cari di</th></tr></thead>
+<tbody>
+<tr><td>Fungsi dan klas</td><td>Usaha atau campuran? Klas berapa?</td><td>PP 16/2021, Permen PU 26/2008, dinas PBG</td></tr>
+<tr><td>Zonasi</td><td>Kegiatan ini boleh di zona lahan?</td><td>RDTR, KKPR</td></tr>
+<tr><td>Intensitas</td><td>KDB, KLB, KDH, GSB, tinggi?</td><td>KRK</td></tr>
+<tr><td>Parkir</td><td>Berapa ruang parkir dan bongkar muat?</td><td>Peraturan daerah</td></tr>
+<tr><td>Evakuasi</td><td>Ke mana orang keluar? Berapa eksit?</td><td>Permen PUPR 14/2017, Permen PU 26/2008</td></tr>
+<tr><td>Kebakaran</td><td>Sistem aktif dan pasif apa yang wajib?</td><td>Permen PU 26/2008, dinas pemadam kebakaran</td></tr>
+<tr><td>Aksesibilitas</td><td>Ram, toilet, parkir untuk disabilitas?</td><td>Permen PUPR 14/2017</td></tr>
+<tr><td>Restoran, showroom</td><td>Exhaust, lemak, bentang, beban?</td><td>Ahli MEP dan struktur, dinas setempat</td></tr>
+</tbody></table></div>
+<div class="note warn">Semua rincian angka mengikuti peraturan dan standar yang berlaku di lokasi Anda. Persetujuan Bangunan Gedung (PBG) diajukan lewat SIMBG, dan dinas setempat yang menentukan persyaratan akhirnya.</div>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://studio.octonaut.id/">Studio</a> bisa membantu sebagian dari daftar di atas, tetapi perlu diketahui sejak awal: aplikasi ini dirancang untuk <strong>rumah tinggal</strong>.</p>
+<p>Yang bisa dipakai untuk bangunan usaha:</p>
+<ul>
+<li>Tab <strong>Aturan daerah</strong> untuk mencatat kabupaten atau kota, zona peruntukan, KDB, KLB, KDH, maksimal lantai, tinggi maksimal, dan GSB depan, samping, belakang, beserta sumber datanya (resmi dari KRK/KKPR atau perkiraan).</li>
+<li>Bagian <strong>Batas untuk lahan ini</strong> yang menghitung tapak maksimal, luas lantai maksimal, dan ruang hijau minimal.</li>
+<li>Tabel <strong>Program ruang</strong> yang bisa diubah manual: Anda bisa mengganti nama ruang, mengisi luas, dan menambah baris seperti area jual, dapur restoran, atau ruang pamer.</li>
+</ul>
+<p>Batasnya:</p>
+<ul>
+<li>Program ruang otomatis disusun dari jumlah penghuni dan kendaraan: kamar tidur, dapur rumah, carport. Untuk usaha hanya ada pilihan <strong>Ruang usaha di rumah</strong> berukuran kecil.</li>
+<li>Pengecekan zona menganggap rencananya rumah. Zona komersial akan ditandai "belum jelas untuk rumah tinggal".</li>
+<li>Program ruang hanya mengenal lantai 1 dan 2.</li>
+<li>Tidak ada pengecekan parkir menurut perda, klas bangunan, sarana evakuasi, proteksi kebakaran, atau aksesibilitas. Pengecekan seperti luas per penghuni dan ukuran kamar tidur juga tidak relevan untuk usaha.</li>
+</ul>
+<p>Jadi untuk ruko, kantor, showroom, atau restoran, pakai Studio sebagai catatan aturan daerah dan hitungan intensitas. Daftar cek di artikel ini tetap perlu Anda kerjakan sendiri bersama dinas dan ahli terkait.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://peraturan.bpk.go.id/Details/161846/pp-no-16-tahun-2021">Peraturan Pemerintah Nomor 16 Tahun 2021 tentang Peraturan Pelaksanaan UU Nomor 28 Tahun 2002 tentang Bangunan Gedung</a> (JDIH BPK, status: berlaku). Fungsi bangunan dan fungsi campuran (Pasal 4–6), lokasi sesuai RDTR (Pasal 8), klasifikasi dan klas 1–10 (Pasal 9–10), tempat parkir sebagai prasarana (Pasal 50).</li>
+<li><a href="https://peraturan.go.id/files3/pp-no-21-tahun-2021_asli.pdf">Peraturan Pemerintah Nomor 21 Tahun 2021 tentang Penyelenggaraan Penataan Ruang</a> (peraturan.go.id), Pasal 1 angka 17–19: definisi KKPR, Konfirmasi KKPR, dan Persetujuan KKPR.</li>
+<li><a href="https://peraturan.bpk.go.id/Details/104475/permen-pupr">Peraturan Menteri PU Nomor 26/PRT/M/2008 tentang Persyaratan Teknis Sistem Proteksi Kebakaran pada Bangunan Gedung dan Lingkungan</a> (JDIH BPK, status: berlaku). Klasifikasi klas 1–10, definisi klas 6, serta komponen proteksi aktif, pasif, dan sarana penyelamatan.</li>
+<li><a href="https://luk.tsipil.ugm.ac.id/atur/konstruksi/Permenpu29-PRT-M-2006SyaratTeknisBangunanGedung.pdf">Peraturan Menteri PU Nomor 29/PRT/M/2006 tentang Pedoman Persyaratan Teknis Bangunan Gedung</a> (salinan arsip Teknik Sipil UGM). Definisi klas 5 dan klas 6.</li>
+<li><a href="https://klinikkonstruksi.jogjaprov.go.id/storage/images/peraturan/PerMen%20PUPR%20No%2014%20Th%202017%20ttg%20Persyaratan%20Kemudahan%20BG.pdf">Peraturan Menteri PUPR Nomor 14/PRT/M/2017 tentang Persyaratan Kemudahan Bangunan Gedung</a> (Klinik Konstruksi DIY). Desain universal (Pasal 5), hubungan horizontal dan vertikal, sarana evakuasi dan pengecualiannya (Pasal 24), prasarana dan sarana (Pasal 36), parkir (Pasal 51).</li>
+<li>Fitur Studio mengacu pada tampilan dan kode <a href="https://studio.octonaut.id/">Studio</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a><a href="/belajar/glosarium-bim-perizinan/">Glosarium istilah BIM dan perizinan bangunan</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

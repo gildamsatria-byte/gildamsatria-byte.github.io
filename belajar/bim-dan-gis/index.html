@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIM dan GIS: bedanya, sistem koordinat, dan memetakan aset gedung · Octonaut</title>
+<meta name="description" content="Beda BIM dan GIS, arti WGS84, UTM, dan koordinat lokal proyek, cara georeferensi model IFC dengan IfcMapConversion, dan contoh peta aset gedung.">
+<link rel="canonical" href="https://octonaut.id/belajar/bim-dan-gis/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/bim-dan-gis/">
+<meta property="og:title" content="BIM dan GIS: bedanya, sistem koordinat, dan memetakan aset gedung · Octonaut">
+<meta property="og:description" content="Beda BIM dan GIS, arti WGS84, UTM, dan koordinat lokal proyek, cara georeferensi model IFC dengan IfcMapConversion, dan contoh peta aset gedung.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">KONSEP</span>
+<h1>BIM dan GIS: bedanya, sistem koordinat, dan memetakan aset gedung</h1>
+<p class="lede">BIM menjelaskan isi satu bangunan. GIS menjelaskan di mana bangunan itu berada dan apa yang ada di sekitarnya. Artikel ini membahas kapan keduanya perlu digabung, sistem koordinat yang dipakai, dan cara model IFC diletakkan di peta.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Banyak kantor arsitek dan kontraktor sudah memakai model BIM. Masalah baru muncul saat pemilik punya beberapa gedung di kota yang berbeda: model per gedung sudah ada, tapi tidak ada satu tempat untuk melihat semuanya sekaligus. Di sinilah GIS masuk.</p>
+
+<h2>Bedanya BIM dan GIS</h2>
+<p><strong>BIM</strong> (Building Information Modeling) adalah model digital sebuah bangunan yang berisi elemen nyata seperti dinding, kolom, pintu, dan ruang, lengkap dengan datanya. Kalau belum akrab, baca dulu <a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a>.</p>
+<p><strong>GIS</strong> (Geographic Information System) menurut USGS adalah sistem komputer yang menganalisis dan menampilkan informasi yang bereferensi geografis. Setiap data di GIS terikat pada lokasi tertentu di muka bumi.</p>
+<div class="tw"><table>
+<thead><tr><th>Aspek</th><th>BIM</th><th>GIS</th></tr></thead>
+<tbody>
+<tr><td>Cakupan</td><td>Satu bangunan atau satu proyek</td><td>Kawasan, kota, sampai negara</td></tr>
+<tr><td>Detail</td><td>Sampai elemen: kolom, kusen, unit AC</td><td>Biasanya sampai objek: persil, gedung, ruas jalan</td></tr>
+<tr><td>Koordinat</td><td>Koordinat lokal proyek dalam meter, titik nol di dekat bangunan</td><td>Koordinat bumi: lintang dan bujur, atau proyeksi peta</td></tr>
+<tr><td>Pertanyaan khas</td><td>Berapa volume beton lantai 2?</td><td>Gedung mana saja yang berada di zona banjir?</td></tr>
+<tr><td>Format umum</td><td>IFC, file aplikasi BIM</td><td>Shapefile, GeoJSON, layanan peta</td></tr>
+</tbody></table></div>
+
+<h2>Kapan dipakai bersama</h2>
+<p>Untuk satu rumah tinggal, GIS jarang diperlukan. Gabungan BIM dan GIS mulai berguna kalau:</p>
+<ul>
+<li><strong>Pemilik mengelola banyak aset.</strong> Misalnya jaringan ruko, cabang restoran, atau beberapa kantor. Peta memberi gambaran semua lokasi, model BIM memberi detail tiap gedung.</li>
+<li><strong>Lokasi memengaruhi keputusan.</strong> Akses jalan, kontur, risiko genangan, atau jarak ke gedung lain lebih mudah dibaca di peta.</li>
+<li><strong>Data perawatan perlu dirangkum.</strong> Laporan kerusakan dan jadwal perawatan dari banyak gedung bisa dilihat per wilayah.</li>
+<li><strong>Model perlu diletakkan di atas peta</strong>, misalnya untuk presentasi kawasan atau memeriksa posisi bangunan terhadap jalan.</li>
+</ul>
+
+<h2>Tiga jenis koordinat yang perlu dikenal</h2>
+
+<h3>WGS84: lintang dan bujur</h3>
+<p>WGS 84 adalah sistem koordinat geografis yang dipakai GPS dan kebanyakan peta daring. Kodenya di registri EPSG adalah <code>EPSG:4326</code>. Lokasi dinyatakan dalam derajat, misalnya lintang −6,1754 dan bujur 106,8272 untuk titik di sekitar Monas, Jakarta. Lintang negatif berarti di selatan khatulistiwa.</p>
+<p>Derajat cocok untuk menandai lokasi, tapi tidak cocok untuk mengukur. Satu derajat bujur tidak selalu sama panjangnya dalam meter, tergantung lintangnya.</p>
+
+<h3>UTM: koordinat dalam meter</h3>
+<p>UTM (Universal Transverse Mercator) membagi bumi menjadi zona selebar 6° bujur. Di dalam tiap zona, posisi dinyatakan sebagai <em>easting</em> (ke timur) dan <em>northing</em> (ke utara) dalam meter, sehingga jarak dan luas bisa dihitung langsung.</p>
+<ul>
+<li>Jakarta berada di zona <strong>48S</strong> (<code>EPSG:32748</code>), yang mencakup bujur 102°–108° BT di belahan selatan. Meridian tengahnya 105°, faktor skala 0,9996, false easting 500.000 m, dan false northing 10.000.000 m.</li>
+<li>Titik Monas di atas menjadi kira-kira <strong>E 702.183 m, N 9.317.059 m</strong> dalam zona 48S.</li>
+<li>Wilayah Indonesia membentang di sekitar 95°–141° BT, jadi terbagi ke beberapa zona UTM. Dua gedung di kota berbeda bisa jatuh di zona berbeda.</li>
+</ul>
+<p>Indonesia juga punya datum geodesi nasional, <strong>SRGI2013</strong> (Sistem Referensi Geospasial Indonesia 2013), yang dikelola Badan Informasi Geospasial dan menggantikan DGN95. SRGI2013 memakai elipsoid yang sama dengan WGS 84. Untuk pekerjaan yang butuh ketelitian survei, tanyakan ke surveyor sistem mana yang dipakai pada data ukurnya.</p>
+
+<h3>Koordinat proyek lokal</h3>
+<p>Aplikasi BIM menggambar dengan koordinat lokal: titik (0,0,0) diletakkan di dekat bangunan, misalnya di perpotongan as A-1, dan sumbu X dibuat sejajar grid bangunan. Cara ini praktis, karena angka koordinatnya kecil dan dinding lurus terhadap sumbu. Masalahnya, koordinat lokal tidak tahu di mana bangunan itu berada di bumi. Untuk itu perlu georeferensi.</p>
+
+<h2>Georeferensi model IFC</h2>
+<p>IFC menyediakan dua cara untuk menyimpan lokasi model.</p>
+
+<h3>Cara sederhana: lintang dan bujur di IfcSite</h3>
+<p>Entitas <code>IfcSite</code> punya atribut <code>RefLatitude</code>, <code>RefLongitude</code>, dan <code>RefElevation</code>. Dokumentasi buildingSMART menyebutnya lintang dan bujur WGS84 di titik referensi, serta elevasi terhadap muka laut. Dokumentasi yang sama menegaskan cara ini tidak dimaksudkan menggantikan georeferensi yang presisi. Ia tidak menyimpan arah utara grid, jadi cukup untuk menandai titik di peta, tapi tidak untuk menumpuk model tepat di atas peta survei.</p>
+
+<h3>Cara presisi: IfcMapConversion</h3>
+<p><code>IfcMapConversion</code> (diperkenalkan di IFC4) mengubah koordinat lokal model ke sistem koordinat peta. Sistem peta tujuannya dicatat di <code>IfcProjectedCRS</code>, yang namanya berisi kode seperti <code>EPSG:32748</code>. Atribut <code>IfcMapConversion</code>:</p>
+<div class="tw"><table>
+<thead><tr><th>Atribut</th><th>Arti</th></tr></thead>
+<tbody>
+<tr><td><code>SourceCRS</code>, <code>TargetCRS</code></td><td>Sistem koordinat asal (model) dan tujuan (peta)</td></tr>
+<tr><td><code>Eastings</code>, <code>Northings</code></td><td>Posisi titik nol model di peta</td></tr>
+<tr><td><code>OrthogonalHeight</code></td><td>Tinggi titik nol terhadap datum vertikal</td></tr>
+<tr><td><code>XAxisAbscissa</code>, <code>XAxisOrdinate</code></td><td>Arah sumbu X model di peta, dalam bentuk vektor</td></tr>
+<tr><td><code>Scale</code></td><td>Faktor skala satuan; bila kosong dianggap 1,0</td></tr>
+</tbody></table></div>
+<p>Urutannya: koordinat lokal diskalakan, diputar berlawanan arah jarum jam sebesar θ, lalu digeser sebesar Eastings, Northings, dan OrthogonalHeight. Sudut putarnya θ = arctan(XAxisOrdinate / XAxisAbscissa).</p>
+
+<h3>Contoh hitungan</h3>
+<p>Misalkan titik nol model berada di E 702.183 m, N 9.317.059 m, dan grid bangunan diputar 15° dari arah timur. Maka XAxisAbscissa = cos 15° ≈ 0,9659 dan XAxisOrdinate = sin 15° ≈ 0,2588. Sebuah kolom berada di koordinat lokal x = 20 m, y = 5 m, dengan skala 1.</p>
+<ul>
+<li>E = 702.183 + (20 × 0,9659 − 5 × 0,2588) = 702.183 + 18,02 = <strong>702.201,02 m</strong></li>
+<li>N = 9.317.059 + (20 × 0,2588 + 5 × 0,9659) = 9.317.059 + 10,01 = <strong>9.317.069,01 m</strong></li>
+</ul>
+<p>Tanpa putaran 15° itu, kolom akan tergambar di E 702.203, N 9.317.064, meleset sekitar 5,4 m. Untuk satu titik di peta kota tidak terasa, tapi untuk menumpuk model di atas batas persil hasilnya jelas salah.</p>
+<div class="note warn">Angka di atas adalah contoh. Nilai Eastings, Northings, dan arah grid yang sebenarnya harus berasal dari data ukur surveyor, bukan dari klik di peta daring. Tidak semua aplikasi BIM mengekspor <code>IfcMapConversion</code>, dan tidak semua penampil membacanya, jadi periksa hasil ekspor Anda.</div>
+
+<h2>Contoh: pemilik lima cabang restoran</h2>
+<p>Bayangkan klien Anda punya lima cabang restoran di tiga kota. Alur kerja yang masuk akal:</p>
+<ol class="steps">
+<li><b>Daftarkan tiap gedung sebagai titik</b>Cukup lintang dan bujur dari peta, plus data dasar: nama cabang, alamat, pengelola, tahun operasi, dan kondisi.</li>
+<li><b>Lampirkan model IFC bila ada</b>Gedung yang punya model as-built bisa dibuka detailnya. Yang belum punya tetap tercatat sebagai titik.</li>
+<li><b>Catat gangguan dan perawatan per gedung</b>Misalnya AC bocor di cabang A atau jadwal servis genset di cabang C.</li>
+<li><b>Baca rangkumannya di peta</b>Cabang dengan laporan terbuka atau perawatan terlambat langsung terlihat, lalu bisa disaring per kota atau kondisi.</li>
+</ol>
+<p>Untuk kebutuhan seperti ini, ketelitian titik beberapa meter biasanya cukup. Georeferensi presisi baru penting kalau model harus pas di atas peta survei atau ditumpuk dengan data utilitas.</p>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://gim.octonaut.id/">GIM</a> adalah peta aset. Anda bisa menambah aset dengan klik di peta atau mengisi lintang dan bujur, memberi kategori dan kondisi, lalu mencatat sensor dengan pembacaan manual, laporan gangguan, dan perawatan. Daftar aset bisa diekspor sebagai CSV. GIM bisa dibuka langsung tanpa login, dan datanya tersimpan di browser yang Anda pakai.</p>
+<p>Tiap aset bisa diberi file IFC (maksimal 20 MB). Yang perlu diketahui dengan jujur:</p>
+<ul>
+<li>GIM membaca lokasi dari <code>RefLatitude</code> dan <code>RefLongitude</code> di <code>IfcSite</code>. Kalau berbeda dari titik aset, Anda bisa memakainya sebagai lokasi aset.</li>
+<li>GIM <strong>tidak membaca</strong> <code>IfcMapConversion</code> atau <code>IfcProjectedCRS</code>. Saat ditampilkan di peta 3D, model diletakkan dengan pusatnya di titik aset, dan arah model diatur manual lewat slider rotasi.</li>
+<li>Jadi GIM cocok untuk gambaran portofolio aset, bukan untuk pengecekan posisi presisi terhadap batas persil.</li>
+</ul>
+<p><a href="https://kembar.octonaut.id/">Kembar</a> bekerja di tingkat satu gedung: buka model IFC, tempatkan sensor di model, catat inspeksi dan kerusakan, lalu unduh paket data aset (AIM). Kembar tidak punya peta dan memerlukan login Gmail. Pemakaian yang wajar: GIM untuk melihat semua gedung, Kembar untuk mengelola isi satu gedung. Penjelasan lebih lanjut ada di <a href="/belajar/digital-twin-gedung/">Digital twin untuk gedung</a>.</p>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul><li><a href="https://www.usgs.gov/faqs/what-a-geographic-information-system-gis">What is a geographic information system (GIS)?</a>, USGS: definisi GIS.</li><li><a href="https://ifc43-docs.standards.buildingsmart.org/IFC/RELEASE/IFC4x3/HTML/lexical/IfcMapConversion.htm">IfcMapConversion</a>, dokumentasi IFC 4.3 buildingSMART: atribut, urutan transformasi, dan rumus sudut putar.</li><li><a href="https://ifc43-docs.standards.buildingsmart.org/IFC/RELEASE/IFC4x3/HTML/lexical/IfcProjectedCRS.htm">IfcProjectedCRS</a> dan <a href="https://ifc43-docs.standards.buildingsmart.org/IFC/RELEASE/IFC4x3/HTML/lexical/IfcCoordinateOperation.htm">IfcCoordinateOperation</a>, dokumentasi IFC 4.3: sistem koordinat peta, SourceCRS, dan TargetCRS.</li><li><a href="https://ifc43-docs.standards.buildingsmart.org/IFC/RELEASE/IFC4x3/HTML/lexical/IfcSite.htm">IfcSite</a>, dokumentasi IFC 4.3: RefLatitude, RefLongitude, RefElevation, dan batas ketelitiannya.</li><li><a href="https://epsg.io/32748">EPSG:32748 WGS 84 / UTM zone 48S</a> dan <a href="https://epsg.io/9470">EPSG:9470 SRGI2013</a>, epsg.io: parameter proyeksi zona 48S dan keterangan SRGI2013. Konversi titik contoh dihitung dengan pustaka PROJ.</li><li>Kemampuan aplikasi mengacu pada tampilan <a href="https://gim.octonaut.id/">GIM</a> dan <a href="https://kembar.octonaut.id/">Kembar</a> pada tanggal artikel ini diperbarui.</li></ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/apa-itu-bim/">Apa itu BIM dan bedanya dengan gambar CAD</a><a href="/belajar/format-ifc/">Mengenal format IFC dan cara memindahkan model antar-aplikasi</a><a href="/belajar/digital-twin-gedung/">Digital twin untuk gedung: apa gunanya setelah bangunan jadi</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kurva S dan memantau progres proyek konstruksi kecil · Octonaut</title>
+<meta name="description" content="Cara menyusun kurva S dari bobot RAB, membaca deviasi rencana dan realisasi, menghitung PV, EV, AC, SPI, CPI, lalu membuat laporan mingguan proyek.">
+<link rel="canonical" href="https://octonaut.id/belajar/kurva-s-dan-progres-proyek/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/kurva-s-dan-progres-proyek/">
+<meta property="og:title" content="Kurva S dan memantau progres proyek konstruksi kecil · Octonaut">
+<meta property="og:description" content="Cara menyusun kurva S dari bobot RAB, membaca deviasi rencana dan realisasi, menghitung PV, EV, AC, SPI, CPI, lalu membuat laporan mingguan proyek.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/#kolaborasi">Kolaborasi</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PANDUAN</span>
+<h1>Kurva S dan memantau progres proyek konstruksi kecil</h1>
+<p class="lede">Dari bobot pekerjaan di RAB sampai SPI dan CPI: cara tahu apakah proyek rumah, ruko, atau kantor kecil Anda sesuai rencana, dan apa yang dilakukan kalau ternyata terlambat.</p>
+<div class="meta"><span>Diperbarui 15 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Pemilik proyek biasanya bertanya dua hal: "Sudah berapa persen?" dan "Masih sesuai jadwal?" Jawaban "kira-kira 40%" tidak cukup. Kurva S memberi jawaban yang bisa dicek: berapa persen yang direncanakan selesai pada minggu ini, berapa yang benar-benar selesai, dan berapa selisihnya. Artikel ini membahas cara menyusunnya dari RAB, membacanya setiap minggu, dan menambahkan earned value sederhana supaya biaya ikut terpantau.</p>
+
+<h2>Apa itu kurva S</h2>
+<p>Kurva S adalah grafik hubungan waktu pelaksanaan dengan progres kumulatif proyek. Sumbu mendatar berisi minggu, sumbu tegak berisi persen progres dari 0% sampai 100%. Bentuknya mirip huruf S karena progres biasanya lambat di awal (persiapan, galian), cepat di tengah (struktur, dinding), lalu melambat lagi di akhir (finishing, perbaikan kecil).</p>
+<p>Dalam satu grafik ada dua garis: <strong>rencana</strong> yang dibuat sebelum proyek mulai, dan <strong>realisasi</strong> yang diisi setiap minggu dari lapangan. Jarak antara keduanya adalah informasi yang Anda cari.</p>
+
+<h2>Langkah 1: hitung bobot tiap pekerjaan dari RAB</h2>
+<p>Pekerjaan yang berbeda tidak bisa dijumlah begitu saja. Satu meter kubik beton dan satu meter persegi cat tidak sebanding. Karena itu setiap pekerjaan diberi <strong>bobot</strong>, yaitu porsi biayanya terhadap total RAB:</p>
+<p><span class="mono">Bobot = harga pekerjaan ÷ total RAB × 100%</span></p>
+<p>Kalau RAB belum ada, buat dulu. Lihat <a href="/belajar/cara-menghitung-rab-rumah/">cara menghitung RAB rumah dari model BIM</a>. Contoh di bawah memakai rumah dengan RAB Rp400.000.000 dan durasi 12 minggu. Angkanya perumpamaan.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Pekerjaan</th><th class="n">Biaya RAB</th><th class="n">Bobot</th><th class="n">Rencana s.d. minggu 6</th><th class="n">Realisasi s.d. minggu 6</th></tr></thead>
+<tbody>
+<tr><td>Persiapan dan tanah</td><td class="n">Rp20.000.000</td><td class="n">5,0%</td><td class="n">5,0% (100%)</td><td class="n">5,0% (100%)</td></tr>
+<tr><td>Pondasi</td><td class="n">Rp60.000.000</td><td class="n">15,0%</td><td class="n">15,0% (100%)</td><td class="n">15,0% (100%)</td></tr>
+<tr><td>Struktur beton</td><td class="n">Rp120.000.000</td><td class="n">30,0%</td><td class="n">15,0% (50%)</td><td class="n">12,0% (40%)</td></tr>
+<tr><td>Dinding dan atap</td><td class="n">Rp100.000.000</td><td class="n">25,0%</td><td class="n">5,0% (20%)</td><td class="n">0,0% (0%)</td></tr>
+<tr><td>Finishing dan instalasi</td><td class="n">Rp100.000.000</td><td class="n">25,0%</td><td class="n">0,0% (0%)</td><td class="n">0,0% (0%)</td></tr>
+<tr><td><strong>Total</strong></td><td class="n"><strong>Rp400.000.000</strong></td><td class="n"><strong>100%</strong></td><td class="n"><strong>40,0%</strong></td><td class="n"><strong>32,0%</strong></td></tr>
+</tbody>
+</table></div>
+<p>Angka dalam kurung adalah progres pekerjaan itu sendiri. Kontribusinya ke proyek adalah bobot dikali progres. Contoh: struktur beton selesai 40%, jadi menyumbang 30% × 40% = 12%.</p>
+
+<h2>Langkah 2: susun garis rencana</h2>
+<ol class="steps">
+<li><b>Buat jadwal batang</b>Tentukan minggu mulai dan selesai tiap pekerjaan, dengan memperhatikan urutannya. Dinding baru bisa dipasang setelah kolom dan balok di bawahnya cukup kuat.</li>
+<li><b>Bagi bobot per minggu</b>Cara paling sederhana adalah membagi rata. Struktur beton 30% selama 6 minggu berarti 5% per minggu.</li>
+<li><b>Jumlahkan per minggu, lalu kumulatifkan</b>Jumlah semua pekerjaan pada minggu itu adalah progres mingguan. Tambahkan ke total minggu sebelumnya. Hasil kumulatif inilah yang digambar sebagai kurva S rencana, dan pada minggu terakhir nilainya harus tepat 100%.</li>
+<li><b>Bekukan sebagai baseline</b>Setelah disetujui, jangan diubah diam-diam. Kalau ada pekerjaan tambah atau perpanjangan waktu yang disepakati, buat revisi baseline secara tertulis.</li>
+</ol>
+
+<h2>Langkah 3: isi realisasi dan baca deviasi</h2>
+<p>Setiap akhir minggu, ukur progres fisik tiap pekerjaan di lapangan, kalikan dengan bobotnya, lalu jumlahkan. Selisihnya dengan rencana disebut deviasi:</p>
+<p><span class="mono">Deviasi = realisasi kumulatif − rencana kumulatif</span></p>
+<p>Pada contoh, deviasi minggu 6 adalah 32% − 40% = −8%. Nilai negatif berarti terlambat, positif berarti lebih cepat, dan nol berarti sesuai rencana. Perhatikan juga trennya. Deviasi −3% yang makin kecil setiap minggu lebih baik daripada −2% yang terus membesar.</p>
+<div class="note">Sebagai pembanding, kontrak konstruksi pemerintah memakai istilah <strong>kontrak kritis</strong>: realisasi terlambat lebih dari 10% saat rencana masih 0–70%, atau lebih dari 5% saat rencana 70–100%. Penanganannya lewat rapat pembuktian (show cause meeting) dengan target yang diuji dalam periode tertentu. Untuk proyek swasta kecil, angka ini bisa dipakai sebagai patokan kapan harus rapat serius dengan kontraktor, kecuali kontrak Anda mengatur lain.</div>
+
+<h2>Earned value singkat: menambahkan uang ke kurva S</h2>
+<p>Kurva S berbasis bobot hanya bicara jadwal. Earned value (EVM) menambahkan sisi biaya dengan tiga angka, semuanya dalam rupiah:</p>
+<ul>
+<li><strong>PV (planned value):</strong> nilai anggaran pekerjaan yang direncanakan selesai sampai tanggal status. Sama dengan rencana kumulatif × total anggaran (BAC).</li>
+<li><strong>EV (earned value):</strong> nilai anggaran pekerjaan yang benar-benar selesai. Sama dengan realisasi kumulatif × BAC.</li>
+<li><strong>AC (actual cost):</strong> uang yang sudah benar-benar keluar untuk pekerjaan yang sudah dikerjakan, dari catatan pembelian material, upah, dan sewa alat.</li>
+</ul>
+<p>Dari ketiganya didapat empat indikator. <strong>SPI = EV ÷ PV</strong> dan <strong>CPI = EV ÷ AC</strong>. Nilai di bawah 1 berarti terlambat (SPI) atau boros (CPI). Selisihnya ditulis <strong>SV = EV − PV</strong> dan <strong>CV = EV − AC</strong>, dan nilai negatif berarti buruk.</p>
+<p>Lanjutkan contoh. Misalkan sampai minggu 6 kontraktor sudah mengeluarkan Rp140.000.000.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Indikator</th><th>Hitungan</th><th class="n">Hasil</th></tr></thead>
+<tbody>
+<tr><td>BAC</td><td>total RAB</td><td class="n">Rp400.000.000</td></tr>
+<tr><td>PV</td><td>40% × Rp400.000.000</td><td class="n">Rp160.000.000</td></tr>
+<tr><td>EV</td><td>32% × Rp400.000.000</td><td class="n">Rp128.000.000</td></tr>
+<tr><td>AC</td><td>dari catatan pengeluaran</td><td class="n">Rp140.000.000</td></tr>
+<tr><td>SV</td><td>128 jt − 160 jt</td><td class="n">−Rp32.000.000</td></tr>
+<tr><td>CV</td><td>128 jt − 140 jt</td><td class="n">−Rp12.000.000</td></tr>
+<tr><td>SPI</td><td>128 jt ÷ 160 jt</td><td class="n">0,80</td></tr>
+<tr><td>CPI</td><td>128 jt ÷ 140 jt</td><td class="n">0,91</td></tr>
+<tr><td>Perkiraan biaya akhir (EAC)</td><td>BAC ÷ CPI = 400 jt × 140 ÷ 128</td><td class="n">Rp437.500.000</td></tr>
+</tbody>
+</table></div>
+<p>Artinya, proyek baru menghasilkan 80% dari pekerjaan yang dijadwalkan, dan setiap Rp1 yang keluar baru menghasilkan pekerjaan senilai sekitar Rp0,91. Kalau efisiensi biaya ini terus sama, biaya akhir bisa mencapai sekitar Rp437,5 juta, atau Rp37,5 juta di atas RAB. Rumus BAC ÷ CPI mengasumsikan kinerja ke depan sama dengan yang sudah terjadi, jadi pakai sebagai peringatan dini, bukan angka pasti.</p>
+<div class="note warn">AC harus dibandingkan dengan pekerjaan yang sudah terpasang, bukan dengan material yang masih menumpuk di gudang. Besi yang sudah dibeli tapi belum dipasang membuat CPI tampak lebih buruk. Pisahkan catatannya, atau hitung AC hanya untuk pekerjaan yang diukur progresnya.</div>
+
+<h2>Laporan mingguan yang cukup satu halaman</h2>
+<p>Untuk proyek kecil, laporan mingguan tidak perlu tebal. Isi berikut biasanya cukup:</p>
+<ul>
+<li>Tanggal status, minggu ke berapa, dan cuaca atau hari kerja yang hilang.</li>
+<li>Grafik kurva S rencana dan realisasi, beserta angka rencana, realisasi, dan deviasi kumulatif.</li>
+<li>Tabel per pekerjaan: bobot, progres minggu ini, dan progres kumulatif.</li>
+<li>SPI dan, bila pengeluaran tercatat, CPI.</li>
+<li>Tiga pekerjaan penyumbang keterlambatan terbesar beserta penyebabnya.</li>
+<li>Rencana minggu depan, kendala yang harus diselesaikan, dan siapa penanggung jawabnya.</li>
+<li>Foto progres dengan keterangan lokasi.</li>
+</ul>
+<p>Ukur dengan cara yang sama setiap minggu. Kalau minggu ini dinding diukur per m² dan minggu depan hanya dikira-kira, kurvanya tidak bisa dipercaya.</p>
+
+<h2>Kalau ternyata terlambat</h2>
+<ol class="steps">
+<li><b>Cari penyebabnya per pekerjaan</b>Lihat pekerjaan mana yang deviasinya paling besar. Sering kali satu atau dua pekerjaan menyumbang hampir semua keterlambatan.</li>
+<li><b>Utamakan pekerjaan di jalur kritis</b>Keterlambatan pada pekerjaan yang menunggu pekerjaan lain, misalnya pengecoran pelat sebelum dinding lantai atas, langsung menggeser tanggal selesai. Pekerjaan yang punya kelonggaran waktu bisa menunggu.</li>
+<li><b>Pilih cara mengejar</b>Tambah tukang atau jam kerja, tambah alat seperti molen atau perancah, kerjakan beberapa pekerjaan bersamaan bila aman, atau pesan material lebih awal. Setiap pilihan menambah biaya, jadi cek dampaknya ke CPI.</li>
+<li><b>Tetapkan target yang bisa diuji</b>Sepakati target progres untuk satu atau dua minggu ke depan, tulis di notulen, lalu cek di laporan berikutnya.</li>
+<li><b>Revisi jadwal bila memang perlu</b>Kalau penyebabnya pekerjaan tambah atau perubahan desain dari pemilik, buat addendum waktu dan baseline baru. Jangan mengejar target yang dasarnya sudah berubah.</li>
+</ol>
+
+<h2>Mencobanya di Octonaut</h2>
+<p><a href="https://kolab.octonaut.id/">Kolab</a> adalah aplikasi browser untuk memantau progres jadwal pada model IFC. Perlu login dengan akun Gmail, dan ada mode demo dengan gedung contoh untuk mencoba. Yang bisa dilakukan untuk topik ini:</p>
+<ul>
+<li><strong>Memuat jadwal dari CSV.</strong> Di tab Progres, muat CSV hasil ekspor MS Project, atau unduh Template CSV yang disediakan. Pilih kolom baseline mulai, baseline selesai, bobot, dan % selesai di bagian Kinerja jadwal (EVM). Kolom bobot bisa diisi biaya RAB tiap pekerjaan.</li>
+<li><strong>Menghitung SPI.</strong> Aplikasi menghitung PV, EV, SV, dan SPI pada tanggal status. PV dibagi rata menurut hari kerja baseline tiap aktivitas, dengan pilihan Senin–Jumat, Senin–Sabtu, atau semua hari. EV adalah bobot dikali % selesai. Ada juga SPI(t) yang menyatakan selisih dalam hari, tabel SPI per WBS, dan daftar aktivitas penyumbang keterlambatan.</li>
+<li><strong>Kurva S rencana dan realisasi.</strong> Garis rencana dihitung dari baseline. Titik realisasi berasal dari beberapa file CSV pembaruan. Simpan tiap pembaruan sebagai file terpisah dengan tanggal di nama file, misalnya <span class="mono">jadwal_2026-09-25.csv</span>, lalu muat sekaligus lewat folder proyek atau seret ke aplikasi.</li>
+<li><strong>Warna di model.</strong> Mode SPI mewarnai elemen model: SPI 1,00 ke atas, 0,90–0,99, dan di bawah 0,90. Mode Jadwal 4D menampilkan model menurut tanggal dengan slider.</li>
+<li><strong>Gantt sederhana.</strong> Tombol Jadwal (Gantt) membuka penjadwal dengan durasi, pendahulu, %, dan Set baseline. Tugas yang tidak punya kelonggaran waktu ditandai merah, dan jadwalnya bisa diterapkan ke status, Jadwal 4D, dan SPI model.</li>
+</ul>
+<p>Batasannya juga perlu diketahui. Kolab tidak mencatat biaya aktual, jadi <strong>AC, CPI, CV, dan EAC tidak dihitung</strong> dan perlu dihitung sendiri di spreadsheet. Progres harus diisi sendiri di jadwal, karena aplikasi tidak mengukur progres dari lapangan. Kurva realisasi hanya muncul kalau Anda menyimpan lebih dari satu file pembaruan.</p>
+<div class="note warn">Angka di artikel ini adalah contoh. Untuk proyek dengan kontrak, ikuti cara pengukuran progres dan ketentuan keterlambatan yang tertulis di kontrak Anda.</div>
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://ejournal.itn.ac.id/index.php/jati/article/download/5324/3580">Auliansyah, Irawan, dan Ariwibisono, "Rancang Bangun Sistem Monitoring Manajemen Proyek Konstruksi Menggunakan Kurva-S"</a>, JATI Vol. 6 No. 2 (2022), ITN Malang. Definisi kurva S, rumus bobot pekerjaan, dan deviasi.</li>
+<li><a href="https://www2.cdc.gov/cdcup/library/practices_guides/cdc_up_earned_value_practices_guide.pdf">CDC Unified Process Practices Guide: Earned Value Management</a>. Definisi PV, EV, AC, SV, CV, SPI, dan CPI.</li>
+<li><a href="https://en.wikipedia.org/wiki/Earned_value_management">Earned value management</a> (Wikipedia). Definisi BAC dan perkiraan biaya akhir BAC ÷ CPI beserta asumsinya.</li>
+<li><a href="https://ntb.bpk.go.id/wp-content/uploads/2019/12/R.Jembatan-Nasional-Sembalun-Masuk-Fase-Kontrak-Kritis.pdf">"Jembatan Nasional Sembalun Masuk Fase Kontrak Kritis"</a>, kliping berita BPK RI Perwakilan NTB (2019). Batas kontrak kritis 10% dan 5% serta tahapan show cause meeting.</li>
+<li>Fitur dan batasan aplikasi mengacu pada <a href="https://kolab.octonaut.id/">Kolab</a> pada tanggal artikel ini diperbarui.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/cara-menghitung-rab-rumah/">Cara menghitung RAB rumah dari model BIM</a><a href="/belajar/tata-letak-proyek-dan-gudang/">Merencanakan tata letak lokasi proyek dan stok material gudang</a><a href="/belajar/format-ifc/">Mengenal format IFC dan cara memindahkan model antar-aplikasi</a></div>
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="/Octopus-Studio/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan, pakai dokumen resmi daerah Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
