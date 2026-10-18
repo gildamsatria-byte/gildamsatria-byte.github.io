@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contoh RAB rumah 2 lantai: volume, rekap, dan cara mengecek · Octonaut</title>
+<meta name="description" content="Contoh RAB rumah 2 lantai 8 × 12 m langkah demi langkah: menghitung volume pondasi, beton, dinding, dan atap, rumus harga satuan, rekapitulasi biaya per pekerjaan, dan cara mengecek hasilnya.">
+<link rel="canonical" href="https://octonaut.id/belajar/contoh-rab-rumah-2-lantai/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/contoh-rab-rumah-2-lantai/">
+<meta property="og:title" content="Contoh RAB rumah 2 lantai: volume, rekap, dan cara mengecek · Octonaut">
+<meta property="og:description" content="Contoh RAB rumah 2 lantai 8 × 12 m langkah demi langkah: menghitung volume pondasi, beton, dinding, dan atap, rumus harga satuan, rekapitulasi biaya per pekerjaan, dan cara mengecek hasilnya.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Contoh RAB rumah 2 lantai 8 × 12 m, dari volume sampai rekap", "description": "Contoh RAB rumah 2 lantai 8 × 12 m langkah demi langkah: menghitung volume pondasi, beton, dinding, dan atap, rumus harga satuan, rekapitulasi biaya per pekerjaan, dan cara mengecek hasilnya.", "inLanguage": "id-ID", "datePublished": "2026-10-18", "dateModified": "2026-10-18", "author": {"@type": "Organization", "name": "Octonaut", "url": "https://octonaut.id/"}, "publisher": {"@type": "Organization", "name": "Octonaut", "url": "https://octonaut.id/"}, "image": "https://octonaut.id/og.jpg", "mainEntityOfPage": "https://octonaut.id/belajar/contoh-rab-rumah-2-lantai/"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://octonaut.id/"}, {"@type": "ListItem", "position": 2, "name": "Belajar", "item": "https://octonaut.id/belajar/"}, {"@type": "ListItem", "position": 3, "name": "Contoh RAB rumah 2 lantai 8 × 12 m, dari volume sampai rekap", "item": "https://octonaut.id/belajar/contoh-rab-rumah-2-lantai/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Apa saja isi RAB rumah 2 lantai?", "acceptedAnswer": {"@type": "Answer", "text": "Biasanya pekerjaan persiapan, tanah dan pondasi, struktur beton, dinding dan plester, atap, kusen pintu dan jendela, lantai, plafon, pengecatan, sanitasi, listrik, dan pekerjaan luar. Tiap pekerjaan berisi volume, satuan, harga satuan, dan jumlah biaya."}}, {"@type": "Question", "name": "Bagaimana cara menghitung volume dinding?", "acceptedAnswer": {"@type": "Answer", "text": "Kalikan panjang total dinding dengan tingginya, lalu kurangi luas pintu dan jendela. Untuk plester dan cat, hitung dua sisi dinding."}}, {"@type": "Question", "name": "Berapa biaya bangun rumah 2 lantai 8 × 12 m?", "acceptedAnswer": {"@type": "Answer", "text": "Dengan luas total 192 m² dan harga kelas menengah Rp5,5 juta per m², biaya bangunan utama sekitar Rp1,06 miliar, belum termasuk pagar, utilitas, dan dana cadangan. Angka di daerah Anda bisa berbeda."}}, {"@type": "Question", "name": "Dari mana harga satuan pekerjaan?", "acceptedAnswer": {"@type": "Answer", "text": "Harga satuan disusun dari koefisien bahan, upah, dan alat dalam Analisis Harga Satuan Pekerjaan (AHSP) PUPR, dikalikan harga bahan dan upah setempat. Banyak pemerintah daerah juga menerbitkan standar harga satuan tiap tahun."}}]}]}</script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a href="/kalkulator/">Kalkulator</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">RAB</span>
+<h1>Contoh RAB rumah 2 lantai 8 × 12 m, dari volume sampai rekap</h1>
+<p class="lede">Satu rumah 2 lantai dihitung dari awal: volume pekerjaan utama, harga satuan, rekap biaya, dan cara memastikan angkanya masuk akal.</p>
+<div class="meta"><span>Diperbarui 18 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>RAB (Rencana Anggaran Biaya) adalah daftar semua pekerjaan beserta volume dan harganya. Artikel ini memberi contoh RAB untuk satu rumah 2 lantai yang sama dari awal sampai akhir: data rumahnya, cara menghitung volume pekerjaan utama, rekapitulasi biaya, dan cara memeriksa hasilnya.</p>
+
+<div class="note warn">Semua angka di contoh ini adalah perumpamaan untuk belajar. Harga satuan di daerah Anda bisa jauh berbeda. Pakai struktur dan cara hitungnya, lalu isi dengan harga dan ukuran proyek Anda sendiri.</div>
+
+<h2>Data rumah contoh</h2>
+<div class="tw"><table>
+<tbody>
+<tr><td>Lahan</td><td class="n">10 × 20 m (200 m²)</td></tr>
+<tr><td>Denah tiap lantai</td><td class="n">8 × 12 m (96 m²)</td></tr>
+<tr><td>Jumlah lantai</td><td class="n">2</td></tr>
+<tr><td>Luas lantai total</td><td class="n">192 m²</td></tr>
+<tr><td>Tinggi dinding per lantai</td><td class="n">3,2 m</td></tr>
+<tr><td>Grid kolom</td><td class="n">4 × 4 m (12 kolom per lantai)</td></tr>
+<tr><td>Atap</td><td class="n">pelana, kemiringan 30°, overstek 60 cm</td></tr>
+<tr><td>Kelas</td><td class="n">menengah</td></tr>
+</tbody></table></div>
+<p>Rumah ini juga lolos batas tata ruang untuk lahan 10 × 20 m dengan KDB 60% dan KLB 1,2. Cara mengeceknya ada di <a href="/belajar/kdb-klb-kdh-gsb/">contoh perhitungan KDB, KLB, KDH, dan GSB</a>.</p>
+
+<h2>Langkah 1: hitung volume pekerjaan utama</h2>
+<p>Volume adalah jumlah pekerjaan dalam satuannya: m³ untuk beton, m² untuk dinding dan lantai, m' (meter lari) untuk lis atau talang. Berikut volume pekerjaan utama rumah contoh.</p>
+<div class="tw"><table>
+<thead><tr><th>Pekerjaan</th><th>Cara hitung</th><th class="n">Volume</th></tr></thead>
+<tbody>
+<tr><td>Pondasi telapak (footplat)</td><td>12 titik × 1 × 1 × 0,25 m</td><td class="n">3,00 m³</td></tr>
+<tr><td>Sloof 20/30</td><td>panjang grid 68 m × 0,20 × 0,30</td><td class="n">4,08 m³</td></tr>
+<tr><td>Kolom 25/25, dua lantai</td><td>12 × 0,25 × 0,25 × 3,5 m × 2 lantai</td><td class="n">5,25 m³</td></tr>
+<tr><td>Balok lantai 2, 20/35</td><td>68 m × 0,20 × 0,35</td><td class="n">4,76 m³</td></tr>
+<tr><td>Pelat lantai 2, tebal 12 cm</td><td>96 m² × 0,12</td><td class="n">11,52 m³</td></tr>
+<tr><td>Ring balok 15/20</td><td>68 m × 0,15 × 0,20</td><td class="n">2,04 m³</td></tr>
+<tr><td>Pasangan dinding</td><td>(keliling 40 m + sekat 30 m) × 3,2 m × 2 lantai, dikurangi 15% bukaan</td><td class="n">380,8 m²</td></tr>
+<tr><td>Plester dan aci</td><td>dua sisi dinding: 380,8 × 2</td><td class="n">761,6 m²</td></tr>
+<tr><td>Penutup atap</td><td>(8 + 1,2) × (12 + 1,2) ÷ cos 30°</td><td class="n">140,2 m²</td></tr>
+<tr><td>Lantai keramik</td><td>luas lantai total</td><td class="n">192 m²</td></tr>
+</tbody></table></div>
+<p>Panjang grid 68 m berasal dari 3 garis memanjang × 12 m ditambah 4 garis melintang × 8 m. Total beton struktur utama di atas sekitar 30,7 m³. Angka ini belum termasuk kolom praktis, balok anak, dan tangga beton, yang di proyek nyata menambah volume.</p>
+
+<h2>Langkah 2: kalikan dengan harga satuan</h2>
+<p>Harga satuan pekerjaan adalah biaya untuk satu satuan volume, sudah termasuk bahan, upah, dan alat. Cara menyusunnya mengikuti Analisis Harga Satuan Pekerjaan (AHSP) dalam Permen PUPR Nomor 8 Tahun 2023, dengan harga bahan dan upah setempat. Rumusnya:</p>
+<p><code>Biaya pekerjaan = volume × harga satuan pekerjaan</code></p>
+<p>Contoh: kalau harga satuan pasangan dinding bata ringan di daerah Anda Rp180.000 per m², biaya pasangan dinding rumah ini menjadi 380,8 × Rp180.000 = Rp68.544.000. Ulangi untuk setiap baris pekerjaan.</p>
+
+<h2>Langkah 3: rekapitulasi</h2>
+<p>Rekap mengelompokkan semua pekerjaan ke dalam beberapa bagian. Untuk rumah contoh dengan total Rp1.056.000.000 (192 m² × Rp5,5 juta), pembagiannya kira-kira seperti ini:</p>
+<div class="tw"><table>
+<thead><tr><th>No</th><th>Pekerjaan</th><th class="n">Porsi</th><th class="n">Biaya</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Persiapan: pembersihan lahan, bowplank, direksi keet</td><td class="n">3%</td><td class="n">Rp31.680.000</td></tr>
+<tr><td>B</td><td>Tanah dan pondasi</td><td class="n">10%</td><td class="n">Rp105.600.000</td></tr>
+<tr><td>C</td><td>Struktur beton: sloof, kolom, balok, pelat, tangga</td><td class="n">27%</td><td class="n">Rp285.120.000</td></tr>
+<tr><td>D</td><td>Dinding, plester, dan aci</td><td class="n">12%</td><td class="n">Rp126.720.000</td></tr>
+<tr><td>E</td><td>Rangka dan penutup atap</td><td class="n">8%</td><td class="n">Rp84.480.000</td></tr>
+<tr><td>F</td><td>Kusen, pintu, dan jendela</td><td class="n">6%</td><td class="n">Rp63.360.000</td></tr>
+<tr><td>G</td><td>Lantai dan dinding keramik</td><td class="n">8%</td><td class="n">Rp84.480.000</td></tr>
+<tr><td>H</td><td>Plafon</td><td class="n">4%</td><td class="n">Rp42.240.000</td></tr>
+<tr><td>I</td><td>Pengecatan</td><td class="n">4%</td><td class="n">Rp42.240.000</td></tr>
+<tr><td>J</td><td>Sanitasi dan plumbing</td><td class="n">7%</td><td class="n">Rp73.920.000</td></tr>
+<tr><td>K</td><td>Instalasi listrik</td><td class="n">5%</td><td class="n">Rp52.800.000</td></tr>
+<tr><td>L</td><td>Railing tangga dan pekerjaan besi</td><td class="n">3%</td><td class="n">Rp31.680.000</td></tr>
+<tr><td>M</td><td>Pekerjaan luar dan lain-lain</td><td class="n">3%</td><td class="n">Rp31.680.000</td></tr>
+<tr><td></td><td><strong>Total biaya bangunan</strong></td><td class="n"><strong>100%</strong></td><td class="n"><strong>Rp1.056.000.000</strong></td></tr>
+</tbody></table></div>
+<p>Porsi di atas adalah gambaran umum rumah tinggal 2 lantai. Struktur beton dan pekerjaan finishing (dinding, lantai, kusen, plafon, cat) biasanya menjadi dua bagian terbesar. Kalau rekap Anda jauh berbeda dari pola ini, periksa lagi apakah ada pekerjaan yang terlewat atau terhitung dua kali.</p>
+
+<h2>Langkah 4: periksa hasilnya</h2>
+<ul>
+<li><strong>Bandingkan dengan harga per m².</strong> Total RAB dibagi luas lantai harus masuk akal untuk kelasnya. Di contoh ini Rp1.056.000.000 ÷ 192 m² = Rp5,5 juta per m², masuk kelas menengah. Kisaran tiap kelas ada di <a href="/belajar/harga-bangun-rumah-per-m2/">harga bangun rumah per m² 2026</a>.</li>
+<li><strong>Cocokkan volume dengan gambar.</strong> Luas dinding, jumlah kolom, dan luas lantai harus sama dengan denah, tampak, dan potongan.</li>
+<li><strong>Tambahkan yang di luar bangunan utama.</strong> Pagar, carport, sumur, sambungan PLN/PDAM, dan dana cadangan 10–15%.</li>
+<li><strong>Cantumkan asumsi.</strong> Tulis spesifikasi utama (mutu beton, jenis bata, merek keramik) di halaman depan RAB supaya penawaran kontraktor bisa dibandingkan dengan adil.</li>
+</ul>
+
+<h2>Membuat RAB tanpa mengukur ulang</h2>
+<p>Bagian paling lama dari RAB adalah menghitung volume dari gambar, dan pekerjaan ini harus diulang setiap kali desain berubah. Di <a href="https://studio.octonaut.id/?utm_source=octonaut&amp;utm_medium=artikel&amp;utm_campaign=contoh-rab-rumah-2-lantai">Octopus Studio</a>, RAB disusun dari model bangunan: begitu denah, dinding, dan pelat digambar, volumenya terhitung otomatis, dan harga satuan bisa Anda isi sendiri. Hasilnya bisa diunduh sebagai Excel. Penjelasan lebih lengkap ada di <a href="/belajar/cara-menghitung-rab-rumah/">cara menghitung RAB rumah dari model BIM</a>.</p>
+<div class="more"><a class="fill" href="https://studio.octonaut.id/?utm_source=octonaut&amp;utm_medium=artikel&amp;utm_campaign=contoh-rab-rumah-2-lantai">Coba di Octopus Studio</a><a href="/kalkulator/">Kalkulator biaya bangun</a></div>
+<h2>Pertanyaan yang sering muncul</h2>
+<h3>Apa saja isi RAB rumah 2 lantai?</h3>
+<p>Biasanya pekerjaan persiapan, tanah dan pondasi, struktur beton, dinding dan plester, atap, kusen pintu dan jendela, lantai, plafon, pengecatan, sanitasi, listrik, dan pekerjaan luar. Tiap pekerjaan berisi volume, satuan, harga satuan, dan jumlah biaya.</p>
+<h3>Bagaimana cara menghitung volume dinding?</h3>
+<p>Kalikan panjang total dinding dengan tingginya, lalu kurangi luas pintu dan jendela. Untuk plester dan cat, hitung dua sisi dinding.</p>
+<h3>Berapa biaya bangun rumah 2 lantai 8 × 12 m?</h3>
+<p>Dengan luas total 192 m² dan harga kelas menengah Rp5,5 juta per m², biaya bangunan utama sekitar Rp1,06 miliar, belum termasuk pagar, utilitas, dan dana cadangan. Angka di daerah Anda bisa berbeda.</p>
+<h3>Dari mana harga satuan pekerjaan?</h3>
+<p>Harga satuan disusun dari koefisien bahan, upah, dan alat dalam Analisis Harga Satuan Pekerjaan (AHSP) PUPR, dikalikan harga bahan dan upah setempat. Banyak pemerintah daerah juga menerbitkan standar harga satuan tiap tahun.</p>
+
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li><a href="https://peraturan.bpk.go.id/Details/262345">Peraturan Menteri PUPR Nomor 8 Tahun 2023</a> tentang Pedoman Penyusunan Perkiraan Biaya Pekerjaan Konstruksi Bidang PUPR (JDIH BPK): dasar Analisis Harga Satuan Pekerjaan (AHSP).</li>
+<li>Ukuran rumah, volume, harga satuan, dan porsi biaya di artikel ini adalah perumpamaan penulis, bukan harga acuan resmi.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/harga-bangun-rumah-per-m2/">Harga bangun rumah per m² 2026</a><a href="/belajar/cara-menghitung-rab-rumah/">Cara menghitung RAB rumah</a><a href="/belajar/kdb-klb-kdh-gsb/">Contoh perhitungan KDB dan KLB</a></div>
+
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="/kalkulator/">Kalkulator</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="https://studio.octonaut.id/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan dan anggaran, pakai dokumen resmi daerah dan penawaran kontraktor Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>

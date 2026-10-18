@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="id">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JYZ42Z5BK7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JYZ42Z5BK7');
+  // Catat klik ke aplikasi (subdomain *.octonaut.id atau /Gtwin/) sebagai event klik_aplikasi
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    var isApp = /\.octonaut\.id$/.test(u.hostname) || /^\/Gtwin\//.test(u.pathname);
+    if (!isApp) return;
+    gtag('event', 'klik_aplikasi', {
+      app_host: u.hostname + u.pathname,
+      teks_tombol: (a.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60)
+    });
+  });
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beda IMB dan PBG, syarat dan cara mengurus PBG rumah · Octonaut</title>
+<meta name="description" content="Perbedaan IMB dan PBG, status IMB lama, syarat dokumen PBG untuk rumah tinggal, langkah mengurusnya lewat SIMBG, lama proses, dan rumus retribusi PBG.">
+<link rel="canonical" href="https://octonaut.id/belajar/beda-imb-dan-pbg/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F141C">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Octonaut">
+<meta property="og:url" content="https://octonaut.id/belajar/beda-imb-dan-pbg/">
+<meta property="og:title" content="Beda IMB dan PBG, syarat dan cara mengurus PBG rumah · Octonaut">
+<meta property="og:description" content="Perbedaan IMB dan PBG, status IMB lama, syarat dokumen PBG untuk rumah tinggal, langkah mengurusnya lewat SIMBG, lama proses, dan rumus retribusi PBG.">
+<meta property="og:image" content="https://octonaut.id/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Robot gurita Octonaut di studio arsitektur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../belajar.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Beda IMB dan PBG, plus syarat dan cara mengurus PBG rumah", "description": "Perbedaan IMB dan PBG, status IMB lama, syarat dokumen PBG untuk rumah tinggal, langkah mengurusnya lewat SIMBG, lama proses, dan rumus retribusi PBG.", "inLanguage": "id-ID", "datePublished": "2026-10-18", "dateModified": "2026-10-18", "author": {"@type": "Organization", "name": "Octonaut", "url": "https://octonaut.id/"}, "publisher": {"@type": "Organization", "name": "Octonaut", "url": "https://octonaut.id/"}, "image": "https://octonaut.id/og.jpg", "mainEntityOfPage": "https://octonaut.id/belajar/beda-imb-dan-pbg/"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Beranda", "item": "https://octonaut.id/"}, {"@type": "ListItem", "position": 2, "name": "Belajar", "item": "https://octonaut.id/belajar/"}, {"@type": "ListItem", "position": 3, "name": "Beda IMB dan PBG, plus syarat dan cara mengurus PBG rumah", "item": "https://octonaut.id/belajar/beda-imb-dan-pbg/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Apa beda IMB dan PBG?", "acceptedAnswer": {"@type": "Answer", "text": "PBG menggantikan IMB sejak PP 16/2021. Bedanya, PBG adalah persetujuan bahwa rencana teknis bangunan memenuhi standar teknis, dinilai lewat konsultasi dengan tim penilai, diajukan daring lewat SIMBG, dan diikuti Sertifikat Laik Fungsi (SLF) sebelum bangunan dipakai."}}, {"@type": "Question", "name": "Apakah IMB lama harus diganti PBG?", "acceptedAnswer": {"@type": "Answer", "text": "Tidak. IMB yang terbit sebelum PP 16/2021 tetap berlaku sampai masa berlakunya berakhir. PBG baru diperlukan kalau bangunan akan dibangun ulang, diubah, atau diperluas."}}, {"@type": "Question", "name": "Bolehkah membangun dulu lalu mengurus PBG?", "acceptedAnswer": {"@type": "Answer", "text": "Tidak untuk bangunan baru. PBG harus diperoleh sebelum pelaksanaan konstruksi. Membangun tanpa PBG bisa dikenai sanksi administratif sampai perintah pembongkaran."}}, {"@type": "Question", "name": "Apa saja syarat PBG rumah?", "acceptedAnswer": {"@type": "Answer", "text": "Secara umum: KTP pemilik, bukti hak atas tanah, KRK atau KKPR, data perencana, serta dokumen teknis arsitektur, struktur, dan MEP. Rinciannya bisa berbeda di tiap daerah."}}, {"@type": "Question", "name": "Berapa biaya mengurus PBG?", "acceptedAnswer": {"@type": "Answer", "text": "Konsultasi perencanaan tidak dipungut biaya. Yang dibayar adalah retribusi PBG yang dihitung dari luas lantai dan indeks yang ditetapkan peraturan daerah, sehingga besarnya berbeda di tiap daerah."}}]}]}</script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="nav">
+<a class="logo" href="/"><svg width="34" height="34" viewBox="0 0 36 36" fill="none" stroke="#1F5FD1" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="13" r="9"/><path d="M10 20c-2 6-6 8-8 8M14 22c0 6-2 9-4 11M18 22v12M22 22c0 6 2 9 4 11M26 20c2 6 6 8 8 8"/><circle cx="15" cy="12" r="1.2" fill="#1F5FD1"/><circle cx="21" cy="12" r="1.2" fill="#1F5FD1"/></svg><span>OCTONAUT</span></a>
+<nav aria-label="Navigasi utama">
+<a href="/#produk">Produk</a>
+<a href="/belajar/" aria-current="page">Belajar</a>
+<a href="/kalkulator/">Kalkulator</a>
+<a class="btn" href="/#produk">Buka aplikasi</a>
+</nav>
+</header>
+
+<section class="phead">
+<div class="crumbs"><a href="/">Beranda</a> / <a href="/belajar/">Belajar</a></div>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">PERIZINAN</span>
+<h1>Beda IMB dan PBG, plus syarat dan cara mengurus PBG rumah</h1>
+<p class="lede">IMB sudah diganti PBG. Ini bedanya, apakah IMB lama masih berlaku, dan dokumen apa yang perlu disiapkan untuk mengurus PBG rumah.</p>
+<div class="meta"><span>Diperbarui 18 Oktober 2026</span></div>
+</section>
+
+<main class="article">
+<article class="prose">
+
+<p>Sejak 2021, Izin Mendirikan Bangunan (IMB) diganti Persetujuan Bangunan Gedung (PBG). Banyak pemilik rumah masih bingung: apa bedanya, apakah IMB lama masih berlaku, dan dokumen apa yang harus disiapkan untuk mengurus PBG rumah. Artikel ini menjawab ketiganya secara ringkas.</p>
+
+<div class="note">Rincian persyaratan, formulir, dan tarif retribusi bisa berbeda di tiap kabupaten atau kota. Cocokkan dengan standar pelayanan DPMPTSP atau dinas teknis di lokasi bangunan Anda. Artikel ini bukan nasihat hukum.</div>
+
+<h2>Ringkasnya</h2>
+<ul>
+<li><strong>PBG menggantikan IMB.</strong> Dasarnya Undang-Undang Bangunan Gedung yang diubah lewat UU Cipta Kerja, dan Peraturan Pemerintah Nomor 16 Tahun 2021.</li>
+<li><strong>PBG tetap harus ada sebelum membangun.</strong> Pembangunan baru boleh dimulai setelah PBG terbit.</li>
+<li><strong>IMB yang sudah terbit tetap berlaku</strong> sampai masa berlakunya berakhir. Kalau rumah akan diubah atau diperluas, yang diurus adalah PBG.</li>
+<li><strong>Semua diurus daring lewat SIMBG</strong> (simbg.pu.go.id), lalu setelah bangunan selesai dilanjutkan dengan Sertifikat Laik Fungsi (SLF).</li>
+</ul>
+
+<h2>Beda IMB dan PBG</h2>
+<div class="tw"><table>
+<thead><tr><th>Aspek</th><th>IMB (dulu)</th><th>PBG (sekarang)</th></tr></thead>
+<tbody>
+<tr><td>Dasar hukum</td><td>UU 28/2002 dan PP 36/2005</td><td>UU 28/2002 yang diubah UU Cipta Kerja, dan PP 16/2021</td></tr>
+<tr><td>Yang dinilai</td><td>Izin untuk mendirikan bangunan</td><td>Persetujuan bahwa rencana teknis bangunan memenuhi standar teknis</td></tr>
+<tr><td>Cara penilaian</td><td>Pemeriksaan berkas oleh dinas</td><td>Konsultasi perencanaan dengan Tim Penilai Teknis (TPT) atau Tim Profesi Ahli (TPA)</td></tr>
+<tr><td>Pengajuan</td><td>Umumnya datang ke kantor dinas</td><td>Daring lewat SIMBG</td></tr>
+<tr><td>Kelanjutannya</td><td>Tidak selalu diikuti sertifikat laik fungsi</td><td>Diikuti SLF sebelum bangunan dipakai</td></tr>
+<tr><td>Cakupan</td><td>Mendirikan bangunan</td><td>Membangun baru, mengubah, memperluas, mengurangi, dan merawat bangunan</td></tr>
+</tbody></table></div>
+<p>Perubahan terbesarnya ada pada cara penilaian. Dengan PBG, gambar dan perhitungan Anda diperiksa terhadap standar teknis (tata bangunan, keselamatan, kesehatan, kenyamanan, kemudahan) dalam sidang konsultasi. Karena itu kualitas gambar kerja sangat menentukan cepat lambatnya proses.</p>
+
+<h2>Apakah IMB lama masih berlaku?</h2>
+<p>Ya. Ketentuan peralihan PP 16/2021 menyatakan IMB yang diterbitkan sebelum PP ini berlaku tetap berlaku sampai masa berlakunya berakhir. Anda tidak perlu menukar IMB menjadi PBG hanya karena aturannya berganti.</p>
+<p>PBG baru diperlukan kalau rumah akan dibangun ulang, diubah, atau diperluas, misalnya menambah lantai. Bangunan yang sudah berdiri tanpa izin diarahkan untuk mengurus SLF, yang di dalamnya juga mencakup pemeriksaan kesesuaian bangunan.</p>
+
+<h2>Syarat mengurus PBG rumah tinggal</h2>
+<p>Daftar di bawah dirangkum dari standar pelayanan beberapa daerah. Isi lengkapnya tergantung fungsi, luas, dan jumlah lantai bangunan.</p>
+<h3>Dokumen administrasi</h3>
+<ul>
+<li>KTP pemilik (atau akta badan usaha bila pemiliknya badan usaha).</li>
+<li>Bukti kepemilikan atau hak atas tanah, misalnya sertifikat, atau surat perjanjian pemanfaatan tanah bila tanah milik orang lain.</li>
+<li>Keterangan Rencana Kota (KRK) atau Kesesuaian Kegiatan Pemanfaatan Ruang (KKPR), yang memuat nilai KDB, KLB, KDH, dan GSB lahan.</li>
+<li>Data penyedia jasa perencana (arsitek dan ahli struktur) bila memakai jasa perencana.</li>
+</ul>
+<h3>Dokumen teknis</h3>
+<div class="tw"><table>
+<thead><tr><th>Kelompok</th><th>Isi umum</th></tr></thead>
+<tbody>
+<tr><td>Arsitektur</td><td>Gambar situasi, denah, tampak, potongan, detail utama, dan spesifikasi teknis. Ukuran dan luas harus sama di semua gambar dan di formulir.</td></tr>
+<tr><td>Struktur</td><td>Gambar pondasi, kolom, balok, pelat, dan rangka atap, beserta perhitungan struktur. Penyelidikan tanah diminta untuk bangunan lebih dari dua lantai.</td></tr>
+<tr><td>MEP</td><td>Gambar dan perhitungan air bersih, air limbah, air hujan, dan listrik. Untuk rumah biasanya cukup sanitasi dan listrik.</td></tr>
+</tbody></table></div>
+<p>Rumah tinggal tunggal sederhana, yaitu satu lantai paling luas 72 m² atau dua lantai paling luas 90 m², dinilai oleh TPT dan bisa memakai desain prototipe. Rumah yang lebih besar dinilai oleh TPA.</p>
+
+<h2>Cara mengurus PBG</h2>
+<ol class="steps">
+<li><b>Siapkan KRK/KKPR dan rancangan</b>Pastikan rancangan sudah memenuhi KDB, KLB, KDH, dan GSB lahan. Cek cepat dengan <a href="/kalkulator/">kalkulator KDB, KLB, KDH, dan GSB</a>.</li>
+<li><b>Daftar dan ajukan di SIMBG</b>Buat akun di simbg.pu.go.id, isi data pemilik dan bangunan, lalu unggah dokumen. Operator memeriksa kelengkapan.</li>
+<li><b>Ikuti konsultasi perencanaan</b>TPT atau TPA memeriksa dokumen dan bisa meminta perbaikan. Konsultasi ini tidak dipungut biaya.</li>
+<li><b>Terima pernyataan pemenuhan standar teknis</b>Setelah dokumen dinyatakan memenuhi, dinas teknis menghitung retribusi.</li>
+<li><b>Bayar retribusi</b>Pembayaran dilakukan berdasarkan surat ketetapan retribusi daerah (SKRD).</li>
+<li><b>PBG terbit</b>Setelah pembayaran diterima, PBG diterbitkan dan pembangunan boleh dimulai.</li>
+</ol>
+<p>Rincian tiap tahap, termasuk SLF setelah bangunan selesai, ada di <a href="/belajar/pbg-slf-simbg/">alur PBG dan SLF lewat SIMBG</a>.</p>
+
+<h2>Berapa lama dan berapa biayanya?</h2>
+<p><strong>Waktu.</strong> Materi DPMPTSP yang merujuk PP 16/2021 menyebut pemeriksaan dokumen paling banyak lima kali dalam kurun paling lama 28 hari kerja. Waktu nyata sering lebih lama kalau dokumen bolak-balik diperbaiki, jadi gambar yang rapi dan konsisten adalah cara paling ampuh mempercepatnya.</p>
+<p><strong>Biaya.</strong> Konsultasi gratis. Yang dibayar adalah retribusi PBG, yang diatur peraturan daerah. Rumus umumnya:</p>
+<p><code>Retribusi = LLt × (Ilo × SHST) × It × Ibg</code></p>
+<ul>
+<li><strong>LLt</strong>: luas total lantai bangunan.</li>
+<li><strong>Ilo</strong>: indeks lokalitas yang ditetapkan daerah.</li>
+<li><strong>SHST</strong>: standar harga satuan tertinggi bangunan gedung di daerah tersebut.</li>
+<li><strong>It</strong>: indeks terintegrasi, gabungan indeks fungsi bangunan, parameter teknis, dan faktor kepemilikan.</li>
+<li><strong>Ibg</strong>: indeks untuk jenis kegiatan, misalnya bangunan baru atau perubahan.</li>
+</ul>
+<p>Karena tiap variabel ditetapkan daerah, cara paling akurat mengetahui besarnya adalah membaca perda retribusi daerah Anda atau bertanya langsung ke dinas. Retribusi juga bergantung pada luas, jadi luas di formulir harus sama dengan luas di gambar.</p>
+
+<h2>Kalau membangun tanpa PBG</h2>
+<p>Undang-Undang Bangunan Gedung mengatur sanksi administratif, mulai dari peringatan tertulis, pembatasan atau penghentian pembangunan, sampai perintah pembongkaran. Selain itu, bangunan tanpa PBG akan sulit memperoleh SLF, dan ini bisa menyulitkan saat rumah dijual, diagunkan ke bank, atau dipakai untuk usaha.</p>
+
+<h2>Menyiapkan gambarnya</h2>
+<p>Sebagian besar waktu pengurusan PBG habis untuk memperbaiki gambar. Di <a href="https://litebim.octonaut.id/">LiteBIM</a> dan <a href="https://studio.octonaut.id/?utm_source=octonaut&amp;utm_medium=artikel&amp;utm_campaign=beda-imb-dan-pbg">Octopus Studio</a>, denah, tampak, dan potongan diambil dari satu model, jadi ukurannya konsisten di semua lembar. Aplikasi ini tidak mengurus PBG atau terhubung ke SIMBG; dokumen tetap disusun dan ditandatangani perencana yang bertanggung jawab.</p>
+<h2>Pertanyaan yang sering muncul</h2>
+<h3>Apa beda IMB dan PBG?</h3>
+<p>PBG menggantikan IMB sejak PP 16/2021. Bedanya, PBG adalah persetujuan bahwa rencana teknis bangunan memenuhi standar teknis, dinilai lewat konsultasi dengan tim penilai, diajukan daring lewat SIMBG, dan diikuti Sertifikat Laik Fungsi (SLF) sebelum bangunan dipakai.</p>
+<h3>Apakah IMB lama harus diganti PBG?</h3>
+<p>Tidak. IMB yang terbit sebelum PP 16/2021 tetap berlaku sampai masa berlakunya berakhir. PBG baru diperlukan kalau bangunan akan dibangun ulang, diubah, atau diperluas.</p>
+<h3>Bolehkah membangun dulu lalu mengurus PBG?</h3>
+<p>Tidak untuk bangunan baru. PBG harus diperoleh sebelum pelaksanaan konstruksi. Membangun tanpa PBG bisa dikenai sanksi administratif sampai perintah pembongkaran.</p>
+<h3>Apa saja syarat PBG rumah?</h3>
+<p>Secara umum: KTP pemilik, bukti hak atas tanah, KRK atau KKPR, data perencana, serta dokumen teknis arsitektur, struktur, dan MEP. Rinciannya bisa berbeda di tiap daerah.</p>
+<h3>Berapa biaya mengurus PBG?</h3>
+<p>Konsultasi perencanaan tidak dipungut biaya. Yang dibayar adalah retribusi PBG yang dihitung dari luas lantai dan indeks yang ditetapkan peraturan daerah, sehingga besarnya berbeda di tiap daerah.</p>
+
+
+<section class="sources">
+<h2>Sumber</h2>
+<ul>
+<li>Peraturan Pemerintah Nomor 16 Tahun 2021 tentang Peraturan Pelaksanaan UU Nomor 28 Tahun 2002 tentang Bangunan Gedung: PBG, TPT dan TPA, konsultasi perencanaan, dan ketentuan peralihan IMB.</li>
+<li><a href="https://www.hukumonline.com/klinik/a/pengertian-pbg-dan-sanksi-jika-bangunan-tak-memilikinya-lt50a86f56c173c/">Pengertian PBG dan sanksi jika bangunan tak memilikinya</a>, Klinik Hukumonline: kewajiban PBG sebelum konstruksi dan sanksi administratif.</li>
+<li><a href="https://www.detik.com/properti/tips-dan-panduan/d-7047030/pbg-adalah-persetujuan-bangunan-gedung-ketahui-perbedaannya-dengan-imb">PBG adalah Persetujuan Bangunan Gedung, ketahui perbedaannya dengan IMB</a>, detikProperti: perbedaan IMB dan PBG, dokumen, dan status IMB lama.</li>
+<li><a href="https://sorotutama.com/cara-mengurus-pbg-pengganti-imb-lewat-simbg-syarat-rumus-retribusi-dan-sanksi-administratif">Cara mengurus PBG lewat SIMBG: syarat, rumus retribusi, dan sanksi</a>, Sorot Utama: rumus retribusi dan rujukan pasal.</li>
+<li><a href="https://pasal.id/peraturan/perda/perda-kota-tanjungpinang-1-2023">Perda Kota Tanjungpinang Nomor 1 Tahun 2023</a>: contoh rumus retribusi PBG dalam peraturan daerah.</li>
+<li><a href="https://dpmptspp.belitung.go.id/wp-content/uploads/2022/04/MEKANISMES-Penerbitan-PBG-SLF-dan-SBKBG.pdf">Mekanisme penerbitan PBG, SLF, dan SBKBG</a>, DPMPTSP Kabupaten Belitung: batas pemeriksaan dan tahapan.</li>
+<li><a href="https://dpmptsp.sanggau.go.id/wp-content/uploads/2022/08/11.-SP-PBG.pdf">Standar pelayanan PBG</a>, DPMPTSP Kabupaten Sanggau: daftar dokumen.</li>
+</ul>
+</section>
+<div class="more"><a class="fill" href="/belajar/">Semua artikel</a><a href="/belajar/pbg-slf-simbg/">Alur PBG dan SLF lewat SIMBG</a><a href="/belajar/kdb-klb-kdh-gsb/">Contoh perhitungan KDB dan KLB</a><a href="/kalkulator/">Kalkulator KDB, KLB, KDH, GSB</a></div>
+
+</article>
+</main>
+
+<footer>
+<div class="row">
+<div><b>OCTONAUT</b><span>Alat bantu sederhana untuk arsitek dan kontraktor.</span></div>
+<nav aria-label="Tautan footer">
+<a href="/">Beranda</a>
+<a href="/belajar/">Belajar</a>
+<a href="/kalkulator/">Kalkulator</a>
+<a href="https://litebim.octonaut.id/">LiteBIM</a>
+<a href="https://studio.octonaut.id/">Studio</a>
+</nav>
+</div>
+<div class="fine"><span>© 2026 Octonaut</span><span>Artikel ini bersifat edukasi. Untuk keputusan perizinan dan anggaran, pakai dokumen resmi daerah dan penawaran kontraktor Anda.</span></div>
+</footer>
+
+</div>
+</body>
+</html>
