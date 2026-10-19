@@ -25,14 +25,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kalkulator KDB, KLB, KDH, GSB &amp; Biaya Bangun Rumah · Octonaut</title>
-<meta name="description" content="Kalkulator pra-desain gratis tanpa login: hitung luas bangunan maksimal dari KDB, KLB, KDH dan GSB, jumlah lantai, serta estimasi biaya bangun rumah per m². Lanjutkan ke denah dan RAB di Octopus Studio.">
+<meta name="description" content="Kalkulator pra-desain tanpa login: hitung luas bangunan maksimal dari KDB, KLB, KDH dan GSB, jumlah lantai, serta estimasi biaya bangun rumah per m². Lanjutkan ke denah dan RAB di Octopus Studio.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0F141C">
 <link rel="canonical" href="https://octonaut.id/kalkulator/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="id_ID">
 <meta property="og:title" content="Kalkulator KDB, KLB, KDH, GSB & Biaya Bangun Rumah">
-<meta property="og:description" content="Hitung luas bangunan maksimal di lahan Anda dan perkiraan biayanya. Gratis, tanpa login.">
+<meta property="og:description" content="Hitung luas bangunan maksimal di lahan Anda dan perkiraan biayanya. Tanpa login.">
 <meta property="og:url" content="https://octonaut.id/kalkulator/">
 <meta property="og:site_name" content="Octonaut">
 <meta property="og:image" content="https://octonaut.id/og.jpg">
@@ -151,7 +151,7 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
 </header>
 
 <section class="phead">
-<span class="tag" style="align-self:flex-start;color:var(--accent)">GRATIS · TANPA LOGIN</span>
+<span class="tag" style="align-self:flex-start;color:var(--accent)">TANPA LOGIN</span>
 <h1>Kalkulator KDB, KLB, KDH, GSB &amp; biaya bangun rumah</h1>
 <p class="lede">Masukkan ukuran lahan dan aturan tata ruangnya. Anda langsung tahu luas bangunan maksimal, jumlah lantai yang diizinkan, dan perkiraan biaya bangunnya.</p>
 </section>
@@ -211,21 +211,29 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
           <label>Jumlah lantai
             <div class="inp"><input id="lantai" inputmode="numeric" value="2"><span class="unit">lt</span></div>
           </label>
-          <label>Kelas bangunan
+          <label>Standar harga kota
             <div class="inp">
-              <select id="kelas">
-                <option value="4000000">Sederhana</option>
-                <option value="5500000" selected>Menengah</option>
-                <option value="8000000">Mewah</option>
-                <option value="custom">Isi sendiri</option>
+              <select id="kota" aria-describedby="hargaHint">
+                <option value="">Contoh umum</option>
               </select>
             </div>
           </label>
         </div>
+        <label>Kelas bangunan
+          <div class="inp">
+            <select id="kelas">
+              <optgroup label="Contoh umum">
+                <option value="4000000">Sederhana</option>
+                <option value="5500000" selected>Menengah</option>
+                <option value="8000000">Mewah</option>
+              </optgroup>
+            </select>
+          </div>
+        </label>
         <label>Harga bangun per m²
           <div class="inp"><input id="harga" inputmode="numeric" value="5.500.000"><span class="unit">Rp</span></div>
         </label>
-        <p class="hint">Angka bawaan hanya contoh kasar. Sesuaikan dengan harga di daerah Anda atau penawaran kontraktor.</p>
+        <p class="hint" id="hargaHint">Angka bawaan hanya contoh kasar. Sesuaikan dengan harga di daerah Anda atau penawaran kontraktor.</p>
       </fieldset>
 
       <div class="btns">
@@ -297,6 +305,7 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     <details><summary>Dari mana saya tahu nilai KDB, KLB, KDH dan GSB lahan saya?</summary><p>Nilainya ditetapkan pemerintah daerah lewat RDTR, peraturan zonasi, atau Keterangan Rencana Kota (KRK/KKPR). Tanyakan ke dinas tata ruang atau PUPR setempat. Angka ini juga diperiksa saat mengurus PBG.</p></details>
     <details><summary>Kenapa lantai dasar maksimal bisa lebih kecil dari KDB?</summary><p>Karena tiga aturan berlaku bersamaan. Lantai dasar dibatasi oleh KDB, oleh area di dalam garis sempadan, dan oleh sisa lahan setelah dikurangi ruang hijau minimal (KDH). Kalkulator memakai yang paling ketat.</p></details>
     <details><summary>Seberapa akurat perkiraan biayanya?</summary><p>Ini perkiraan awal dengan metode harga per m², cocok untuk menyiapkan anggaran kasar. Biaya nyata bergantung pada daerah, kondisi tanah, desain, dan spesifikasi material. Untuk angka yang bisa dipertanggungjawabkan, susun RAB per item pekerjaan.</p></details>
+    <details><summary>Dari mana angka standar harga kota?</summary><p>Dari Standar Harga Satuan Tertinggi (SHST) bangunan gedung negara tahun anggaran 2026 yang ditetapkan pemerintah daerah. Angka ini adalah batas biaya konstruksi fisik per m² untuk gedung pemerintah, kelas sederhana (sampai 2 lantai) dan tidak sederhana (lebih dari 2 lantai), belum termasuk biaya perencanaan dan pengawasan. Kalkulator memakainya sebagai acuan resmi; harga rumah pribadi bisa lebih rendah atau lebih tinggi menurut spesifikasi dan kontraktor.</p></details>
     <details><summary>Apakah data saya disimpan?</summary><p>Tidak. Semua perhitungan berjalan di browser Anda dan tidak dikirim ke server.</p></details>
     <p style="color:var(--muted);font-size:14px">Mau belajar lebih dalam? Baca <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a> atau artikel lain di <a href="/belajar/">Belajar</a>.</p>
   </section>
@@ -323,8 +332,24 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  const ids = ['lebar','panjang','luas','kdb','klb','kdh','gsbD','gsbB','gsbS','lantai','kelas','harga'];
-  const DEFAULTS = {lebar:'10',panjang:'20',luas:'200',kdb:'60',klb:'1,2',kdh:'20',gsbD:'3',gsbB:'2',gsbS:'0',lantai:'2',kelas:'5500000',harga:'5.500.000'};
+  const ids = ['lebar','panjang','luas','kdb','klb','kdh','gsbD','gsbB','gsbS','lantai','kota','kelas','harga'];
+  const DEFAULTS = {lebar:'10',panjang:'20',luas:'200',kdb:'60',klb:'1,2',kdh:'20',gsbD:'3',gsbB:'2',gsbS:'0',lantai:'2',kota:'',kelas:'5500000',harga:'5.500.000'};
+
+  // Standar Harga Satuan Tertinggi (SHST) bangunan gedung negara per m², tahun anggaran 2026.
+  // s = sederhana (s.d. 2 lantai), t = tidak sederhana (lebih dari 2 lantai). Biaya konstruksi fisik.
+  // Tambah kota baru di sini; pastikan sumbernya dokumen resmi pemda.
+  const SRC_JATENG = 'DPU Bina Marga Cipta Karya Jawa Tengah, TA 2026';
+  const KOTA = {
+    semarang:   {n:'Kota Semarang',   s:5760000, t:6730000, src:'Perwal Kota Semarang No. 30/2025, termasuk PPN'},
+    surakarta:  {n:'Kota Surakarta (Solo)', o:'Solo',  s:4940000, t:5710000, src:SRC_JATENG},
+    salatiga:   {n:'Kota Salatiga',   s:5560000, t:6572000, src:SRC_JATENG},
+    magelang:   {n:'Kota Magelang',   s:5318000, t:6213000, src:SRC_JATENG},
+    pekalongan: {n:'Kota Pekalongan', s:5503000, t:6430000, src:SRC_JATENG},
+    tegal:      {n:'Kota Tegal',      s:5013000, t:5684000, src:SRC_JATENG}
+  };
+  const CONTOH = [['4000000','Sederhana'],['5500000','Menengah'],['8000000','Mewah']];
+  const HINT0 = 'Angka bawaan hanya contoh kasar. Sesuaikan dengan harga di daerah Anda atau penawaran kontraktor.';
+  let kelasManual = false;
   const nf = new Intl.NumberFormat('id-ID',{maximumFractionDigits:1});
   const nf0 = new Intl.NumberFormat('id-ID',{maximumFractionDigits:0});
   let luasManual = false;
@@ -348,6 +373,38 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     return rp(n);
   }
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // Isi pilihan kota sekali
+  Object.keys(KOTA).forEach(k=>{ const o=document.createElement('option'); o.value=k; o.textContent=KOTA[k].o || KOTA[k].n.replace(/^Kota /,''); $('kota').appendChild(o); });
+
+  // Bangun ulang pilihan kelas sesuai kota (atau contoh umum)
+  function buildKelas(){
+    const k = KOTA[$('kota').value];
+    const opts = k
+      ? [[String(k.s),'Sederhana (s.d. 2 lantai)'],[String(k.t),'Tidak sederhana (> 2 lantai)']]
+      : CONTOH;
+    $('kelas').innerHTML = '<optgroup label="'+esc(k ? k.n : 'Contoh umum')+'">' +
+      opts.map(o=>'<option value="'+o[0]+'">'+esc(o[1])+'</option>').join('') + '</optgroup>' +
+      '<option value="custom">Isi sendiri</option>';
+  }
+  // Kelas otomatis menurut jumlah lantai (aturan bangunan gedung negara), kecuali dipilih sendiri
+  function autoKelas(){
+    const k = KOTA[$('kota').value];
+    if(!k || kelasManual) return;
+    const lt = Math.round(num($('lantai').value)||1);
+    const v = String(lt > 2 ? k.t : k.s);
+    $('kelas').value = v; $('harga').value = nf0.format(Number(v));
+  }
+  function syncKelasFromHarga(){
+    const h = num($('harga').value);
+    const m = [...$('kelas').options].find(o=>Number(o.value)===h);
+    $('kelas').value = m ? m.value : 'custom';
+  }
+  function updateHint(){
+    const k = KOTA[$('kota').value];
+    if(!k){ $('hargaHint').textContent = HINT0; return; }
+    $('hargaHint').textContent = 'Standar harga satuan tertinggi bangunan gedung negara ' + k.n + ' 2026: biaya konstruksi fisik, belum termasuk perencanaan dan pengawasan. Harga rumah pribadi bisa berbeda menurut spesifikasi. Sumber: ' + k.src + '.';
+  }
 
   let last = null;
 
@@ -485,15 +542,17 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
       '• Ruang hijau min: ' + m2(o.aKdh),
       '• Lantai maks: ' + o.ltMax,
       '• Rencana ' + o.lt + ' lantai: ' + m2(o.total) + (isFinite(o.biaya) ? ' ≈ ' + rpShort(o.biaya) + ' (' + rp(o.harga) + '/m²)' : ''),
+      (KOTA[$('kota').value] ? '• Acuan harga: standar ' + KOTA[$('kota').value].n + ' 2026' : ''),
       '',
       'Hitung punya Anda: ' + shareUrl()
-    ].join('\n');
+    ].filter((l,i,a)=> l!=='' || i===a.length-2).join('\n');
   }
   function shareUrl(){
     const base = location.origin && location.origin.startsWith('http') ? location.origin + location.pathname : 'https://octonaut.id/kalkulator/';
     const q = new URLSearchParams();
     ids.forEach(i=>{ if(i!=='kelas') q.set(i, $(i).value); });
     if(!luasManual) q.delete('luas');
+    if(!$('kota').value) q.delete('kota');
     return base + '?' + q.toString();
   }
   function updateShare(){
@@ -506,11 +565,12 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     try{
       const q = new URLSearchParams(location.search);
       if(![...q.keys()].length) return;
-      ids.forEach(i=>{ if(q.has(i)) $(i).value = q.get(i); });
+      if(q.has('kota') && KOTA[q.get('kota')]) $('kota').value = q.get('kota');
+      buildKelas();
+      ids.forEach(i=>{ if(i!=='kota' && i!=='kelas' && q.has(i)) $(i).value = q.get(i); });
       if(q.has('luas')) luasManual = true;
-      const h = num($('harga').value);
-      const match = [...$('kelas').options].find(o=>Number(o.value)===h);
-      $('kelas').value = match ? match.value : 'custom';
+      if(q.has('harga')) kelasManual = true;
+      syncKelasFromHarga();
     }catch(e){}
   }
   function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
@@ -524,20 +584,28 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
   }
 
   // Events
-  ids.forEach(i=> $(i).addEventListener('input', ()=>{
+  ids.forEach(i=> $(i).addEventListener(i==='kota'||i==='kelas' ? 'change' : 'input', ()=>{
     if(i==='luas') luasManual = true;
-    if(i==='lebar'||i==='panjang'){ /* recompute luas only if user hasn't overridden */ }
-    if(i==='kelas'){ if($('kelas').value!=='custom') $('harga').value = nf0.format(Number($('kelas').value)); else $('harga').focus(); }
-    if(i==='harga'){ const h=num($('harga').value); const m=[...$('kelas').options].find(o=>Number(o.value)===h); $('kelas').value = m?m.value:'custom'; }
+    if(i==='kota'){
+      buildKelas(); kelasManual = false;
+      if(!KOTA[$('kota').value]){ $('kelas').value = DEFAULTS.kelas; $('harga').value = DEFAULTS.harga; }
+      autoKelas(); updateHint();
+    }
+    if(i==='kelas'){ kelasManual = true; if($('kelas').value!=='custom') $('harga').value = nf0.format(Number($('kelas').value)); else $('harga').focus(); }
+    if(i==='harga'){ kelasManual = true; syncKelasFromHarga(); }
+    if(i==='lantai') autoKelas();
     calc();
   }));
   $('harga').addEventListener('blur', ()=>{ const h=num($('harga').value); if(h>0) $('harga').value = nf0.format(h); });
   $('luas').addEventListener('blur', ()=>{ if($('luas').value.trim()===''){ luasManual=false; calc(); } });
-  $('btnReset').addEventListener('click', ()=>{ ids.forEach(i=> $(i).value = DEFAULTS[i]); luasManual=false; calc(); });
+  $('btnReset').addEventListener('click', ()=>{ $('kota').value=''; buildKelas(); ids.forEach(i=> $(i).value = DEFAULTS[i]); luasManual=false; kelasManual=false; updateHint(); calc(); });
   $('btnCopy').addEventListener('click', ()=> copy(summary(), 'Ringkasan disalin'));
   $('btnLink').addEventListener('click', ()=> copy(shareUrl(), 'Tautan disalin'));
 
+  buildKelas();
+  $('kelas').value = DEFAULTS.kelas;
   loadUrl();
+  updateHint();
   calc();
 })();
 </script>
