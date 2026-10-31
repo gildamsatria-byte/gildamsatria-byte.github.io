@@ -25,7 +25,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kalkulator KDB, KLB, KDH, GSB &amp; Biaya Bangun Rumah</title>
-<meta name="description" content="Kalkulator gratis tanpa login: hitung luas bangunan maksimal dari KDB, KLB, KDH, GSB, jumlah lantai, dan perkiraan biaya bangun rumah per m².">
+<meta name="description" content="Kalkulator gratis tanpa login: hitung luas maksimal dari KDB, KLB, KDH, GSB, gambar denah sederhana, dan perkiraan biaya bangun dari elemennya.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0F141C">
 <link rel="canonical" href="https://octonaut.id/kalkulator/">
@@ -51,7 +51,7 @@
       "operatingSystem": "Browser",
       "inLanguage": "id",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "IDR"},
-      "description": "Hitung KDB, KLB, KDH, GSB, jumlah lantai maksimal, dan estimasi biaya bangun rumah per m²."
+      "description": "Hitung KDB, KLB, KDH, GSB, jumlah lantai maksimal, estimasi biaya bangun per m², dan gambar denah sederhana dengan biaya dari volume dinding, pintu, jendela, lantai, dan atap."
     },
     {
       "@type": "FAQPage",
@@ -60,7 +60,8 @@
         {"@type": "Question", "name": "Apa itu KLB?", "acceptedAnswer": {"@type": "Answer", "text": "Koefisien Lantai Bangunan (KLB) adalah perbandingan total luas seluruh lantai bangunan terhadap luas lahan. KLB 1,2 pada lahan 200 m² berarti total luas lantai maksimal 240 m²."}},
         {"@type": "Question", "name": "Apa itu KDH?", "acceptedAnswer": {"@type": "Answer", "text": "Koefisien Dasar Hijau (KDH) adalah persentase minimal luas lahan yang harus dibiarkan sebagai ruang terbuka hijau yang dapat meresapkan air."}},
         {"@type": "Question", "name": "Apa itu GSB?", "acceptedAnswer": {"@type": "Answer", "text": "Garis Sempadan Bangunan (GSB) adalah jarak minimal dinding terluar bangunan dari batas lahan, biasanya diukur dari batas depan yang berbatasan dengan jalan."}},
-        {"@type": "Question", "name": "Dari mana saya tahu nilai KDB, KLB, KDH dan GSB lahan saya?", "acceptedAnswer": {"@type": "Answer", "text": "Nilainya ditetapkan pemerintah daerah lewat Rencana Detail Tata Ruang (RDTR), peraturan zonasi, atau Keterangan Rencana Kota (KRK/KKPR). Tanyakan ke dinas tata ruang atau PUPR setempat sebelum mengurus PBG."}}
+        {"@type": "Question", "name": "Dari mana saya tahu nilai KDB, KLB, KDH dan GSB lahan saya?", "acceptedAnswer": {"@type": "Answer", "text": "Nilainya ditetapkan pemerintah daerah lewat Rencana Detail Tata Ruang (RDTR), peraturan zonasi, atau Keterangan Rencana Kota (KRK/KKPR). Tanyakan ke dinas tata ruang atau PUPR setempat sebelum mengurus PBG."}},
+        {"@type": "Question", "name": "Bagaimana biaya dari gambar denah dihitung?", "acceptedAnswer": {"@type": "Answer", "text": "Dinding dihitung dari panjang × tinggi dikurangi luas pintu dan jendela. Luas lantai diambil dari ruang yang tertutup dinding, atap dari proyeksi gabungan semua lantai ditambah teritis, pondasi dari panjang dinding lantai 1. Tiap volume dikali harga satuan yang bisa Anda ganti."}}
       ]
     }
   ]
@@ -131,6 +132,70 @@ summary{cursor:pointer;font-weight:600}
 details p{color:var(--muted);margin-top:8px;line-height:1.6}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:10}
 .toast.show{opacity:1}
+/* Denah */
+.denah{padding:0 var(--pad) clamp(40px,5vw,72px)}
+.dh-head{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+.dh-head h2{font-size:30px;margin:4px 0 6px}
+.dh-head .sub{color:var(--muted);font-size:15px;max-width:720px}
+.dh-floors{display:flex;border-bottom:1.5px solid var(--ink);margin-bottom:12px;overflow-x:auto}
+.dh-floors button{appearance:none;border:1.5px solid var(--ink);border-bottom:0;background:var(--paper);color:var(--ink);font:inherit;font-weight:600;font-size:15px;padding:0 14px;margin-right:-1.5px;min-height:40px;cursor:pointer;white-space:nowrap}
+.dh-floors button[aria-selected=true]{background:var(--ink);color:#fff}
+.dh-empty{font-weight:400;font-size:12px;opacity:.7}
+.dh-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tool{appearance:none;display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 12px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);font:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.tool:hover{background:#fff}
+.tool[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.tool kbd{font-family:var(--mono);font-size:11px;font-weight:400;opacity:.7}
+.tool svg{flex:none}
+.tool:disabled{opacity:.4;cursor:default}
+.dh-sep{width:1px;align-self:stretch;background:var(--rule);margin:0 2px}
+.denah label.mini{display:inline-flex;align-items:center;gap:8px;margin:0;font-size:14px}
+.denah label.mini .inp{margin:0}
+.denah label.mini input[type=text],.denah label.mini .inp input{width:96px;min-height:40px;padding:6px 38px 6px 10px}
+.denah label.chk{display:inline-flex;align-items:center;gap:6px;margin:0;font-size:14px;cursor:pointer}
+.denah label.chk input{width:18px;height:18px;accent-color:var(--accent)}
+.dh-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.dh-canvas{position:relative;border:1.5px solid var(--ink);background:#fff}
+#dhSvg{display:block;width:100%;height:clamp(380px,64vh,660px);touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.dh-canvas[data-tool=pilih] #dhSvg{cursor:default}
+#dhSvg.panning{cursor:grabbing}
+.dh-hint{position:absolute;left:10px;top:10px;right:60px;display:flex;gap:10px;align-items:center;pointer-events:none}
+.dh-hint span{background:rgba(251,251,250,.94);border:1px solid var(--rule2);padding:6px 10px;font-size:13px;line-height:1.45;color:var(--muted);max-width:560px}
+.dh-hint button{pointer-events:auto;min-height:36px}
+.dh-hint button[hidden]{display:none}
+.boq thead th{background:var(--paper);color:var(--muted);text-transform:none;letter-spacing:0}
+.dh-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column}
+.dh-zoom button{appearance:none;width:38px;height:38px;border:1.5px solid var(--ink);margin-top:-1.5px;background:var(--paper);font:inherit;font-weight:600;font-size:18px;cursor:pointer;color:var(--ink)}
+.dh-zoom button:hover{background:#fff}
+.dh-side{display:grid;gap:12px}
+.panel{border:1.5px solid var(--ink);background:#fff;padding:14px}
+.panel h3{font-size:20px;margin-bottom:8px}
+.panel fieldset{margin:0}
+.panel label{font-size:13.5px;margin-bottom:8px}
+.panel .inp input{min-height:40px;padding:6px 40px 6px 10px;font-size:14px}
+.stat{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;border-top:1px solid var(--rule2)}
+.stat:first-of-type{border-top:0}
+.stat b{font-family:var(--mono);font-weight:500;white-space:nowrap}
+.b.sm{min-height:38px;font-size:14px;padding:0 12px}
+.b:disabled{opacity:.4;cursor:default}
+.dh-alerts{display:grid;gap:8px;margin:14px 0 0}
+.dh-boq{margin-top:20px}
+.dh-boq h3{font-size:24px;margin-bottom:4px}
+.boq-wrap{overflow-x:auto;border:1.5px solid var(--ink);background:#fff;margin-top:10px}
+.boq{width:100%;border-collapse:collapse;font-size:15px;min-width:720px}
+.boq th{text-align:left;font-size:13px;color:var(--muted);font-weight:500;padding:10px 12px;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+.boq th.n{text-align:right}
+.boq td{padding:8px 12px;border-top:1px solid var(--rule2);vertical-align:middle}
+.boq td .f{font-size:12.5px;color:var(--muted);margin-top:2px}
+.boq td.n{font-family:var(--mono);text-align:right;white-space:nowrap}
+.boq .inp{margin:0;display:inline-block}
+.boq .inp input{width:140px;min-height:38px;padding:6px 10px;text-align:right;font-size:14px}
+.boq .inp input.mod{border-color:var(--pencil);background:#FFF9EC}
+.boq tfoot td{font-weight:600;border-top:1.5px solid var(--ink);background:var(--paper)}
+.dh-cmp{font-size:15px;margin-top:12px;line-height:1.55}
+@media (max-width:980px){.dh-grid{grid-template-columns:minmax(0,1fr)}.dh-side{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+@media (max-width:640px){.tool kbd{display:none}.dh-sep{display:none}#dhSvg{height:62vh}.dh-hint{position:static;padding:8px;border-top:1px solid var(--rule2);background:var(--paper)}.dh-hint span{border:0;background:none;padding:0}.denah .box{padding:16px}}
+@media print{.dh-tools,.dh-zoom,.dh-hint,.dh-head .btns,#dhProps,.dh-boq .btns{display:none!important}.dh-grid{grid-template-columns:1fr}.boq .inp input{border:0}}
 @media (max-width:980px){.calc{grid-template-columns:minmax(0,1fr)}.cta2{grid-template-columns:1fr}}
 @media (max-width:760px){.edu .grid4{grid-template-columns:1fr}}
 @media (max-width:460px){.row3{grid-template-columns:1fr 1fr}.kpi .v{font-size:28px}.kpi.big .v{font-size:36px}.box{padding:18px}}
@@ -280,10 +345,87 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     </section>
 </main>
 
+  <section class="denah" id="denah" aria-labelledby="h-denah">
+    <div class="box">
+      <div class="dh-head">
+        <div>
+          <span class="eyebrow">Baru · gambar denah</span>
+          <h2 id="h-denah">Gambar denah, hitung biaya dari elemennya</h2>
+          <p class="sub">Gambar dinding tebal 15 cm, pasang pintu 90 cm dan jendela. Luas lantai, atap, serta jumlah pintu dan jendela diambil dari gambar. Harga satuan memakai angka bawaan dan bisa Anda ganti.</p>
+        </div>
+        <div class="btns"><button class="b sm" type="button" id="dhSample">Muat contoh denah</button></div>
+      </div>
+
+      <div class="dh-floors" role="tablist" aria-label="Pilih lantai" id="dhFloors"></div>
+
+      <div class="dh-tools" role="toolbar" aria-label="Alat gambar denah">
+        <button class="tool" type="button" data-tool="pilih" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 2l9 5-4 1-1 5z"/></svg>Pilih <kbd>V</kbd></button>
+        <button class="tool" type="button" data-tool="dinding" aria-pressed="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 13V3h12" stroke-width="3"/></svg>Dinding <kbd>W</kbd></button>
+        <button class="tool" type="button" data-tool="ruang" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="9" stroke-width="2.4"/></svg>Ruang kotak <kbd>R</kbd></button>
+        <button class="tool" type="button" data-tool="pintu" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 14h3M11 14h3M5 14V5M5 5a9 9 0 0 1 9 9" /></svg>Pintu 90 cm <kbd>P</kbd></button>
+        <button class="tool" type="button" data-tool="jendela" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 6h14M1 10h14M1 8h14M3 6v4M13 6v4"/></svg>Jendela <kbd>J</kbd></button>
+        <label class="mini">Lebar jendela <span class="inp"><input id="dhJW" inputmode="numeric" aria-label="Lebar jendela baru"><span class="unit">cm</span></span></label>
+        <span class="dh-sep" aria-hidden="true"></span>
+        <label class="chk"><input type="checkbox" id="dhOrtho">Siku</label>
+        <label class="chk"><input type="checkbox" id="dhDims">Ukuran</label>
+        <span class="dh-sep" aria-hidden="true"></span>
+        <button class="tool" type="button" id="dhUndo" title="Batalkan (Ctrl+Z)">↶ Batal</button>
+        <button class="tool" type="button" id="dhRedo" title="Ulangi (Ctrl+Y)">↷ Ulangi</button>
+      </div>
+
+      <div class="dh-grid">
+        <div class="dh-canvas" id="dhCanvas" data-tool="dinding">
+          <svg id="dhSvg" role="img" aria-label="Kanvas denah. Gunakan alat di atas untuk menggambar dinding, pintu, dan jendela."></svg>
+          <div class="dh-hint"><span id="dhHintT"></span><button class="b sm" type="button" id="dhDone" hidden>Selesai</button></div>
+          <div class="dh-zoom">
+            <button type="button" id="dhZin" aria-label="Perbesar">+</button>
+            <button type="button" id="dhZout" aria-label="Perkecil">−</button>
+            <button type="button" id="dhFit" aria-label="Pas layar" style="font-size:13px">⤢</button>
+          </div>
+        </div>
+        <aside class="dh-side" aria-label="Info denah">
+          <div class="panel" id="dhProps"></div>
+          <div class="panel" id="dhSum"></div>
+          <div class="panel">
+            <h3>Ukuran elemen</h3>
+            <div class="row">
+              <label>Tinggi dinding/lt<div class="inp"><input id="dhH" inputmode="decimal"><span class="unit">m</span></div></label>
+              <label>Tinggi jendela<div class="inp"><input id="dhJH" inputmode="decimal"><span class="unit">m</span></div></label>
+            </div>
+            <label>Teritis atap<div class="inp"><input id="dhTer" inputmode="decimal"><span class="unit">m</span></div></label>
+            <p class="hint" style="margin:0 0 10px">Dinding 15 cm dan pintu 90 × 210 cm tetap. Jumlah lantai mengikuti isian di atas.</p>
+            <div class="btns">
+              <button class="b sm" type="button" id="dhCopy">Salin dari lantai bawah</button>
+              <button class="b sm" type="button" id="dhClear">Kosongkan lantai</button>
+              <button class="b sm" type="button" id="dhSvgDl">Unduh SVG</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="dh-alerts" id="dhAlerts"></div>
+
+      <div class="dh-boq">
+        <h3>Rincian biaya dari elemen denah</h3>
+        <p class="hint" style="margin:0">Volume dihitung dari gambar. Harga satuan bawaan hanya contoh kasar; ketik angka Anda sendiri di kolom harga (kolom yang diubah berwarna kuning).</p>
+        <div class="boq-wrap">
+          <table class="boq">
+            <thead><tr><th>Pekerjaan</th><th class="n">Volume</th><th>Sat.</th><th class="n">Harga satuan (Rp)</th><th class="n">Jumlah</th></tr></thead>
+            <tbody id="dhBoqBody"></tbody>
+            <tfoot><tr><td colspan="4">Total perkiraan biaya</td><td class="n" id="dhTotal">–</td></tr></tfoot>
+          </table>
+        </div>
+        <p class="dh-cmp" id="dhCmp"></p>
+        <div class="btns" style="margin-top:10px"><button class="b sm" type="button" id="dhResetPrice">Kembalikan harga bawaan</button></div>
+        <p class="hint" style="margin-top:10px">Gambar tersimpan di browser perangkat ini saja, tidak dikirim ke server. Untuk RAB lengkap per item pekerjaan dan model 3D, lanjutkan ke Octopus Studio.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="cta2">
     <div>
       <h2>Sudah tahu batasnya? Lanjutkan jadi denah dan RAB.</h2>
-      <p>Di Octopus Studio, angka ini menjadi titik awal pra-desain: program ruang, model 2D/3D, RAB dari volume model, sampai gambar kerja.</p>
+      <p>Denah di atas cukup untuk anggaran awal. Di Octopus Studio, angka ini menjadi titik awal pra-desain: program ruang, model 2D/3D, RAB dari volume model, sampai gambar kerja.</p>
       <ul>
         <li>Langsung di browser, tanpa instalasi</li>
         <li>RAB dihitung dari model, bisa diekspor ke Excel</li>
@@ -306,7 +448,8 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     <details><summary>Kenapa lantai dasar maksimal bisa lebih kecil dari KDB?</summary><p>Karena tiga aturan berlaku bersamaan. Lantai dasar dibatasi oleh KDB, oleh area di dalam garis sempadan, dan oleh sisa lahan setelah dikurangi ruang hijau minimal (KDH). Kalkulator memakai yang paling ketat.</p></details>
     <details><summary>Seberapa akurat perkiraan biayanya?</summary><p>Ini perkiraan awal dengan metode harga per m², cocok untuk menyiapkan anggaran kasar. Biaya nyata bergantung pada daerah, kondisi tanah, desain, dan spesifikasi material. Untuk angka yang bisa dipertanggungjawabkan, susun RAB per item pekerjaan.</p></details>
     <details><summary>Dari mana angka standar harga kota?</summary><p>Dari Standar Harga Satuan Tertinggi (SHST) bangunan gedung negara tahun anggaran 2026 yang ditetapkan pemerintah daerah. Angka ini adalah batas biaya konstruksi fisik per m² untuk gedung pemerintah, kelas sederhana (sampai 2 lantai) dan tidak sederhana (lebih dari 2 lantai), belum termasuk biaya perencanaan dan pengawasan. Kalkulator memakainya sebagai acuan resmi; harga rumah pribadi bisa lebih rendah atau lebih tinggi menurut spesifikasi dan kontraktor.</p></details>
-    <details><summary>Apakah data saya disimpan?</summary><p>Tidak. Semua perhitungan berjalan di browser Anda dan tidak dikirim ke server.</p></details>
+    <details><summary>Bagaimana biaya dari gambar denah dihitung?</summary><p>Dinding dihitung dari panjang × tinggi dikurangi luas pintu dan jendela. Luas lantai diambil dari ruang yang tertutup dinding, atap dari proyeksi gabungan semua lantai ditambah teritis, pondasi dari panjang dinding lantai 1. Tiap volume dikali harga satuan yang bisa Anda ganti.</p></details>
+    <details><summary>Apakah data saya disimpan?</summary><p>Tidak. Semua perhitungan berjalan di browser Anda dan tidak dikirim ke server. Gambar denah hanya disimpan di browser perangkat ini.</p></details>
     <p style="color:var(--muted);font-size:14px">Mau belajar lebih dalam? Baca <a href="/belajar/kdb-klb-kdh-gsb/">KDB, KLB, KDH, dan GSB dengan contoh lahan 10 × 20 m</a> atau artikel lain di <a href="/belajar/">Belajar</a>.</p>
   </section>
 
@@ -489,6 +632,8 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
     drawSvg({L,P,A,gD,gB,gS,tapak:klbCap?tapakRencana:tapak,hasDim,effW,effD});
 
     last = {A,kdb,klb,kdh,gD,gB,gS,lt,harga,tapak,aKdb,aKlb,aKdh,ltMax,total,biaya,klbCap};
+    window.octoKalk = {L,P,A,hasDim,gD,gB,gS,effW,effD,tapak,aKdb,aKlb,lt,harga};
+    document.dispatchEvent(new CustomEvent('kalk:update',{detail:window.octoKalk}));
     updateShare();
     saveUrl();
   }
@@ -610,5 +755,6 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
   calc();
 })();
 </script>
+<script src="/kalkulator/denah.js" defer></script>
 </body>
 </html>
