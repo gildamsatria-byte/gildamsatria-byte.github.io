@@ -355,6 +355,8 @@
   let rectA = null, rectDrag = false, downAt = null;
   let drag = null;
   let ortho = true, shiftKey = false, showDims = true;
+  let newMir = false, newFlip = false; // cermin untuk pintu baru: engsel (bit 2) dan arah buka (bit 1)
+  const newF = c => (c.f ^ (newFlip ? 1 : 0)) | (newMir ? 2 : 0);
   let lastP = null;
 
   function renderStatic() {
@@ -434,7 +436,7 @@
       h += marker(q);
     } else if (tool === 'pintu' || tool === 'jendela') {
       const c = opCandidate(p);
-      if (c) h += opSvg(c.w, { t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: c.f }, c.ok ? ACC : BAD, 'rgba(232,238,249,.95)');
+      if (c) h += opSvg(c.w, { t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: tool === 'pintu' ? newF(c) : c.f }, c.ok ? ACC : BAD, 'rgba(232,238,249,.95)');
     }
     gDyn.innerHTML = h;
   }
@@ -567,7 +569,7 @@
       const c = opCandidate(p);
       if (c && c.ok) {
         pushHist();
-        F().ops.push({ id: S.nid++, w: c.w.id, t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: c.f });
+        F().ops.push({ id: S.nid++, w: c.w.id, t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: tool === 'pintu' ? newF(c) : c.f });
         changed();
       } else toast(c ? c.msg : 'Klik tepat pada dinding.');
     }
@@ -617,16 +619,39 @@
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (k === 'escape') { if (chain || rectA) { chain = null; rectA = null; } else sel = null; updHint(); renderStatic(); renderProps(); renderDyn(lastP); return; }
     if (k === 'delete' || k === 'backspace') { if (sel) { e.preventDefault(); delSel(); } return; }
+    if (k === 'm') { mirrorDoor(2); return; }
+    if (k === 'f') { mirrorDoor(1); return; }
     const map = { v: 'pilih', w: 'dinding', r: 'ruang', p: 'pintu', j: 'jendela' };
     if (map[k]) setTool(map[k]);
   });
+
+  // ---------- Cermin pintu ----------
+  // bit: 1 = arah buka (sisi dinding), 2 = posisi engsel (ujung kiri/kanan bukaan)
+  const selDoor = () => { if (!sel || sel.k !== 'o') return null; const o = F().ops.find(x => x.id === sel.id); return o && o.k === 'd' ? o : null; };
+  function mirrorDoor(bit) {
+    const o = selDoor();
+    if (o) { pushHist(); o.f ^= bit; changed(); toast(bit === 2 ? 'Engsel pintu dicerminkan' : 'Arah buka pintu dibalik'); return; }
+    if (bit === 2) newMir = !newMir; else newFlip = !newFlip;
+    if (tool !== 'pintu') setTool('pintu');
+    renderMirror(); renderDyn(lastP);
+    toast(bit === 2 ? 'Pintu baru: engsel ' + (newMir ? 'dicerminkan' : 'normal') : 'Pintu baru: arah buka ' + (newFlip ? 'dibalik' : 'normal'));
+  }
+  function renderMirror() {
+    const d = selDoor();
+    $('dhMir').setAttribute('aria-pressed', String(!d && newMir));
+    $('dhFlip').setAttribute('aria-pressed', String(!d && newFlip));
+    $('dhMir').title = d ? 'Cerminkan engsel pintu terpilih (M)' : 'Cerminkan engsel untuk pintu baru (M)';
+    $('dhFlip').title = d ? 'Balik arah buka pintu terpilih (F)' : 'Balik arah buka untuk pintu baru (F)';
+  }
+  $('dhMir').addEventListener('click', () => mirrorDoor(2));
+  $('dhFlip').addEventListener('click', () => mirrorDoor(1));
 
   // ---------- UI panel ----------
   const HINTS = {
     pilih: 'Klik elemen untuk memilih. Seret pintu atau jendela untuk menggesernya di sepanjang dinding. Seret area kosong untuk menggeser tampilan.',
     dinding: 'Snap 5 cm. Klik titik awal, lalu klik tiap sudut. Selesai: klik titik awal lagi, klik dua kali, atau tekan Esc. Tahan Shift untuk garis miring.',
     ruang: 'Snap 5 cm. Seret dari satu sudut ke sudut seberang (atau klik dua titik) untuk membuat empat dinding sekaligus.',
-    pintu: 'Klik pada dinding untuk memasang pintu 90 cm. Daun pintu membuka ke sisi yang Anda klik.',
+    pintu: 'Klik pada dinding untuk memasang pintu 90 cm. Daun pintu membuka ke sisi yang Anda klik. Tekan M untuk mencerminkan engsel, F untuk membalik arah buka.',
     jendela: 'Klik pada dinding untuk memasang jendela. Lebarnya diatur di kolom "Lebar jendela".'
   };
   function updHint() {
@@ -663,6 +688,7 @@
   });
 
   function renderProps() {
+    renderMirror();
     const f = F(), el = $('dhProps');
     if (!sel) { el.innerHTML = '<h3>Elemen terpilih</h3><p class="hint" style="margin:0">Pakai alat <b>Pilih</b> lalu klik dinding, pintu, atau jendela untuk melihat dan mengubahnya.</p>'; return; }
     if (sel.k === 'w') {
@@ -677,7 +703,8 @@
       const o = f.ops.find(x => x.id === sel.id); if (!o) { sel = null; return renderProps(); }
       if (o.k === 'd') {
         el.innerHTML = '<h3>Pintu</h3>' + stat('Ukuran', '90 × 210 cm') +
-          '<div class="btns" style="margin-top:10px"><button class="b sm" type="button" data-act="flip">Balik arah buka</button><button class="b sm" type="button" data-act="del">Hapus</button></div>';
+          stat('Engsel', (o.f & 2) ? 'dicerminkan' : 'normal') + stat('Arah buka', (o.f & 1) ? 'sisi B' : 'sisi A') +
+          '<div class="btns" style="margin-top:10px"><button class="b sm" type="button" data-act="mir">⇆ Cermin engsel</button><button class="b sm" type="button" data-act="flip">⇅ Balik arah buka</button><button class="b sm" type="button" data-act="del">Hapus</button></div>';
       } else {
         el.innerHTML = '<h3>Jendela</h3>' +
           '<label class="mini">Lebar <span class="inp"><input id="dhOpW" inputmode="numeric" value="' + nf0.format(o.len * 100) + '"><span class="unit">cm</span></span></label>' +
@@ -696,7 +723,8 @@
   $('dhProps').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
     if (b.dataset.act === 'del') delSel();
-    if (b.dataset.act === 'flip') { const o = F().ops.find(x => x.id === sel.id); if (o) { pushHist(); o.f = (o.f + 1) % 4; changed(); } }
+    if (b.dataset.act === 'flip') mirrorDoor(1);
+    if (b.dataset.act === 'mir') mirrorDoor(2);
   });
   const stat = (k, v) => '<div class="stat"><span>' + esc(k) + '</span><b>' + esc(v) + '</b></div>';
 
