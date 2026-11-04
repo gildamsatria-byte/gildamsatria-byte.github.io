@@ -164,6 +164,11 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
 .dh-hint button{pointer-events:auto;min-height:36px}
 .dh-hint button[hidden]{display:none}
 .boq thead th{background:var(--paper);color:var(--muted);text-transform:none;letter-spacing:0}
+.dh-move{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule2)}
+.dh-move .k{width:100%;font-size:13.5px;font-weight:500}
+.dh-move .inp{margin:0;width:92px}
+.dh-move .inp input{min-height:38px;padding:6px 34px 6px 10px;font-size:14px}
+.tool[data-tool=hapus][aria-pressed=true]{background:#C0392B;border-color:#C0392B}
 .dh-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column}
 .dh-zoom button{appearance:none;width:38px;height:38px;border:1.5px solid var(--ink);margin-top:-1.5px;background:var(--paper);font:inherit;font-weight:600;font-size:18px;cursor:pointer;color:var(--ink)}
 .dh-zoom button:hover{background:#fff}
@@ -359,13 +364,14 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
       <div class="dh-floors" role="tablist" aria-label="Pilih lantai" id="dhFloors"></div>
 
       <div class="dh-tools" role="toolbar" aria-label="Alat gambar denah">
-        <button class="tool" type="button" data-tool="pilih" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 2l9 5-4 1-1 5z"/></svg>Pilih <kbd>V</kbd></button>
+        <button class="tool" type="button" data-tool="pilih" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 2l9 5-4 1-1 5z"/></svg>Pilih / geser <kbd>V</kbd></button>
         <button class="tool" type="button" data-tool="dinding" aria-pressed="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 13V3h12" stroke-width="3"/></svg>Dinding <kbd>W</kbd></button>
         <button class="tool" type="button" data-tool="ruang" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="9" stroke-width="2.4"/></svg>Ruang kotak <kbd>R</kbd></button>
         <button class="tool" type="button" data-tool="pintu" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 14h3M11 14h3M5 14V5M5 5a9 9 0 0 1 9 9" /></svg>Pintu 90 cm <kbd>P</kbd></button>
         <button class="tool" type="button" id="dhMir" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 1v14" stroke-dasharray="2 2"/><path d="M6 4L2 8l4 4M10 4l4 4-4 4"/></svg>Cermin engsel <kbd>M</kbd></button>
         <button class="tool" type="button" id="dhFlip" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 8h14" stroke-dasharray="2 2"/><path d="M4 6l4-4 4 4M4 10l4 4 4-4"/></svg>Balik arah buka <kbd>F</kbd></button>
         <button class="tool" type="button" data-tool="jendela" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 6h14M1 10h14M1 8h14M3 6v4M13 6v4"/></svg>Jendela <kbd>J</kbd></button>
+        <button class="tool" type="button" data-tool="hapus" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 4h10M6 4V2.5h4V4M4.5 4l.7 9.5h5.6l.7-9.5"/></svg>Hapus <kbd>X</kbd></button>
         <label class="mini">Lebar jendela <span class="inp"><input id="dhJW" inputmode="numeric" aria-label="Lebar jendela baru"><span class="unit">cm</span></span></label>
         <span class="dh-sep" aria-hidden="true"></span>
         <span class="tag" title="Semua titik dinding mengunci ke grid 5 cm">Snap 5 cm</span>
@@ -758,6 +764,6 @@ details p{color:var(--muted);margin-top:8px;line-height:1.6}
   calc();
 })();
 </script>
-<script src="/kalkulator/denah.js?v=20261104b" defer></script>
+<script src="/kalkulator/denah.js?v=20261104c" defer></script>
 </body>
 </html>

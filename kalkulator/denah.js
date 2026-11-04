@@ -355,6 +355,7 @@
   let rectA = null, rectDrag = false, downAt = null;
   let drag = null;
   let ortho = true, shiftKey = false, showDims = true;
+  let moveStep = '5';
   let newMir = false, newFlip = false; // cermin untuk pintu baru: engsel (bit 2) dan arah buka (bit 1)
   const newF = c => (c.f ^ (newFlip ? 1 : 0)) | (newMir ? 2 : 0);
   let lastP = null;
@@ -413,8 +414,18 @@
   }
   function renderDyn(p) {
     lastP = p;
-    if (!p || drag) { gDyn.innerHTML = ''; return; }
+    if (!p || drag) { if (!drag || drag.type !== 'wall') gDyn.innerHTML = ''; return; }
     let h = '';
+    if (tool === 'pilih' || tool === 'hapus') {
+      const ht = hit(p), f = F();
+      svg.style.cursor = ht ? (tool === 'hapus' ? 'pointer' : ht.k === 'w' ? 'move' : 'grab') : '';
+      if (tool === 'hapus' && ht) {
+        if (ht.k === 'w') { const w = f.walls.find(x => x.id === ht.id); if (w) h += line(w.a, w.b, BAD, T, 'stroke-linecap="square" opacity=".75"'); }
+        else { const o = f.ops.find(x => x.id === ht.id), w = o && wallMap(f).get(o.w); if (w) h += opSvg(w, o, BAD, '#FBE3E3'); }
+      }
+      gDyn.innerHTML = h; return;
+    }
+    svg.style.cursor = '';
     const fs = pxToW(12);
     if (tool === 'dinding') {
       const q = snapPt(p, chain ? chain.last : null);
@@ -499,6 +510,63 @@
     return best ? { k: 'w', id: best.id } : null;
   }
 
+  // ---------- Geser dinding (push/move) ----------
+  // Dinding bergeser tegak lurus arahnya. Ujung dinding lain yang menempel (di ujung atau di
+  // badan dinding ini) ikut bergeser, jadi dinding tersambung memanjang/memendek.
+  // Pintu & jendela di dinding yang digeser ikut pindah; di dinding tersambung tetap di tempatnya.
+  function wallNormal(w) { const L = wlen(w) || 1; return [-(w.b[1] - w.a[1]) / L, (w.b[0] - w.a[0]) / L]; }
+  function beginMove(id) {
+    const f = F(), w = f.walls.find(x => x.id === id);
+    if (!w) return null;
+    const ends = [];
+    f.walls.forEach(x => {
+      if (x.id === id) return;
+      ['a', 'b'].forEach(k => { if (proj(w, x[k]).d < 1e-3) ends.push({ w: x, k, p0: x[k].slice() }); });
+    });
+    const wm = wallMap(f);
+    const ops = f.ops.map(o => { const ow = wm.get(o.w); return { o, abs: o.w === id ? null : (ow ? at(ow, o.t) : null) }; });
+    return { id, n: wallNormal(w), a0: w.a.slice(), b0: w.b.slice(), ends, ops, s: 0 };
+  }
+  function applyMove(m, sOff) {
+    const f = F(), w = f.walls.find(x => x.id === m.id);
+    if (!w) return;
+    const dx = m.n[0] * sOff, dy = m.n[1] * sOff;
+    const mv = p => snapP([p[0] + dx, p[1] + dy]);
+    w.a = mv(m.a0); w.b = mv(m.b0);
+    m.ends.forEach(e => { e.w[e.k] = mv(e.p0); });
+    const wm = wallMap(f);
+    m.ops.forEach(({ o, abs }) => {
+      if (!abs) return;
+      const ow = wm.get(o.w); if (!ow) return;
+      const L = wlen(ow);
+      o.t = r4(Math.max(o.len / 2, Math.min(L - o.len / 2, proj(ow, abs).t)));
+    });
+    m.s = sOff;
+  }
+  function finishMove(m, snapBefore) {
+    if (Math.abs(m.s) < 1e-6) return false;
+    undoS.push(snapBefore); if (undoS.length > 100) undoS.shift(); redoS = [];
+    const f = F(), nOps = f.ops.length;
+    normalize(f);
+    changed();
+    if (f.ops.length < nOps) toast((nOps - f.ops.length) + ' pintu/jendela dihapus karena dindingnya terlalu pendek.');
+    return true;
+  }
+  function nudgeWall(id, sOff) {
+    const before = snap(), m = beginMove(id);
+    if (!m) return;
+    applyMove(m, snapv(sOff));
+    finishMove(m, before);
+  }
+  // label arah geser untuk dinding datar/tegak
+  function moveLabels(w) {
+    if (isH(w)) return [-1, '↑ Atas', 1, '↓ Bawah'];
+    if (isV(w)) return [-1, '← Kiri', 1, '→ Kanan'];
+    return [-1, '↖ Sisi A', 1, '↘ Sisi B'];
+  }
+  // ubah arah layar (-1 atas/kiri, +1 bawah/kanan) menjadi offset searah normal dinding
+  function signedNormalOffset(w, d) { const n = wallNormal(w); if (isH(w)) return d * (n[1] >= 0 ? 1 : -1); if (isV(w)) return d * (n[0] >= 0 ? 1 : -1); return d; }
+
   // ---------- Mutasi ----------
   let tracked = false;
   function track() { if (tracked) return; tracked = true; try { if (typeof gtag === 'function') gtag('event', 'denah_gambar'); } catch (e) { /* abaikan */ } }
@@ -542,9 +610,18 @@
     const p = toWorld(e);
     if (tool === 'pilih') {
       const h = hit(p);
-      if (h) { sel = h; if (h.k === 'o') { drag = { type: 'op', id: h.id, moved: false, snap: snap() }; } }
+      if (h) {
+        sel = h;
+        if (h.k === 'o') drag = { type: 'op', id: h.id, moved: false, snap: snap() };
+        else { const m = beginMove(h.id); if (m) drag = { type: 'wall', m, p0: p, snap: snap(), moved: false }; }
+      }
       else { sel = null; startPan(e); }
       renderStatic(); renderProps(); return;
+    }
+    if (tool === 'hapus') {
+      const h = hit(p);
+      if (h) { sel = h; delSel(); renderDyn(p); } else toast('Klik dinding, pintu, atau jendela yang ingin dihapus.');
+      return;
     }
     if (tool === 'dinding') {
       const q = snapPt(p, chain ? chain.last : null);
@@ -586,6 +663,18 @@
       vb.x = drag.vx - (e.clientX - drag.cx) / m.a; vb.y = drag.vy - (e.clientY - drag.cy) / m.d; setVB(); return;
     }
     const p = toWorld(e);
+    if (drag && drag.type === 'wall') {
+      const m = drag.m, sOff = snapv((p[0] - drag.p0[0]) * m.n[0] + (p[1] - drag.p0[1]) * m.n[1]);
+      if (sOff !== m.s) { applyMove(m, sOff); drag.moved = Math.abs(sOff) > 1e-6; renderStatic(); }
+      const w = F().walls.find(x => x.id === m.id);
+      if (w) {
+        const c = [(w.a[0] + w.b[0]) / 2, (w.a[1] + w.b[1]) / 2], fs = pxToW(12);
+        const sd = signedNormalOffset(w, sOff), arw = isH(w) ? (sd >= 0 ? '↓ ' : '↑ ') : isV(w) ? (sd >= 0 ? '→ ' : '← ') : (sd >= 0 ? '+' : '−');
+        const lw = wlen(w), ux = (w.b[0] - w.a[0]) / (lw || 1), uy = (w.b[1] - w.a[1]) / (lw || 1), off = Math.min(lw / 2, fs * 4);
+        gDyn.innerHTML = Math.abs(sOff) < 1e-6 ? '' : text(c[0] + ux * off + m.n[0] * fs * 1.4, c[1] + uy * off + m.n[1] * fs * 1.4, arw + nf0.format(Math.abs(sOff) * 100) + ' cm', fs * 1.1, { fill: ACC, bold: true });
+      }
+      return;
+    }
     if (drag && drag.type === 'op') {
       const f = F(), o = f.ops.find(x => x.id === drag.id), w = o && wallMap(f).get(o.w);
       if (!w) return;
@@ -598,6 +687,7 @@
   svg.addEventListener('pointerup', e => {
     if (drag) {
       if (drag.type === 'op' && drag.moved) { undoS.push(drag.snap); redoS = []; changed(); }
+      if (drag.type === 'wall') { gDyn.innerHTML = ''; if (!finishMove(drag.m, drag.snap)) { renderStatic(); renderProps(); } }
       drag = null; svg.classList.remove('panning'); return;
     }
     if (tool === 'ruang' && rectA && rectDrag) {
@@ -624,9 +714,18 @@
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (k === 'escape') { if (chain || rectA) { chain = null; rectA = null; } else sel = null; updHint(); renderStatic(); renderProps(); renderDyn(lastP); return; }
     if (k === 'delete' || k === 'backspace') { if (sel) { e.preventDefault(); delSel(); } return; }
+    const arr = { arrowup: [0, -1], arrowdown: [0, 1], arrowleft: [-1, 0], arrowright: [1, 0] }[k];
+    if (arr && sel && sel.k === 'w') {
+      const w = F().walls.find(x => x.id === sel.id);
+      if (w) {
+        const n = wallNormal(w), d = arr[0] * n[0] + arr[1] * n[1];
+        if (Math.abs(d) > 0.3) { e.preventDefault(); nudgeWall(w.id, Math.sign(d) * (e.shiftKey ? 0.5 : SNAP)); }
+      }
+      return;
+    }
     if (k === 'm') { mirrorDoor(2); return; }
     if (k === 'f') { mirrorDoor(1); return; }
-    const map = { v: 'pilih', w: 'dinding', r: 'ruang', p: 'pintu', j: 'jendela' };
+    const map = { v: 'pilih', w: 'dinding', r: 'ruang', p: 'pintu', j: 'jendela', x: 'hapus' };
     if (map[k]) setTool(map[k]);
   });
 
@@ -653,7 +752,8 @@
 
   // ---------- UI panel ----------
   const HINTS = {
-    pilih: 'Klik elemen untuk memilih. Seret pintu atau jendela untuk menggesernya di sepanjang dinding. Seret area kosong untuk menggeser tampilan.',
+    pilih: 'Seret dinding untuk menggesernya tegak lurus (dinding tersambung ikut memanjang/memendek), atau pilih lalu tekan panah: 5 cm, Shift 50 cm. Seret pintu/jendela di sepanjang dinding. Delete untuk menghapus.',
+    hapus: 'Klik dinding, pintu, atau jendela untuk menghapusnya. Batal (Ctrl+Z) mengembalikannya.',
     dinding: 'Snap 5 cm. Klik titik awal, lalu klik tiap sudut. Selesai: klik titik awal lagi, klik dua kali, atau tekan Esc. Tahan Shift untuk garis miring.',
     ruang: 'Snap 5 cm. Seret dari satu sudut ke sudut seberang (atau klik dua titik) untuk membuat empat dinding sekaligus.',
     pintu: 'Klik pada dinding untuk memasang pintu 90 cm (membuka ke sisi yang Anda klik). Pintu yang baru dipasang atau diklik langsung terpilih: tekan M untuk mencerminkan engsel, F untuk membalik arah buka.',
@@ -703,6 +803,13 @@
       el.innerHTML = '<h3>Dinding</h3>' +
         stat('Panjang (as)', nf2.format(L) + ' m') + stat('Tebal', '15 cm') +
         stat('Luas bidang', nf2.format(Math.max(0, L * H() - open)) + ' m²') + stat('Pintu / jendela', ops.filter(o => o.k === 'd').length + ' / ' + ops.filter(o => o.k === 'j').length) +
+        (function () {
+          const ml = moveLabels(w);
+          return '<div class="dh-move"><span class="k">Geser dinding</span>' +
+            '<span class="inp"><input id="dhMv" inputmode="numeric" value="' + esc(moveStep) + '" aria-label="Jarak geser"><span class="unit">cm</span></span>' +
+            '<button class="b sm" type="button" data-act="mv" data-d="' + ml[0] + '">' + ml[1] + '</button>' +
+            '<button class="b sm" type="button" data-act="mv" data-d="' + ml[2] + '">' + ml[3] + '</button></div>';
+        })() +
         '<div class="btns" style="margin-top:10px"><button class="b sm" type="button" data-act="del">Hapus dinding</button></div>';
     } else {
       const o = f.ops.find(x => x.id === sel.id); if (!o) { sel = null; return renderProps(); }
@@ -728,6 +835,14 @@
   $('dhProps').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
     if (b.dataset.act === 'del') delSel();
+    if (b.dataset.act === 'mv' && sel && sel.k === 'w') {
+      const w = F().walls.find(x => x.id === sel.id), v = num($('dhMv').value);
+      if (!w || !(v > 0)) { toast('Isi jarak geser dalam cm.'); return; }
+      moveStep = $('dhMv').value;
+      const dd = Math.max(SNAP, snapv(v / 100));
+      if (Math.abs(dd * 100 - v) > 0.01) toast('Dibulatkan ke ' + nf0.format(dd * 100) + ' cm (snap 5 cm).');
+      nudgeWall(w.id, signedNormalOffset(w, +b.dataset.d * dd));
+    }
     if (b.dataset.act === 'flip') mirrorDoor(1);
     if (b.dataset.act === 'mir') mirrorDoor(2);
   });
