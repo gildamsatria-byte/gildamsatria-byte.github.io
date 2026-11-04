@@ -566,10 +566,15 @@
       updHint(); renderDyn(p); return;
     }
     if (tool === 'pintu' || tool === 'jendela') {
+      // klik pada pintu/jendela yang sudah ada: pilih elemen itu
+      const hh = hit(p);
+      if (hh && hh.k === 'o') { sel = hh; renderStatic(); renderProps(); renderDyn(p); return; }
       const c = opCandidate(p);
       if (c && c.ok) {
         pushHist();
-        F().ops.push({ id: S.nid++, w: c.w.id, t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: tool === 'pintu' ? newF(c) : c.f });
+        const o = { id: S.nid++, w: c.w.id, t: c.t, len: c.len, k: tool === 'pintu' ? 'd' : 'j', f: tool === 'pintu' ? newF(c) : c.f };
+        F().ops.push(o);
+        sel = { k: 'o', id: o.id }; // langsung terpilih: tombol cermin bekerja pada pintu ini
         changed();
       } else toast(c ? c.msg : 'Klik tepat pada dinding.');
     }
@@ -630,7 +635,7 @@
   const selDoor = () => { if (!sel || sel.k !== 'o') return null; const o = F().ops.find(x => x.id === sel.id); return o && o.k === 'd' ? o : null; };
   function mirrorDoor(bit) {
     const o = selDoor();
-    if (o) { pushHist(); o.f ^= bit; changed(); toast(bit === 2 ? 'Engsel pintu dicerminkan' : 'Arah buka pintu dibalik'); return; }
+    if (o) { pushHist(); o.f ^= bit; if (bit === 2) newMir = !newMir; else newFlip = !newFlip; changed(); toast(bit === 2 ? 'Engsel pintu dicerminkan' : 'Arah buka pintu dibalik'); return; }
     if (bit === 2) newMir = !newMir; else newFlip = !newFlip;
     if (tool !== 'pintu') setTool('pintu');
     renderMirror(); renderDyn(lastP);
@@ -638,8 +643,8 @@
   }
   function renderMirror() {
     const d = selDoor();
-    $('dhMir').setAttribute('aria-pressed', String(!d && newMir));
-    $('dhFlip').setAttribute('aria-pressed', String(!d && newFlip));
+    $('dhMir').setAttribute('aria-pressed', String(newMir));
+    $('dhFlip').setAttribute('aria-pressed', String(newFlip));
     $('dhMir').title = d ? 'Cerminkan engsel pintu terpilih (M)' : 'Cerminkan engsel untuk pintu baru (M)';
     $('dhFlip').title = d ? 'Balik arah buka pintu terpilih (F)' : 'Balik arah buka untuk pintu baru (F)';
   }
@@ -651,7 +656,7 @@
     pilih: 'Klik elemen untuk memilih. Seret pintu atau jendela untuk menggesernya di sepanjang dinding. Seret area kosong untuk menggeser tampilan.',
     dinding: 'Snap 5 cm. Klik titik awal, lalu klik tiap sudut. Selesai: klik titik awal lagi, klik dua kali, atau tekan Esc. Tahan Shift untuk garis miring.',
     ruang: 'Snap 5 cm. Seret dari satu sudut ke sudut seberang (atau klik dua titik) untuk membuat empat dinding sekaligus.',
-    pintu: 'Klik pada dinding untuk memasang pintu 90 cm. Daun pintu membuka ke sisi yang Anda klik. Tekan M untuk mencerminkan engsel, F untuk membalik arah buka.',
+    pintu: 'Klik pada dinding untuk memasang pintu 90 cm (membuka ke sisi yang Anda klik). Pintu yang baru dipasang atau diklik langsung terpilih: tekan M untuk mencerminkan engsel, F untuk membalik arah buka.',
     jendela: 'Klik pada dinding untuk memasang jendela. Lebarnya diatur di kolom "Lebar jendela".'
   };
   function updHint() {
