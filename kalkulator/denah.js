@@ -12,7 +12,7 @@
   const T = 0.15;          // tebal dinding (m)
   const DW = 0.9;          // lebar pintu (m)
   const DH = 2.1;          // tinggi pintu (m)
-  const SNAP = 0.05;       // grid snap 5 cm
+  const SNAP = 0.05;       // snap tetap 5 cm: semua titik dinding selalu kelipatan 5 cm
   const MAXF = 8;
   const KEY = 'octonaut-denah-v1';
   const ACC = '#1F5FD1', INK = '#141922', BAD = '#C0392B';
@@ -39,6 +39,9 @@
   }
   const r4 = n => Math.round(n * 1e4) / 1e4;
   const snapv = v => r4(Math.round(v / SNAP) * SNAP);
+  const snapP = p => [snapv(p[0]), snapv(p[1])];
+  // posisi bukaan di sepanjang dinding: kelipatan 5 cm, tetap di dalam batas
+  const snapIn = (v, mn, mx) => { const lo = r4(Math.ceil(mn / SNAP - 1e-6) * SNAP), hi = r4(Math.floor(mx / SNAP + 1e-6) * SNAP); return lo > hi ? r4(Math.min(mx, Math.max(mn, v))) : Math.min(hi, Math.max(lo, snapv(v))); };
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 
   // ---------- Harga satuan bawaan (contoh kasar, bisa diganti pengguna) ----------
@@ -106,7 +109,8 @@
   function normalize(f) {
     const wm = wallMap(f);
     const opsAbs = f.ops.map(o => { const w = wm.get(o.w); return w ? { o, p: at(w, o.t), w0: o.w } : null; }).filter(Boolean);
-    const walls = f.walls.filter(w => wlen(w) >= 0.049);
+    f.walls.forEach(w => { w.a = snapP(w.a); w.b = snapP(w.b); });
+    const walls = f.walls.filter(w => wlen(w) >= SNAP - 1e-6);
     const groups = new Map(), out = [];
     walls.forEach(w => {
       if (isH(w)) { const k = 'h' + w.a[1].toFixed(4); (groups.get(k) || groups.set(k, []).get(k)).push({ lo: Math.min(w.a[0], w.b[0]), hi: Math.max(w.a[0], w.b[0]), w, c: w.a[1], h: 1 }); }
@@ -136,7 +140,7 @@
       const L = wlen(w);
       if (L < o.len + 0.02) return null;
       o.w = w.id;
-      o.t = r4(Math.min(L - o.len / 2, Math.max(o.len / 2, proj(w, p).t)));
+      o.t = snapIn(proj(w, p).t, o.len / 2, L - o.len / 2);
       return o;
     }).filter(Boolean);
   }
@@ -449,18 +453,16 @@
       const fi = horiz ? 0 : 1;
       let v = horiz ? x : y, best = null, bd = tol;
       pts.forEach(a => { const d = Math.abs(a[fi] - v); if (d < bd) { bd = d; best = a[fi]; } });
-      v = best != null ? best : snapv(v);
-      return horiz ? [r4(v), from[1]] : [from[0], r4(v)];
+      v = snapv(best != null ? best : v);
+      return horiz ? [v, from[1]] : [from[0], v];
     }
     let bp = null, bd = tol;
     pts.forEach(a => { const d = Math.hypot(a[0] - x, a[1] - y); if (d < bd) { bd = d; bp = a; } });
-    if (bp) return [bp[0], bp[1]];
+    if (bp) return snapP(bp);
     for (const w of f.walls) {
       const pr = proj(w, [x, y]);
       if (pr.d < tol) {
-        if (isH(w)) return [snapv(pr.q[0]), w.a[1]];
-        if (isV(w)) return [w.a[0], snapv(pr.q[1])];
-        return [r4(pr.q[0]), r4(pr.q[1])];
+        return snapP(pr.q);
       }
     }
     return [snapv(x), snapv(y)];
@@ -479,7 +481,7 @@
     const c = { w: best.w, len: ol, t: L / 2, f: best.pr.side > 0 ? 1 : 0, ok: true, msg: '' };
     const mn = ol / 2 + 0.05, mx = L - ol / 2 - 0.05;
     if (mx < mn) { c.ok = false; c.msg = 'Dinding ini terlalu pendek untuk ' + (tool === 'pintu' ? 'pintu 90 cm' : 'jendela ' + nf0.format(ol * 100) + ' cm') + '.'; return c; }
-    c.t = r4(Math.min(mx, Math.max(mn, snapv(best.pr.t))));
+    c.t = snapIn(best.pr.t, mn, mx);
     if (overlaps(f, best.w.id, c.t, ol, null)) { c.ok = false; c.msg = 'Bertabrakan dengan pintu atau jendela lain di dinding ini.'; }
     return c;
   }
@@ -501,7 +503,7 @@
   function addWalls(list) {
     pushHist();
     const f = F();
-    list.forEach(([a, b]) => { if (dist(a, b) >= 0.05) f.walls.push({ id: S.nid++, a: [a[0], a[1]], b: [b[0], b[1]] }); });
+    list.forEach(([a, b]) => { a = snapP(a); b = snapP(b); if (dist(a, b) >= SNAP - 1e-6) f.walls.push({ id: S.nid++, a, b }); });
     normalize(f);
     changed();
   }
@@ -580,7 +582,7 @@
     if (drag && drag.type === 'op') {
       const f = F(), o = f.ops.find(x => x.id === drag.id), w = o && wallMap(f).get(o.w);
       if (!w) return;
-      const L = wlen(w), t = r4(Math.min(L - o.len / 2 - 0.05, Math.max(o.len / 2 + 0.05, snapv(proj(w, p).t))));
+      const L = wlen(w), t = snapIn(proj(w, p).t, o.len / 2 + 0.05, L - o.len / 2 - 0.05);
       if (t !== o.t && !overlaps(f, w.id, t, o.len, o.id)) { o.t = t; drag.moved = true; renderStatic(); }
       return;
     }
@@ -622,8 +624,8 @@
   // ---------- UI panel ----------
   const HINTS = {
     pilih: 'Klik elemen untuk memilih. Seret pintu atau jendela untuk menggesernya di sepanjang dinding. Seret area kosong untuk menggeser tampilan.',
-    dinding: 'Klik titik awal, lalu klik tiap sudut. Selesai: klik titik awal lagi, klik dua kali, atau tekan Esc. Tahan Shift untuk garis miring.',
-    ruang: 'Seret dari satu sudut ke sudut seberang (atau klik dua titik) untuk membuat empat dinding sekaligus.',
+    dinding: 'Snap 5 cm. Klik titik awal, lalu klik tiap sudut. Selesai: klik titik awal lagi, klik dua kali, atau tekan Esc. Tahan Shift untuk garis miring.',
+    ruang: 'Snap 5 cm. Seret dari satu sudut ke sudut seberang (atau klik dua titik) untuk membuat empat dinding sekaligus.',
     pintu: 'Klik pada dinding untuk memasang pintu 90 cm. Daun pintu membuka ke sisi yang Anda klik.',
     jendela: 'Klik pada dinding untuk memasang jendela. Lebarnya diatur di kolom "Lebar jendela".'
   };
@@ -682,9 +684,9 @@
           stat('Tinggi', nf2.format(JH()) + ' m') + stat('Luas', nf2.format(o.len * JH()) + ' m²') +
           '<div class="btns" style="margin-top:10px"><button class="b sm" type="button" data-act="del">Hapus</button></div>';
         $('dhOpW').addEventListener('change', ev => {
-          const v = num(ev.target.value) / 100, w = wallMap(f).get(o.w);
+          const v = Math.round(num(ev.target.value)) / 100, w = wallMap(f).get(o.w);
           if (!(v >= 0.2) || !w) { ev.target.value = nf0.format(o.len * 100); return; }
-          const L = wlen(w), t = Math.min(L - v / 2 - 0.05, Math.max(v / 2 + 0.05, o.t));
+          const L = wlen(w), t = snapIn(o.t, v / 2 + 0.05, L - v / 2 - 0.05);
           if (v > L - 0.1 || overlaps(f, w.id, t, v, o.id)) { toast('Jendela ' + nf0.format(v * 100) + ' cm tidak muat di posisi ini.'); ev.target.value = nf0.format(o.len * 100); return; }
           pushHist(); o.len = r4(v); o.t = r4(t); changed();
         });
